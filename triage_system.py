@@ -26,11 +26,11 @@ if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
 # ==========================================
-# 2. SIDEBAR NAVIGATION WITH ROUTED LOGO
+# 2. SIDEBAR NAVIGATION WITH SECURE DESIGN
 # ==========================================
 with st.sidebar:
-    # RECTIFIED PATH: Pointing securely to the exact repository layout path to draw your purple logo live
-    st.image("https://githubusercontent.com", use_container_width=True)
+    # FIXED: Replaced external file link with clean vector indicators to ensure immediate cloud rendering
+    st.markdown("## 🧠 Tumaini 365")
     st.write("---")
     st.markdown("🏢 **Viva 360 Insurance Brokers**")
     st.write("---")
@@ -53,7 +53,7 @@ with st.sidebar:
 # PORTAL INTERFACE GATEWAY ROUTING
 # ==========================================
 if selected_portal == "1. Employee Secure Portal":
-    st.title("🌱 Tumaini Three Sixty Five Limited")
+    st.markdown("## 🌱 Tumaini Three Sixty Five Limited")
     st.subheader("Employee Secure Well-being Assessment Portal")
     st.write("---")
     
@@ -114,7 +114,7 @@ if selected_portal == "1. Employee Secure Portal":
             st.rerun()
 
 elif selected_portal == "2. Ezekiel's Clinical Panel":
-    st.title("🔒 Tumaini 365: Clinical Administration Workspace")
+    st.markdown("## 🔒 Tumaini 365: Clinical Administration Workspace")
     st.subheader("Lead Consultant Console: Ezekiel Kiago Wangunyu")
     st.write("---")
     if pin_input != "365":
@@ -128,17 +128,12 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
         st.error("⚠️ **CRITICAL INCIDENT ALERT:** High-risk overloads detected inside active cadres. Reference Token T365-CLA-F56D1A (Claims Adjustment Cadre) for immediate callback match validation to encrypted staff ID V360-205.")
 
 else:
-    st.title("📊 Viva 360 Insurance Brokers: Executive Analytics Dashboard")
+    st.markdown("## 📊 Viva 360 Insurance Brokers: Executive Analytics Dashboard")
     st.subheader("Institutional Burnout Tracking & Corporate Budgeting Interface")
     st.write("---")
     st.markdown("### 🔒 Privacy Protocol View")
     st.write("In compliance with data protection laws, all individual fields are entirely stripped from this layout. It displays only aggregated data groupings to guide resource deployment.")
     st.write("---")
-    
-    total_screened = len(clinical_registry)
-    greens = len(clinical_registry[clinical_registry["Triage_Tier"] == "GREEN TIER"])
-    yellows = len(clinical_registry[clinical_registry["Triage_Tier"] == "YELLOW TIER"])
-    reds = len(clinical_registry[clinical_registry["Triage_Tier"] == "RED TIER"])
     
     col_m1, col_m2, col_m3 = st.columns(3)
     with col_m1:
@@ -168,3 +163,6 @@ else:
         st.write("- Red Crisis Urgency: 1 Staff")
         
     st.write("---")
+    st.error("🎯 **STRATEGIC BUDGET ALLOCATION RECOMMENDATION:** High burnout density values tracked inside your Direct Sales Force pipeline (Quota Fatigue). Tumaini 365 advises human resource scheduling of a specialized 'Preventive Financial Therapy Safari' workshop next month to protect premium acquisition targets before absenteeism spikes occur.")
+
+st.write("---")
