@@ -107,7 +107,8 @@ if selected_portal == "1. Employee Secure Portal":
                 "Mobile_Number": st.session_state.temp_phone, "Email_Address": st.session_state.temp_email, 
                 "Triage_Tier": calculated_tier, "Status": "Active Follow-up"
             }
-            st.session_state.clinical_registry = pd.concat([st.session_state.clinical_registry, pd.DataFrame([new_entry])], fill_value=0)
+            # FIXED: Removed the buggy fill_value structural collision to seal compilation paths safely
+            st.session_state.clinical_registry = pd.concat([st.session_state.clinical_registry, pd.DataFrame([new_entry])], ignore_index=True)
             st.session_state.last_token = token
             st.session_state.last_tier = calculated_tier
             st.session_state.staff_step = 3
@@ -158,5 +159,3 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
         
         st.write("### 🚨 Urgent WhatsApp Intercept Actions Matrix")
         st.link_button("🚨 INTERCEPT PATIENT T365-CLA-F56D1A (+254733444555)", "https://wa.meOutreach%20Intercept%20Token%20T365-CLA-F56D1A")
-        st.link_button("🚨 INTERCEPT PATIENT T365-CLA-200B (+254755666777)", "https://wa.meOutreach%20Intercept%20Token%20T365-CLA-200B")
-
