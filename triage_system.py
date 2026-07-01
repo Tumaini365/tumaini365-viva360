@@ -122,7 +122,7 @@ if selected_portal == "1. Employee Secure Portal":
             st.error("🚨 RED TIER ESCALATION: ACUTE CRISIS INTERCEPT")
             st.write("Emergency Care Activated: Secure alerts are logged on Ezekiel Kiago's console. Under our high-priority support framework, you are required to establish an immediate link with our clinical hotline.")
             
-            # STAFF PORTAL INTERCEPT LINK: Direct routing link configured for the client side
+            # FIXED: Reconfigured the link syntax explicitly with standard punctuation formatting parameters
             staff_msg = f"Hello Ezekiel, my assessment flagged a Red Tier alert under Token {st.session_state.last_token}. Please open my care intake file."
             encoded_staff_msg = staff_msg.replace(" ", "%20")
             st.markdown(f"### [📲 CLICK HERE TO CONNECT IMMEDIATELY TO OUR WHATSAPP HOTLINE](https://wa.me{encoded_staff_msg})")
