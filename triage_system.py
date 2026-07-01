@@ -1,4 +1,5 @@
 import streamlit as st
+import datetime
 import uuid
 import pandas as pd
 
@@ -134,15 +135,15 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
         st.warning("Awaiting proper credential parameters. Access blocked under Data Protection Act framework.")
     else:
         st.success("Access Verified. Secure encrypted database connection active.")
-        st.write("### 🗂️ Live Patient Triage & Active Contact Registry")
+        st.write("### 🗂️ Live Patient Triage & Active Contact Registry Matrix Table")
         
+        # FIXED SECURE TABULAR STRUCTURE: Sourced and displayed cleanly as an embedded data spreadsheet frame
         baseline_data = [
             {"Anonymized Token": "T365-CLA-F56D1A", "Cadre Department": "Claims Adjustment Cadre", "Employee Staff ID": "V360-205", "Telephone Mobile Number": "+254733444555", "Corporate Email": "claims5@viva360.co.ke", "Triage Status": "🔴 RED TIER CRISIS"},
             {"Anonymized Token": "T365-CLA-200B", "Cadre Department": "Claims Adjustment Cadre", "Employee Staff ID": "V360-101", "Telephone Mobile Number": "+254755666777", "Corporate Email": "admin@viva360.co.ke", "Triage Status": "🔴 RED TIER CRISIS"},
             {"Anonymized Token": "T365-DIR-E49A2B", "Cadre Department": "Direct Sales Force", "Employee Staff ID": "V360-401", "Telephone Mobile Number": "+254711222333", "Corporate Email": "sales1@viva360.co.ke", "Triage Status": "🟡 YELLOW RISK"},
             {"Anonymized Token": "T365-UND-B81C9F", "Cadre Department": "Underwriting & Risk", "Employee Staff ID": "V360-112", "Telephone Mobile Number": "+254722333444", "Corporate Email": "risk2@viva360.co.ke", "Triage Status": "🟢 GREEN RESILIENCE"}
         ]
-        
         st.dataframe(pd.DataFrame(baseline_data), use_container_width=True)
         st.write("---")
         
