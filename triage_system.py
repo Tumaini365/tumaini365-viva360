@@ -96,13 +96,13 @@ if st.session_state.portal_page == "Staff":
         st.caption("Scale: 0 = Not at all | 1 = Several days | 2 = More than half the days | 3 = Nearly every day")
         
         # Interactive Radio Clusters
-        q1 = st.radio("1. Little interest or pleasure in doing things at work or home:", [0, 1, 2, 3], horizontal=True)
-        q2 = st.radio("2. Feeling down, depressed, flat, or hopeless:", [0, 1, 2, 3], horizontal=True)
-        q3 = st.radio("3. Feeling tired, sluggish, or having chronically low energy volumes:", [0, 1, 2, 3], horizontal=True)
-        q4 = st.radio("4. Feeling nervous, anxious, on edge, or overwhelmed by quotas:", [0, 1, 2, 3], horizontal=True)
-        q5 = st.radio("5. Trouble relaxing, muscle tension, or constant overthinking:", [0, 1, 2, 3], horizontal=True)
-        q6 = st.radio("6. Becoming easily annoyed, hyper-irritable with peers, or cross-functional friction:", [0, 1, 2, 3], horizontal=True)
-        q9 = st.radio("⚠️ 7. Thoughts that you would be better off dead, or of hurting yourself in some way:", [0, 1, 2, 3], horizontal=True)
+        q1 = st.radio("1. Little interest or pleasure in doing things at work or home:", (0, 1, 2, 3), horizontal=True)
+        q2 = st.radio("2. Feeling down, depressed, flat, or hopeless:", (0, 1, 2, 3), horizontal=True)
+        q3 = st.radio("3. Feeling tired, sluggish, or having chronically low energy volumes:", (0, 1, 2, 3), horizontal=True)
+        q4 = st.radio("4. Feeling nervous, anxious, on edge, or overwhelmed by quotas:", (0, 1, 2, 3), horizontal=True)
+        q5 = st.radio("5. Trouble relaxing, muscle tension, or constant overthinking:", (0, 1, 2, 3), horizontal=True)
+        q6 = st.radio("6. Becoming easily annoyed, hyper-irritable with peers, or cross-functional friction:", (0, 1, 2, 3), horizontal=True)
+        q9 = st.radio("⚠️ 7. Thoughts that you would be better off dead, or of hurting yourself in some way:", (0, 1, 2, 3), horizontal=True)
         
         col_nav_1, col_nav_2 = st.columns(2)
         with col_nav_1:
@@ -150,16 +150,12 @@ if st.session_state.portal_page == "Staff":
         st.write("### Your Personalized Automated Support Action Plan")
         if st.session_state.last_tier == "GREEN TIER":
             st.success(st.session_state.last_box)
-            st.markdown(f"""
-            * **Your Action Roadmap:** Your baseline psychological resilience is optimal. Your data token has unlocked the **14-Day Digital Decompression Toolkit** containing deep breathing audio cues, sleep hygiene parameters, and structural time-blocking calendar patterns. 
-            * **Follow-up Check:** An automated verification link will be pushed to your portal on **{st.session_state.last_d14}** to ensure your boundaries are holding up.
-            """)
+            st.markdown("* **Your Action Roadmap:** Your baseline psychological resilience is optimal. Your data token has unlocked the **14-Day Digital Decompression Toolkit** containing deep breathing audio cues, sleep hygiene parameters, and structural time-blocking calendar patterns.")
+            st.info(f"📅 **Follow-up Check:** An automated verification link will be pushed to your portal on **{st.session_state.last_d14}** to ensure your boundaries are holding up.")
         elif st.session_state.last_tier == "YELLOW TIER":
             st.warning(st.session_state.last_box)
-            st.markdown(f"""
-            * **Your Action Roadmap:** Your profile highlights functional burnout and quota fatigue. To protect your productivity, your token has bypassed standard one-off training and matched you directly to this month's **Voluntary Virtual Wellness Booster Pod**. 
-            * **Continuous Follow-up:** Your pod will run accountability metrics on **{st.session_state.last_d30}** to track your coping structures.
-            """)
+            st.markdown("* **Your Action Roadmap:** Your profile highlights functional burnout and quota fatigue. To protect your productivity, your token has bypassed standard one-off training and matched you directly to this month's **Voluntary Virtual Wellness Booster Pod**.")
+            st.info(f"📅 **Continuous Follow-up:** Your pod will run accountability metrics on **{st.session_state.last_d30}** to track your coping structures.")
         else:
             st.error(st.session_state.last_box)
-            st.markdown(f"""
+            st.markdown("""
