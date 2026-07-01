@@ -26,14 +26,16 @@ if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
 # ==========================================
-# 2. SIDEBAR NAVIGATION CONTROLS
+# 2. SIDEBAR NAVIGATION WITH PRO UI TEXT HEADERS
 # ==========================================
 with st.sidebar:
-    # FIXED: Replaced fragile image strings with clean, native, and unblockable layout headers
-    st.markdown("## 🧠 Tumaini 365")
+    # FIXED: Using zero-asset bold headers to prevent broken layout blocks completely
+    st.markdown("## 🏢 TUMAINI 365")
+    st.markdown("### `TOTAL WELLNESS ECOSYSTEM`")
     st.caption("✨ Your Hope Everyday")
     st.write("---")
-    st.markdown("🏢 **Viva 360 Insurance Brokers**")
+    st.markdown("🤝 **Strategic Partner Platform:**")
+    st.markdown("#### **Viva 360 Insurance Brokers**")
     st.write("---")
     
     st.subheader("🚪 System Portal Navigation")
@@ -115,7 +117,7 @@ if selected_portal == "1. Employee Secure Portal":
             st.rerun()
 
 elif selected_portal == "2. Ezekiel's Clinical Panel":
-    st.markdown("## 🔒 Tumaini 365: Clinical Administration Workspace")
+    st.title("🔒 Tumaini 365: Clinical Administration Workspace")
     st.subheader("Lead Consultant Console: Ezekiel Kiago Wangunyu")
     st.write("---")
     if pin_input != "365":
@@ -129,7 +131,7 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
         st.error("⚠️ **CRITICAL INCIDENT ALERT:** High-risk overloads detected inside active cadres. Reference Token T365-CLA-F56D1A (Claims Adjustment Cadre) for immediate callback match validation to encrypted staff ID V360-205.")
 
 else:
-    st.markdown("## 📊 Viva 360 Insurance Brokers: Executive Analytics Dashboard")
+    st.title("📊 Viva 360 Insurance Brokers: Executive Analytics Dashboard")
     st.subheader("Institutional Burnout Tracking & Corporate Budgeting Interface")
     st.write("---")
     st.markdown("### 🔒 Privacy Protocol View")
@@ -164,6 +166,3 @@ else:
         st.write("- Red Crisis Urgency: 1 Staff")
         
     st.write("---")
-    st.error("🎯 **STRATEGIC BUDGET ALLOCATION RECOMMENDATION:** High burnout density values tracked inside your Direct Sales Force pipeline (Quota Fatigue). Tumaini 365 advises human resource scheduling of a specialized 'Preventive Financial Therapy Safari' workshop next month to protect premium acquisition targets before absenteeism spikes occur.")
-
-st.write("---")
