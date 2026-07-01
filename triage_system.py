@@ -145,17 +145,17 @@ if st.session_state.portal_page == "Staff":
     # STEP 3: AUTOMATED OUTCOME DISPLAY
     elif st.session_state.staff_step == 3:
         st.success("🎉 Confidential Screening Completed Successfully.")
-        st.info(f"**Your Non-Identifiable Security Token:** `{st.session_state.last_token}` (Write this down to track your progress)")
+        st.info("Your Non-Identifiable Security Token: " + str(st.session_state.last_token) + " (Write this down to track your progress)")
         
         st.write("### Your Personalized Automated Support Action Plan")
         if st.session_state.last_tier == "GREEN TIER":
             st.success(st.session_state.last_box)
             st.markdown("* **Your Action Roadmap:** Your baseline psychological resilience is optimal. Your data token has unlocked the **14-Day Digital Decompression Toolkit** containing deep breathing audio cues, sleep hygiene parameters, and structural time-blocking calendar patterns.")
-            st.info(f"📅 **Follow-up Check:** An automated verification link will be pushed to your portal on **{st.session_state.last_d14}** to ensure your boundaries are holding up.")
+            st.info("📅 **Follow-up Check:** An automated verification link will be pushed to your portal on " + str(st.session_state.last_d14) + " to ensure your boundaries are holding up.")
         elif st.session_state.last_tier == "YELLOW TIER":
             st.warning(st.session_state.last_box)
             st.markdown("* **Your Action Roadmap:** Your profile highlights functional burnout and quota fatigue. To protect your productivity, your token has bypassed standard one-off training and matched you directly to this month's **Voluntary Virtual Wellness Booster Pod**.")
-            st.info(f"📅 **Continuous Follow-up:** Your pod will run accountability metrics on **{st.session_state.last_d30}** to track your coping structures.")
+            st.info("📅 **Continuous Follow-up:** Your pod will run accountability metrics on " + str(st.session_state.last_d30) + " to track your coping structures.")
         else:
             st.error(st.session_state.last_box)
             st.markdown("""
