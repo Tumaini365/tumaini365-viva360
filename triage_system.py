@@ -147,11 +147,11 @@ elif app_mode == "2. Ezekiel's Clinical Panel":
             # Display full relational clinical tracking dataframe
             st.dataframe(st.session_state.clinical_registry.drop(columns=["Staff_ID"])) # Hide Staff ID from general panel to enforce data protocol
             
-            st.write("### 🚨 Emergency Overrides Pending Intercept")
-            red_cases = st.session_state.clinical_registry[st.session_state.clinical_registry["Triage_Tier"] == "RED TIER"]
-            if not red_cases.empty:
-                for idx, row in red_cases.iterrows():
-                    st.error(f"**CRITICAL ALERT:** Token `{row['Token']}` from `{row['Department']}` has matched Red Tier parameters. Required: Call back to encrypted verification matching user ID: `{row['Staff_ID']}`.")
-            else:
-                st.success("Zero critical emergency case overloads pending on your workspace matrix.")
+        st.write("### 🚨 Emergency Overrides Pending Intercept")
+        red_cases = st.session_state.clinical_registry[st.session_state.clinical_registry["Triage_Tier"] == "RED TIER"]
+        if not red_cases.empty:
+            for idx, row in red_cases.iterrows():
+                st.error(f"**CRITICAL ALERT:** Token `{row['Token']}` from `{row['Department']}` has matched Red Tier parameters. Required: Call back to encrypted verification matching user ID: `{row['Staff_ID']}`.")
+        else:
+            st.success("Zero critical emergency case overloads pending on your workspace matrix.")
     elif pin:
