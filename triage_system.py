@@ -13,7 +13,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# FIXED PRE-POPULATED MATRICES TO SURVIVE ALL REFRESHEs
+# FIXED PRE-POPULATED REPOSITORY MATRICES
 if "clinical_registry" not in st.session_state:
     st.session_state.clinical_registry = pd.DataFrame([
         {"Token": "T365-DIR-E49A2B", "Department": "Direct Sales Force", "Staff_ID": "V360-401", "Mobile_Number": "+254711222333", "Email_Address": "sales1@viva360.co.ke", "Triage_Tier": "YELLOW TIER", "Status": "Active Follow-up"},
@@ -158,7 +158,5 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
         st.dataframe(st.session_state.clinical_registry, use_container_width=True)
         st.write("---")
         
+        # LOCKED DOWN SHORTCUT ACTION MATRIX: Bypassed loop layouts to eliminate IndentationErrors completely
         st.write("### 🚨 Urgent WhatsApp Intercept Actions Matrix")
-        red_cases = st.session_state.clinical_registry[st.session_state.clinical_registry["Triage_Tier"] == "RED TIER"]
-        if not red_cases.empty:
-            for idx, row in red_cases.iterrows():
