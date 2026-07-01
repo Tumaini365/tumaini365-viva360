@@ -29,19 +29,13 @@ if "staff_step" not in st.session_state:
 # 2. SIDEBAR NAVIGATION WITH DIRECT LOGO CODE
 # ==========================================
 with st.sidebar:
-    # UNBLOCKABLE LOGO CODE: This renders your precise brand colors directly via browser code paths.
-    # It completely bypasses internet loading, file names, or folder paths.
     logo_svg = """
     <div style="text-align: center; margin-bottom: 20px;">
         <svg width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://w3.org">
-            <!-- Circular Background/Shield -->
             <circle cx="50" cy="50" r="45" fill="#1A1528" stroke="#3A2A6B" stroke-width="2"/>
-            <!-- Sprout / Hope Stem Leaf Shape -->
             <path d="M50 75V45" stroke="#90E0EF" stroke-width="5" stroke-linecap="round"/>
             <path d="M50 55C60 55 70 45 70 35C70 25 55 25 50 45C45 25 30 25 30 35C30 45 40 55 50 55Z" fill="#7B2CBF"/>
-            <!-- Internal Glow Accents -->
             <path d="M50 45C52 35 62 30 62 35C62 40 54 45 50 45Z" fill="#90E0EF" opacity="0.6"/>
-            <!-- Ground Base Line -->
             <path d="M30 75H70" stroke="#90E0EF" stroke-width="3" stroke-linecap="round"/>
         </svg>
         <h3 style="color: #7B2CBF; font-family: sans-serif; margin-top: 5px; margin-bottom: 0px; font-weight: bold;">TUMAINI 365</h3>
@@ -50,8 +44,6 @@ with st.sidebar:
     """
     st.markdown(logo_svg, unsafe_allow_html=True)
     st.write("---")
-    
-    # Partner Brand Verification Title Block
     st.markdown("🏢 **Viva 360 Insurance Brokers**")
     st.write("---")
     
@@ -67,7 +59,7 @@ with st.sidebar:
         st.subheader("🔒 Administrator Login")
         pin_input = st.text_input("Enter Access PIN:", type="password", key="ez_sidebar_pin")
         
-    st.info("💡 **Boardroom Demo Note:** Pre-loaded baseline datasets are now permanently active. Changing portal views above will preserve and display data perfectly.")
+    st.info("💡 **Boardroom Note:** Baseline datasets are active. Portal views preserve and display data perfectly.")
 
 # ==========================================
 # PORTAL INTERFACE GATEWAY ROUTING
@@ -134,7 +126,7 @@ if selected_portal == "1. Employee Secure Portal":
             st.rerun()
 
 elif selected_portal == "2. Ezekiel's Clinical Panel":
-    st.title("🔒 Tumaini 365: Clinical Administration Workspace")
+    st.markdown("## 🔒 Tumaini 365: Clinical Administration Workspace")
     st.subheader("Lead Consultant Console: Ezekiel Kiago Wangunyu")
     st.write("---")
     if pin_input != "365":
@@ -148,7 +140,7 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
         st.error("⚠️ **CRITICAL INCIDENT ALERT:** High-risk overloads detected inside active cadres. Reference Token T365-CLA-F56D1A (Claims Adjustment Cadre) for immediate callback match validation to encrypted staff ID V360-205.")
 
 else:
-    st.title("📊 Viva 360 Insurance Brokers: Executive Analytics Dashboard")
+    st.markdown("## 📊 Viva 360 Insurance Brokers: Executive Analytics Dashboard")
     st.subheader("Institutional Burnout Tracking & Corporate Budgeting Interface")
     st.write("---")
     st.markdown("### 🔒 Privacy Protocol View")
@@ -161,3 +153,14 @@ else:
     with col_m2:
         st.metric("Green Tier (Resilience Ratio)", "25.0%")
     with col_m3:
+        st.metric("Yellow Tier (Burnout Density)", "50.0%")
+    st.write("---")
+    
+    st.write("### 📑 Departmental Burnout Distribution Metrics")
+    col_chart_1, col_chart_2, col_chart_3 = st.columns(3)
+    with col_chart_1:
+        st.write("🔥 **Direct Sales Force Grouping**")
+        st.write("- Green Resilience: 1 Staff")
+        st.write("- Yellow Burnout Risk: 2 Staff")
+        st.write("- Red Crisis Urgency: 0 Staff")
+    with col_chart_2:
