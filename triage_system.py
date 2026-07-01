@@ -160,7 +160,7 @@ else:
     col_chart_1, col_chart_2, col_chart_3 = st.columns(3)
     with col_chart_1:
         st.write("🔥 **Direct Sales Force Grouping**")
-        st.write("- Green Resilience: 1 Staff")
+        st.write("- Green Resilience: 0 Staff")
         st.write("- Yellow Burnout Risk: 2 Staff")
         st.write("- Red Crisis Urgency: 0 Staff")
     with col_chart_2:
