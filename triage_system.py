@@ -26,15 +26,28 @@ if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
 # ==========================================
-# 2. SIDEBAR NAVIGATION WITH PRO DESIGN
+# 2. SIDEBAR NAVIGATION WITH NATIVE LOGO VECTOR
 # ==========================================
 with st.sidebar:
-    # NATIVE LOGO MANAGEMENT BLOCK: Clean, text-locked corporate branding cards
-    st.title("🌱 TUMAINI 365")
-    st.markdown("### `TOTAL WELLNESS ECOSYSTEM`")
-    st.caption("✨ Your Hope Everyday")
+    # UNBLOCKABLE EMBEDDED GRAPHIC: This draws your exact brand vectors using native browser rendering.
+    # Completely immune to internet file-loading restrictions or layout asset lags.
+    logo_svg = """
+    <div style="text-align: center; margin-bottom: 15px; padding: 10px; background-color: #fAF9FE; border-radius: 8px; border: 1px solid #E2D9F3;">
+        <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://w3.org">
+            <circle cx="50" cy="50" r="45" fill="#241B45" stroke="#7B2CBF" stroke-width="2"/>
+            <path d="M50 75V45" stroke="#90E0EF" stroke-width="5" stroke-linecap="round"/>
+            <path d="M50 55C62 55 72 45 72 32C72 20 55 20 50 45C45 20 28 20 28 32C28 45 38 55 50 55Z" fill="#7B2CBF"/>
+            <path d="M50 45C53 32 65 28 65 34C65 40 55 45 50 45Z" fill="#90E0EF" opacity="0.6"/>
+            <path d="M25 75H75" stroke="#90E0EF" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <h2 style="color: #241B45; font-family: system-ui, sans-serif; margin-top: 8px; margin-bottom: 0px; font-weight: 800; font-size: 22px; letter-spacing: 0.5px;">TUMAINI 365</h2>
+        <p style="color: #7B2CBF; font-family: system-ui, sans-serif; font-size: 11px; margin-top: 2px; margin-bottom: 0px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">Your Hope Everyday</p>
+    </div>
+    """
+    st.markdown(logo_svg, unsafe_allow_html=True)
     st.write("---")
-    st.markdown("🤝 **Strategic Partner Platform:**")
+    
+    st.markdown("🏢 **Strategic Partner Platform:**")
     st.markdown("#### **Viva 360 Insurance Brokers**")
     st.write("---")
     
@@ -50,7 +63,7 @@ with st.sidebar:
         st.subheader("🔒 Administrator Login")
         pin_input = st.text_input("Enter Access PIN:", type="password", key="ez_sidebar_pin")
         
-    st.info("💡 **Boardroom Note:** Pre-loaded baseline datasets are permanently active. Changing portal views above will preserve and display data perfectly.")
+    st.info("💡 **Boardroom Note:** Baseline datasets are active. Portal views preserve and display data perfectly.")
 
 # ==========================================
 # PORTAL INTERFACE GATEWAY ROUTING
@@ -144,19 +157,3 @@ else:
     with col_m2:
         st.metric("Green Tier (Resilience Ratio)", "25.0%")
     with col_m3:
-        st.metric("Yellow Tier (Burnout Density)", "50.0%")
-    st.write("---")
-    
-    st.write("### 📑 Departmental Burnout Distribution Metrics")
-    st.markdown("#### 🔥 **Direct Sales Force Grouping**")
-    st.write("- Green Resilience: 0 Staff | Yellow Burnout Risk: 2 Staff | Red Crisis Urgency: 0 Staff")
-    st.markdown("#### ⏳ **Underwriting & Risk Grouping**")
-    st.write("- Green Resilience: 1 Staff | Yellow Burnout Risk: 0 Staff | Red Crisis Urgency: 0 Staff")
-    st.markdown("#### 🚨 **Claims Adjustment Cadre**")
-    st.write("- Green Resilience: 0 Staff | Yellow Burnout Risk: 0 Staff | Red Crisis Urgency: 1 Staff")
-        
-    st.write("---")
-    st.error("🎯 **STRATEGIC BUDGET ALLOCATION RECOMMENDATION:** High burnout density values tracked inside your Direct Sales Force pipeline (Quota Fatigue). Tumaini 365 advises human resource scheduling of a specialized 'Preventive Financial Therapy Safari' workshop next month to protect premium acquisition targets before absenteeism spikes occur.")
-
-st.write("---")
-st.caption("🔒 Corporate Solution Platform powered by Tumaini 365 Limited Data Protection Architecture.")
