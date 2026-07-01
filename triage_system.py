@@ -13,7 +13,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# FIXED PRE-POPULATED PRODUCTION MATRIX (Locked in memory to survive all page switches)
+# FIXED PRE-POPULATED REPOSITORY MATRICES
 if "clinical_registry" not in st.session_state:
     st.session_state.clinical_registry = pd.DataFrame([
         {"Token": "T365-DIR-E49A2B", "Department": "Direct Sales Force", "Staff_ID": "V360-401", "Mobile_Number": "+254711222333", "Email_Address": "sales1@viva360.co.ke", "Triage_Tier": "YELLOW TIER", "Status": "Active Follow-up"},
@@ -30,15 +30,17 @@ if "staff_step" not in st.session_state:
 # ==========================================
 st.sidebar.markdown("## 🌱 TUMAINI 365")
 st.sidebar.markdown("### `TOTAL WELLNESS ECOSYSTEM`")
-st.sidebar.caption("✨ Your Hope Everyday")
+st.sidebar.caption("Your Hope Everyday")
 st.sidebar.write("---")
 st.sidebar.markdown("🤝 **Strategic Partner Platform:**")
 st.sidebar.markdown("#### **Viva 360 Insurance Brokers**")
 st.sidebar.write("---")
 
+st.sidebar.subheader("Choose Interface to Open:")
 selected_portal = st.sidebar.selectbox(
     "Choose Interface to Open:",
-    ["1. Employee Secure Portal", "2. Ezekiel's Clinical Panel", "3. HR Executive Analytics"]
+    ["1. Employee Secure Portal", "2. Ezekiel's Clinical Panel", "3. HR Executive Analytics"],
+    label_visibility="collapsed"
 )
 st.sidebar.write("---")
 
@@ -154,5 +156,3 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
             
             st.markdown(f"#### **{tier_badge}** | Anonymized Token: `{row['Token']}`")
             st.write(f"🏢 **Cadre Department:** {row['Department']} | 🆔 **Employee Staff ID:** `{row['Staff_ID']}`")
-            st.write(f"📞 **Telephone Mobile Number:** `{row['Mobile_Number']}` | ✉️ **Corporate Email:** `{row['Email_Address']}`")
-            
