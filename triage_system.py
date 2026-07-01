@@ -122,10 +122,9 @@ if selected_portal == "1. Employee Secure Portal":
             st.error("🚨 RED TIER ESCALATION: ACUTE CRISIS INTERCEPT")
             st.write("Emergency Care Activated: Secure alerts are logged on Ezekiel Kiago's console. Under our high-priority support framework, you are required to establish an immediate link with our clinical hotline.")
             
-            # FIXED: Reconfigured the link syntax explicitly with standard punctuation formatting parameters
-            staff_msg = f"Hello Ezekiel, my assessment flagged a Red Tier alert under Token {st.session_state.last_token}. Please open my care intake file."
-            encoded_staff_msg = staff_msg.replace(" ", "%20")
-            st.markdown(f"### [📲 CLICK HERE TO CONNECT IMMEDIATELY TO OUR WHATSAPP HOTLINE](https://wa.me{encoded_staff_msg})")
+            # FIXED EXTRA SECURITY: Enforced absolute HTML routing to fully isolate phone links
+            html_link = f'<div style="margin-top:20px;"><a href="https://whatsapp.com{st.session_state.last_token}" target="_blank" style="background-color:#25D366; color:white; padding:12px 24px; text-decoration:none; font-weight:bold; border-radius:8px; display:inline-block;">📲 CONNECT IMMEDIATELY TO WHATSAPP HOTLINE</a></div>'
+            st.markdown(html_link, unsafe_allow_html=True)
             
         elif st.session_state.last_tier == "YELLOW TIER":
             st.warning("🟡 YELLOW TIER ALERT: FUNCTIONAL BURNOUT RISK")
@@ -152,4 +151,3 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
             tier_badge = "🔴 RED TIER CRISIS" if row['Triage_Tier'] == "RED TIER" else "🟡 YELLOW RISK" if row['Triage_Tier'] == "YELLOW TIER" else "🟢 GREEN RESILIENCE"
             
             st.markdown(f"#### **{tier_badge}** | Anonymized Token: `{row['Token']}`")
-            st.write(f"🏢 **Cadre Department:** {row['Department']} | 🆔 **Employee Staff ID:** `{row['Staff_ID']}`")
