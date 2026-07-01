@@ -26,15 +26,13 @@ if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
 # ==========================================
-# 2. SIDEBAR NAVIGATION WITH SECURE IMAGE LINKS
+# 2. SIDEBAR NAVIGATION WITH UNIVERSAL BRANDING
 # ==========================================
 with st.sidebar:
-    # FIXED PIPELINE: Using high-availability cloud imagery links to ensure instant display on your browser
-    col_logo1, col_logo2 = st.columns(2)
-    with col_logo1:
-        st.image("https://icons8.com", use_container_width=True, caption="Tumaini 365")
-    with col_logo2:
-        st.image("https://icons8.com", use_container_width=True, caption="Viva 360")
+    # FIXED: Replaced image file links with clean text design cards to bypass all browser blocks completely
+    st.markdown("### 🌱 Tumaini 365")
+    st.caption("Your Hope Everyday")
+    st.markdown("🔹 **Viva 360 Insurance Brokers**")
     
     st.write("---")
     st.subheader("🚪 System Portal Navigation")
@@ -136,6 +134,11 @@ else:
     st.markdown("### 🔒 Privacy Protocol View")
     st.write("In compliance with data protection laws, all individual fields are entirely stripped from this layout. It displays only aggregated data groupings to guide resource deployment.")
     st.write("---")
+    
+    total_screened = len(clinical_registry)
+    greens = len(clinical_registry[clinical_registry["Triage_Tier"] == "GREEN TIER"])
+    yellows = len(clinical_registry[clinical_registry["Triage_Tier"] == "YELLOW TIER"])
+    reds = len(clinical_registry[clinical_registry["Triage_Tier"] == "RED TIER"])
     
     col_m1, col_m2, col_m3 = st.columns(3)
     with col_m1:
