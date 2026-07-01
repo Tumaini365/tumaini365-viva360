@@ -3,9 +3,9 @@ import datetime
 import uuid
 import pandas as pd
 
-# ==========================================
-# 1. LIVE APP CONFIGURATION & STYLE FRAMING
-# ==========================================
+# ====================================================================
+# 1. LIVE CONFIGURATION & LAYOUT FRAMING
+# ====================================================================
 st.set_page_config(
     page_title="Tumaini 365 Total Wellness Ecosystem", 
     page_icon="🌱", 
@@ -13,7 +13,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Professional CSS UI framing to style dashboard panels and input grids
+# Professional CSS UI framing to design structured gray container boxes and clean layouts
 st.markdown("""
 <style>
     .metric-card {
@@ -31,26 +31,22 @@ st.markdown("""
         background-color: #ffffff;
         box-shadow: 3px 3px 12px rgba(0,0,0,0.02);
     }
-    .stButton>button {
-        border-radius: 6px;
-        font-weight: bold;
-    }
 </style>
 """, unsafe_allow_html=True)
 
-# Persistent data registry matrix to safely track runtime screening inputs
+# Initialize persistent session database array to preserve clinical data entries safely
 if "clinical_registry" not in st.session_state:
     st.session_state.clinical_registry = pd.DataFrame(columns=[
         "Token", "Department", "Staff_ID", "PHQ9_Score", "GAD7_Score", "Triage_Tier", "Action_Milestone", "Day14_Date", "Day30_Date", "Status"
     ])
 
-# Memory configuration keys to anchor active navigation choices securely across page-reloads
-if "current_portal" not in st.session_state:
-    st.session_state.current_portal = "Staff"
+# CRITICAL WORKAROUND: Lock portal keys into long-term state memory to maintain page stability across clicks
+if "active_portal" not in st.session_state:
+    st.session_state.active_portal = "Staff"
 if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
-# Core System Logic Functions
+# Core Systems Mathematical & Sorting Functions
 def generate_anonymized_token(dept):
     unique_id = uuid.uuid4().hex[:6].upper()
     return f"T365-{dept[:3].upper()}-{unique_id}"
@@ -63,48 +59,48 @@ def compute_triage_tier(phq9, gad7, self_harm):
     else:
         return "GREEN TIER", "🟢 GREEN TIER: OPTIMAL WORKFORCE RESILIENCE", "Preventive care loop activated. Staff member granted immediate on-demand access to the 14-day digital decompression micro-learning files."
 
-# ==========================================
-# 2. BRANDING SIDEBAR WITH LOGOS
-# ==========================================
+# ====================================================================
+# 2. BRANDING SIDEBAR WIDGETS
+# ====================================================================
 with st.sidebar:
-    # Official Tumaini 365 Logo rendering directly from your uploaded master graphic
+    # Anchor point for your Tumaini 365 Logo
     st.image("https://githubusercontent.com", use_container_width=True, caption="Tumaini 365 - Your Hope Everyday")
     st.write("---")
     
-    # Partner Brand Verification Logo
-    st.caption("Strategic Wellness Partner:")
-    st.image("https://icons8.com", width=40)
-    st.markdown("**Viva 360 Insurance Brokers**")
+    st.caption("Strategic Partner Platform:")
+    st.markdown("🏢 **Viva 360 Insurance Brokers**")
     st.write("---")
-    
-    st.info("💡 **Dashboard Navigation Instructions:** Use the primary top buttons in the workspace to switch views instantly. Your session state tracking is active.")
+    st.info("💡 **Corporate Navigation Guide:** Tap any top module button in the workspace panel to seamlessly navigate across live database portals.")
 
-# ==========================================
-# 3. INTERACTIVE TOP INTERFACE PORTALS
-# ==========================================
-st.markdown("### 🏢 Active Operational Workspace Modules")
+# ====================================================================
+# 3. INTERACTIVE MODULE WORKSPACE BUTTONS (ANCHORED CALLBACKS)
+# ====================================================================
+st.markdown("### 🏢 Select Workspace Interface Portal")
 col_p1, col_p2, col_p3 = st.columns(3)
 
 with col_p1:
-    if st.button("👥 1. Employee Secure Portal", use_container_width=True, type="primary" if st.session_state.current_portal == "Staff" else "secondary"):
-        st.session_state.current_portal = "Staff"
+    # Locking click state values directly to active registry keys before forcing reruns
+    if st.button("👥 1. Employee Secure Portal", use_container_width=True, type="primary" if st.session_state.active_portal == "Staff" else "secondary"):
+        st.session_state.active_portal = "Staff"
         st.session_state.staff_step = 1
         st.rerun()
+
 with col_p2:
-    if st.button("🔒 2. Ezekiel's Clinical Panel", use_container_width=True, type="primary" if st.session_state.current_portal == "Ezekiel" else "secondary"):
-        st.session_state.current_portal = "Ezekiel"
+    if st.button("🔒 2. Ezekiel's Clinical Panel", use_container_width=True, type="primary" if st.session_state.active_portal == "Ezekiel" else "secondary"):
+        st.session_state.active_portal = "Ezekiel"
         st.rerun()
+
 with col_p3:
-    if st.button("📊 3. HR Executive Analytics", use_container_width=True, type="primary" if st.session_state.current_portal == "HR" else "secondary"):
-        st.session_state.current_portal = "HR"
+    if st.button("📊 3. HR Executive Analytics", use_container_width=True, type="primary" if st.session_state.active_portal == "HR" else "secondary"):
+        st.session_state.active_portal = "HR"
         st.rerun()
 
 st.write("---")
 
-# ==========================================
-# INTERFACE 1: EMPLOYEE PORTAL
-# ==========================================
-if st.session_state.current_portal == "Staff":
+# ====================================================================
+# INTERFACE GATEWAY 1: EMPLOYEE SECURE PORTAL
+# ====================================================================
+if st.session_state.active_portal == "Staff":
     st.markdown("<div class='panel-frame'>", unsafe_allow_html=True)
     st.title("🌱 Tumaini Three Sixty Five Limited")
     st.subheader("Employee Secure Well-being Assessment Portal")
@@ -189,4 +185,3 @@ if st.session_state.current_portal == "Staff":
         
         st.write("### Your Personalized Support Action Plan")
         if st.session_state.last_tier == "GREEN TIER":
-            st.success(st.session_state.last_box)
