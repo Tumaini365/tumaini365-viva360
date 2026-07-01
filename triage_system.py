@@ -154,4 +154,4 @@ elif app_mode == "2. Ezekiel's Clinical Panel":
                 st.error(f"**CRITICAL ALERT:** Token `{row['Token']}` from `{row['Department']}` has matched Red Tier parameters. Required: Call back to encrypted verification matching user ID: `{row['Staff_ID']}`.")
         else:
             st.success("Zero critical emergency case overloads pending on your workspace matrix.")
-    elif pin:
+elif pin:
