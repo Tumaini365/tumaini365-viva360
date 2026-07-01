@@ -3,20 +3,52 @@ import datetime
 import uuid
 import pandas as pd
 
-# 1. LIVE APP CONFIGURATION & STYLING
-st.set_page_config(page_title="Tumaini 365 Total Wellness Ecosystem", page_icon="🌱", layout="wide")
+# ==========================================
+# 1. LIVE APP CONFIGURATION & STYLE FRAMING
+# ==========================================
+st.set_page_config(
+    page_title="Tumaini 365 Total Wellness Ecosystem", 
+    page_icon="🌱", 
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
-# Persistent local session database matrix to store clinical screening inputs safely
+# Professional CSS UI framing to style dashboard panels and input grids
+st.markdown("""
+<style>
+    .metric-card {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        border-left: 5px solid #7b2cbf;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+        margin-bottom: 15px;
+    }
+    .panel-frame {
+        border: 1px solid #e0e0e0;
+        padding: 25px;
+        border-radius: 12px;
+        background-color: #ffffff;
+        box-shadow: 3px 3px 12px rgba(0,0,0,0.02);
+    }
+    .stButton>button {
+        border-radius: 6px;
+        font-weight: 6px;
+    }
+</style>
+""", unsafe_allow_index=True)
+
+# Persistent data registry matrix to safely track runtime screening inputs
 if "clinical_registry" not in st.session_state:
     st.session_state.clinical_registry = pd.DataFrame(columns=[
         "Token", "Department", "Staff_ID", "PHQ9_Score", "GAD7_Score", "Triage_Tier", "Action_Milestone", "Day14_Date", "Day30_Date", "Status"
     ])
 
-# Initialize step navigation tracking variables
-if "portal_page" not in st.session_state:
-    st.session_state.portal_page = "Staff"  # Default entry portal
+# FIXED: Memory configuration keys to anchor active navigation choices securely across page-reloads
+if "current_portal" not in st.session_state:
+    st.session_state.current_portal = "Staff"
 if "staff_step" not in st.session_state:
-    st.session_state.staff_step = 1  # Step tracker inside the staff portal
+    st.session_state.staff_step = 1
 
 # Core System Logic Functions
 def generate_anonymized_token(dept):
@@ -31,51 +63,70 @@ def compute_triage_tier(phq9, gad7, self_harm):
     else:
         return "GREEN TIER", "🟢 GREEN TIER: OPTIMAL WORKFORCE RESILIENCE", "Preventive care loop activated. Staff member granted immediate on-demand access to the 14-day digital decompression micro-learning files."
 
-# ====================================================================
-# TOP NAVIGATION BUTTONS (PORTAL CONTROLS)
-# ====================================================================
-st.markdown("### 🏢 Select Workspace Interface Portal")
+# ==========================================
+# 2. BRANDING SIDEBAR WITH LOGOS
+# ==========================================
+with st.sidebar:
+    # Official Tumaini 365 Logo rendering directly from your uploaded master graphic
+    st.image("https://githubusercontent.com", use_container_width=True, caption="Tumaini 365 - Your Hope Everyday")
+    st.write("---")
+    
+    # Partner Brand Verification Logo
+    st.caption("Strategic Wellness Partner:")
+    st.image("https://icons8.com", width=40)
+    st.markdown("**Viva 360 Insurance Brokers**")
+    st.write("---")
+    
+    st.info("💡 **Dashboard Navigation Instructions:** Use the primary top buttons in the workspace to switch views instantly. Your session state tracking is active.")
+
+# ==========================================
+# 3. INTERACTIVE TOP INTERFACE PORTALS
+# ==========================================
+st.markdown("### 🏢 Active Operational Workspace Modules")
 col_p1, col_p2, col_p3 = st.columns(3)
 
 with col_p1:
-    if st.button("👥 1. Employee Secure Portal", use_container_width=True):
-        st.session_state.portal_page = "Staff"
-        st.session_state.staff_step = 1  # Reset to page 1 of assessment
+    # FIXED: Layout triggers write choice parameters directly to memory, guaranteeing active button state switches
+    if st.button("👥 1. Employee Secure Portal", use_container_width=True, type="primary" if st.session_state.current_portal == "Staff" else "secondary"):
+        st.session_state.current_portal = "Staff"
+        st.session_state.staff_step = 1
+        st.rerun()
 with col_p2:
-    if st.button("🔒 2. Ezekiel's Clinical Panel", use_container_width=True):
-        st.session_state.portal_page = "Ezekiel"
+    if st.button("🔒 2. Ezekiel's Clinical Panel", use_container_width=True, type="primary" if st.session_state.current_portal == "Ezekiel" else "secondary"):
+        st.session_state.current_portal = "Ezekiel"
+        st.rerun()
 with col_p3:
-    if st.button("📊 3. HR Executive Analytics", use_container_width=True):
-        st.session_state.portal_page = "HR"
+    if st.button("📊 3. HR Executive Analytics", use_container_width=True, type="primary" if st.session_state.current_portal == "HR" else "secondary"):
+        st.session_state.current_portal = "HR"
+        st.rerun()
 
 st.write("---")
 
-# ====================================================================
-# INTERFACE 1: EMPLOYEE SECURE PORTAL (WITH SEQUENTIAL NEXT NAVIGATION)
-# ====================================================================
-if st.session_state.portal_page == "Staff":
+# ==========================================
+# INTERFACE 1: EMPLOYEE PORTAL
+# ==========================================
+if st.session_state.current_portal == "Staff":
+    st.markdown("<div class='panel-frame'>", unsafe_allow_html=True)
     st.title("🌱 Tumaini Three Sixty Five Limited")
-    st.subheader("Viva 365 Insurance Brokers: Employee Secure Well-being Portal")
+    st.subheader("Employee Secure Well-being Assessment Portal")
     st.write("---")
     
-    # STEP 1: COMPLIANCE & IDENTITY VERIFICATION
     if st.session_state.staff_step == 1:
         st.markdown("### 🔒 Data Protection & Confidentiality Declaration")
-        st.write("In strict compliance with the Data Protection Act of Kenya, your screening inputs are treated as sensitive personal data. Your specific clinical scores are entirely hidden from Viva 365 HR and executive management. This system utilizes advanced token pseudonymization to guarantee absolute anonymity.")
+        st.write("In strict compliance with the Data Protection Act of Kenya, your screening inputs are treated as sensitive personal data. Your specific clinical scores are entirely hidden from Viva 360 HR and executive management. This system utilizes advanced token pseudonymization to guarantee absolute anonymity.")
         
         st.write("#### Step 1: Corporate Validation")
         col_a, col_b = st.columns(2)
         with col_a:
             dept_input = st.selectbox("Your Department Grouping:", ["Direct Sales Force", "Underwriting & Risk", "Claims Adjustment Cadre", "Administration & HR"], key="staff_dept")
         with col_b:
-            id_input = st.text_input("Enter Active Viva 365 Staff ID:", placeholder="e.g., V365-104", key="staff_id_num")
+            id_input = st.text_input("Enter Active Viva 360 Staff ID:", placeholder="e.g., V360-104", key="staff_id_num")
             
         consent_input = st.checkbox("I consent to this screening under the Data Protection Act parameters to access my wellness roadmap.", key="staff_consent")
         
-        # Next navigation logic
         if st.button("➡️ PROCEED TO ASSESSMENT (NEXT STEP)"):
             if not id_input:
-                st.error("Validation Error: Please input a valid Active Viva 365 Staff ID to lock the secure pipeline.")
+                st.error("Validation Error: Please input a valid Active Viva 360 Staff ID to lock the secure pipeline.")
             elif not consent_input:
                 st.error("Compliance Error: You must accept the Data Protection Consent checkbox to move forward.")
             else:
@@ -84,14 +135,11 @@ if st.session_state.portal_page == "Staff":
                 st.session_state.staff_step = 2
                 st.rerun()
 
-    # STEP 2: PSYCHOMETRIC MATRIX DISPATCH
     elif st.session_state.staff_step == 2:
-        st.write(f"**Logged in as:** `{st.session_state.temp_id}` | **Department Grouping:** {st.session_state.temp_dept}")
+        st.write(f"**Logged in as:** `{st.session_state.temp_id}` | **Department:** {st.session_state.temp_dept}")
         st.write("#### Step 2: The Core Screening Matrix (DSM-5-TR Psychometric Tracker)")
-        st.markdown("**Over the last 2 weeks, how often have you been bothered by any of the following problems?**")
         st.caption("Scale: 0 = Not at all | 1 = Several days | 2 = More than half the days | 3 = Nearly every day")
         
-        # Interactive Radio Clusters
         q1 = st.radio("1. Little interest or pleasure in doing things at work or home:", (0, 1, 2, 3), horizontal=True)
         q2 = st.radio("2. Feeling down, depressed, flat, or hopeless:", (0, 1, 2, 3), horizontal=True)
         q3 = st.radio("3. Feeling tired, sluggish, or having chronically low energy volumes:", (0, 1, 2, 3), horizontal=True)
@@ -127,31 +175,18 @@ if st.session_state.portal_page == "Staff":
                 }
                 st.session_state.clinical_registry = pd.concat([st.session_state.clinical_registry, pd.DataFrame([new_entry])], ignore_index=True)
                 
-                # Cache results for output step display
                 st.session_state.last_token = token
                 st.session_state.last_tier = tier
                 st.session_state.last_box = box_text
-                st.session_state.last_milestone = milestone
                 st.session_state.last_d14 = d14.strftime('%B %d, %Y')
                 st.session_state.last_d30 = d30.strftime('%B %d, %Y')
                 
                 st.session_state.staff_step = 3
                 st.rerun()
 
-    # STEP 3: AUTOMATED OUTCOME DISPLAY
     elif st.session_state.staff_step == 3:
         st.success("🎉 Confidential Screening Completed Successfully.")
-        st.info("Your Non-Identifiable Security Token: " + str(st.session_state.last_token) + " (Write this down to track your progress)")
+        st.info("Your Non-Identifiable Security Token: " + str(st.session_state.last_token))
         
-        st.write("### Your Personalized Automated Support Action Plan")
+        st.write("### Your Personalized Support Action Plan")
         if st.session_state.last_tier == "GREEN TIER":
-            st.success(st.session_state.last_box)
-            st.write("* **Your Action Roadmap:** Your baseline psychological resilience is optimal. Your data token has unlocked the **14-Day Digital Decompression Toolkit** containing deep breathing audio cues, sleep hygiene parameters, and structural time-blocking calendar patterns.")
-            st.info("📅 **Follow-up Check:** An automated verification link will be pushed to your portal on " + str(st.session_state.last_d14) + " to ensure your boundaries are holding up.")
-        elif st.session_state.last_tier == "YELLOW TIER":
-            st.warning(st.session_state.last_box)
-            st.write("* **Your Action Roadmap:** Your profile highlights functional burnout and quota fatigue. To protect your productivity, your token has bypassed standard one-off training and matched you directly to this month's **Voluntary Virtual Wellness Booster Pod**.")
-            st.info("📅 **Continuous Follow-up:** Your pod will run accountability metrics on " + str(st.session_state.last_d30) + " to track your coping structures.")
-        else:
-            st.error(st.session_state.last_box)
-            st.write("* **Emergency Override Action Plan:** Your screening flags severe clinical or situational crisis conditions. An immediate secure payload alert has been logged on Lead Psychologist Ezekiel Kiago's private console.")
