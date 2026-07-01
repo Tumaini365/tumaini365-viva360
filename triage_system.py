@@ -13,13 +13,14 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# FIXED BOARDROOM PRODUCTION REPOSITORY ARRAYS
-# Pre-loaded with operational metrics so your sheets are instantly full when you click them
+# FIXED PRE-POPULATED REPOSITORY MATRICES
+# All fields explicitly pre-bound with actual communication metrics to guarantee immediate loading
 if "clinical_registry" not in st.session_state:
     st.session_state.clinical_registry = pd.DataFrame([
-        {"Token": "T365-DIR-E49A2B", "Department": "Direct Sales Force", "Staff_ID": "V360-401", "Mobile_Number": "+254711222333", "Email_Address": "sales1@viva360.co.ke", "Triage_Tier": "YELLOW TIER", "Day14_Date": "2026-07-15", "Day30_Date": "2026-07-31", "Status": "Active Follow-up"},
-        {"Token": "T365-UND-B81C9F", "Department": "Underwriting & Risk", "Staff_ID": "V360-112", "Mobile_Number": "+254722333444", "Email_Address": "risk2@viva360.co.ke", "Triage_Tier": "GREEN TIER", "Day14_Date": "2026-07-15", "Day30_Date": "2026-07-31", "Status": "Optimal"},
-        {"Token": "T365-CLA-F56D1A", "Department": "Claims Adjustment Cadre", "Staff_ID": "V360-205", "Mobile_Number": "+254733444555", "Email_Address": "claims5@viva360.co.ke", "Triage_Tier": "RED TIER", "Day14_Date": "2026-07-15", "Day30_Date": "2026-07-31", "Status": "Clinical Intercept Pending"}
+        {"Token": "T365-DIR-E49A2B", "Department": "Direct Sales Force", "Staff_ID": "V360-401", "Mobile_Number": "+254711222333", "Email_Address": "sales1@viva360.co.ke", "Triage_Tier": "YELLOW TIER", "Status": "Active Follow-up"},
+        {"Token": "T365-UND-B81C9F", "Department": "Underwriting & Risk", "Staff_ID": "V360-112", "Mobile_Number": "+254722333444", "Email_Address": "risk2@viva360.co.ke", "Triage_Tier": "GREEN TIER", "Status": "Optimal Resilience"},
+        {"Token": "T365-CLA-F56D1A", "Department": "Claims Adjustment Cadre", "Staff_ID": "V360-205", "Mobile_Number": "+254733444555", "Email_Address": "claims5@viva360.co.ke", "Triage_Tier": "RED TIER", "Status": "Clinical Intercept Pending"},
+        {"Token": "T365-CLA-200B", "Department": "Claims Adjustment Cadre", "Staff_ID": "V360-101", "Mobile_Number": "+254755666777", "Email_Address": "admin@viva360.co.ke", "Triage_Tier": "RED TIER", "Status": "Clinical Intercept Pending"}
     ])
 
 if "staff_step" not in st.session_state:
@@ -38,8 +39,8 @@ st.sidebar.write("---")
 
 st.sidebar.subheader("🚪 System Portal Navigation")
 selected_portal = st.sidebar.selectbox(
-    "Choose Interface to Open:",
-    ["1. Employee Secure Portal", "2. Ezekiel's Clinical Panel", "3. HR Executive Analytics"]
+        "Choose Interface to Open:",
+        ["1. Employee Secure Portal", "2. Ezekiel's Clinical Panel", "3. HR Executive Analytics"]
 )
 st.sidebar.write("---")
 
@@ -48,7 +49,7 @@ if selected_portal == "2. Ezekiel's Clinical Panel":
     st.sidebar.subheader("🔒 Administrator Login")
     pin_input = st.sidebar.text_input("Enter Access PIN:", type="password", key="ez_sidebar_pin")
 
-st.sidebar.info("💡 **Boardroom Note:** Pre-loaded baseline datasets are active. Portal views preserve and display contact fields perfectly.")
+st.sidebar.info("💡 **Boardroom Note:** Pre-loaded baseline datasets are active. Portal views preserve and display data perfectly.")
 
 # ==========================================
 # PORTAL INTERFACE GATEWAY ROUTING
@@ -65,11 +66,8 @@ if selected_portal == "1. Employee Secure Portal":
         st.write("#### Step 1: Corporate Validation & Contact Registration")
         dept_input = st.selectbox("Your Department Grouping:", ["Direct Sales Force", "Underwriting & Risk", "Claims Adjustment Cadre", "Administration & HR"], key="staff_dept")
         id_input = st.text_input("Enter Active Viva 360 Staff ID:", placeholder="e.g., V360-104", key="staff_id_num")
-        
-        # NEW CRITICAL CONTACT INPUT FIELDS
         phone_input = st.text_input("Enter Your Mobile Phone Number (For Secure Emergency Intercepts):", placeholder="e.g., +254720545788", key="staff_phone")
         email_input = st.text_input("Enter Your Corporate Email Address:", placeholder="e.g., user@viva360.co.ke", key="staff_email")
-        
         consent_input = st.checkbox("I consent to this screening under the Data Protection Act parameters to access my wellness roadmap.", key="staff_consent")
         
         if st.button("➡️ PROCEED TO ASSESSMENT (NEXT STEP)"):
@@ -81,13 +79,11 @@ if selected_portal == "1. Employee Secure Portal":
                 st.session_state.staff_step = 2
                 st.rerun()
             else:
-                st.error("Validation Error: Please ensure Staff ID, Phone Number, and Email fields are fully completed, and the Consent box is checked.")
+                st.error("Validation Error: Please check required inputs and mark the consent box.")
 
     elif st.session_state.staff_step == 2:
         st.write("Logged in as: " + str(st.session_state.temp_id))
         st.write("#### Step 2: The Core Screening Matrix (DSM-5-TR Psychometric Tracker)")
-        st.caption("Scale: 0 = Not at all | 1 = Several days | 2 = More than half the days | 3 = Nearly every day")
-        
         q1 = st.radio("1. Little interest or pleasure in doing things at work or home:", (0, 1, 2, 3), horizontal=True)
         q2 = st.radio("2. Feeling down, depressed, flat, or hopeless:", (0, 1, 2, 3), horizontal=True)
         q3 = st.radio("3. Feeling tired, sluggish, or having chronically low energy volumes:", (0, 1, 2, 3), horizontal=True)
@@ -106,9 +102,9 @@ if selected_portal == "1. Employee Secure Portal":
             calculated_tier = "RED TIER" if (score_total >= 13 or q9 >= 1) else "YELLOW TIER" if score_total >= 6 else "GREEN TIER"
             
             new_entry = {
-                "Token": token, "Department": st.session_state.temp_dept, "Staff_ID": st.session_state.temp_id, 
+                "Token": token, "Department": st.session_state.temp_dept, "Staff_ID": st.session_state.staff_id_num, 
                 "Mobile_Number": st.session_state.temp_phone, "Email_Address": st.session_state.temp_email, 
-                "Triage_Tier": calculated_tier, "Day14_Date": "2026-07-15", "Day30_Date": "2026-07-31", "Status": "Active Follow-up"
+                "Triage_Tier": calculated_tier, "Status": "Active Follow-up"
             }
             st.session_state.clinical_registry = pd.concat([st.session_state.clinical_registry, pd.DataFrame([new_entry])], ignore_index=True)
             st.session_state.last_token = token
@@ -120,19 +116,13 @@ if selected_portal == "1. Employee Secure Portal":
         st.success("🎉 Confidential Screening Completed Successfully.")
         st.info("Your Non-Identifiable Security Token: " + str(st.session_state.last_token))
         st.write("### Your Personalized Support Action Plan")
-        
         if st.session_state.last_tier == "RED TIER":
             st.error("🚨 RED TIER ESCALATION: ACUTE CRISIS INTERCEPT")
-            st.write("Emergency Care Activated: Secure emergency notifications have been routed to Ezekiel Kiago's console. Click the button below for immediate 24/7 hotline communication.")
-            # Native direct WhatsApp routing link tied to your hotline number parameters
             st.markdown("[📲 OPEN SECURE WHATSAPP CRISIS HOTLINE TO EZEKIEL](https://wa.me)")
         elif st.session_state.last_tier == "YELLOW TIER":
             st.warning("🟡 YELLOW TIER ALERT: FUNCTIONAL BURNOUT RISK")
-            st.write("Your Action Roadmap: Your profile highlights functional quota fatigue. Your token matches you directly to this month's voluntary Virtual Wellness Booster Pod.")
         else:
             st.success("🟢 GREEN TIER: OPTIMAL WORKFORCE RESILIENCE")
-            st.write("Preventive care loop activated. Staff member granted immediate on-demand access to the 14-day digital decompression files.")
-            
         if st.button("🔄 RESTART FRESH ASSESSMENT"):
             st.session_state.staff_step = 1
             st.rerun()
@@ -147,12 +137,23 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
         st.success("✅ Access Verified. Encrypted database channel active.")
         st.write("### 🗂️ Live Patient Triage & Active Contact Intercept Registry")
         
-        # FIXED FLAT PIPELINE: Displays full contact details row-by-row with dynamic contact buttons
+        # FIXED RENDER PIPELINE: Explicitly extracts tracking data rows cleanly onto the layout
         for idx, row in st.session_state.clinical_registry.iterrows():
-            tier_color = "🔴" if row['Triage_Tier'] == "RED TIER" else "🟡" if row['Triage_Tier'] == "YELLOW TIER" else "🟢"
+            tier_badge = "🔴 RED TIER CRISIS" if row['Triage_Tier'] == "RED TIER" else "🟡 YELLOW RISK" if row['Triage_Tier'] == "YELLOW TIER" else "🟢 GREEN RESILIENCE"
             
-            # Formats clean markdown visual status cards
-            st.markdown(f"### {tier_color} Token: **{row['Token']}** | Dept: {row['Department']}")
-            col1, col2, col3 = st.columns(3)
-            with col1:
-                st.write(f"🆔 **Staff ID:** `{row['Staff_ID']}`")
+            st.markdown(f"#### **{tier_badge}** | Anonymized Token: `{row['Token']}`")
+            st.write(f"🏢 **Cadre Department:** {row['Department']} | 🆔 **Employee Staff ID:** `{row['Staff_ID']}`")
+            st.write(f"📞 **Telephone Mobile Number:** `{row['Mobile_Number']}` | ✉️ **Corporate Email:** `{row['Email_Address']}`")
+            
+            # CRITICAL ATTACHED INTERCEPT BUTTON ACTIONS
+            if row['Triage_Tier'] == "RED TIER":
+                crisis_text = f"Hello, this is Ezekiel Kiago from Tumaini 365. I am reaching out regarding your secure wellness alert flagged under Token {row['Token']}. Let us connect immediately."
+                encoded_msg = crisis_text.replace(" ", "%20")
+                # Direct hotline generation macro linked to your exact WhatsApp number line
+                st.markdown(f"[🚨 LAUNCH WHATSAPP CARE INTERCEPT ON +254720545788](https://wa.me?text={encoded_msg})")
+            else:
+                st.caption("✅ Tracking standard continuous accountability metrics.")
+            st.write("---")
+
+else:
+    st.title("📊 Viva 360 Insurance Brokers: Executive Analytics Dashboard")
