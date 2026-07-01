@@ -13,7 +13,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# PRE-POPULATED BASELINE REPOSITORY REGISTRY MATRIX
+# FIXED PRE-POPULATED MATRICES TO SURVIVE ALL REFRESHEs
 if "clinical_registry" not in st.session_state:
     st.session_state.clinical_registry = pd.DataFrame([
         {"Token": "T365-DIR-E49A2B", "Department": "Direct Sales Force", "Staff_ID": "V360-401", "Mobile_Number": "+254711222333", "Email_Address": "sales1@viva360.co.ke", "Triage_Tier": "YELLOW TIER", "Status": "Active Follow-up"},
@@ -26,7 +26,7 @@ if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
 # ==========================================
-# 2. SIDEBAR BRANDING & ROUTING NAVIGATION
+# 2. SIDEBAR NAVIGATION CONTROLS
 # ==========================================
 st.sidebar.markdown("## 🌱 TUMAINI 365")
 st.sidebar.markdown("### `TOTAL WELLNESS ECOSYSTEM`")
@@ -37,7 +37,6 @@ st.sidebar.markdown("#### **Viva 360 Insurance Brokers**")
 st.sidebar.write("---")
 
 st.sidebar.subheader("🚪 System Portal Navigation")
-# FIXED PIPELINE: Using explicit direct string matching for unblockable page navigation parameters
 selected_portal = st.sidebar.selectbox(
     "Choose Interface to Open:",
     ["1. Employee Secure Portal", "2. Ezekiel's Clinical Panel", "3. HR Executive Analytics"]
@@ -79,7 +78,7 @@ if selected_portal == "1. Employee Secure Portal":
                 st.session_state.staff_step = 2
                 st.rerun()
             else:
-                st.error("Validation Error: Please check required inputs and mark the data protection consent box.")
+                st.error("Validation Error: Please fill in all fields and check the data protection consent box.")
 
     elif st.session_state.staff_step == 2:
         st.write("Logged in as: " + str(st.session_state.temp_id))
@@ -150,13 +149,16 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
     st.write("---")
     
     if pin_input != "365":
-        st.warning("⚠️ Access Restricted: Please enter your master access key code in the sidebar block on the left to unlock the active registry.")
+        st.warning("Awaiting proper credential parameters. Access blocked under Data Protection Act framework.")
     else:
-        st.success("✅ Access Verified. Encrypted database channel active.")
+        st.success("Access Verified. Secure encrypted database connection active.")
         st.write("### 🗂️ Live Patient Triage & Active Contact Intercept Registry")
         
-        # FIXED: Renders full database registry containing all contact tokens, phone numbers, and emails in a tabular grid format
+        # Tabular spreadsheet grid layout for the clinical panel
         st.dataframe(st.session_state.clinical_registry, use_container_width=True)
         st.write("---")
         
-        # WhatsApp Care Intercept Hotline Action Launchers
+        st.write("### 🚨 Urgent WhatsApp Intercept Actions Matrix")
+        red_cases = st.session_state.clinical_registry[st.session_state.clinical_registry["Triage_Tier"] == "RED TIER"]
+        if not red_cases.empty:
+            for idx, row in red_cases.iterrows():
