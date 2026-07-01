@@ -67,17 +67,17 @@ if app_mode == "1. Employee Secure Portal":
         st.caption("Scale: 0 = Not at all | 1 = Several days | 2 = More than half the days | 3 = Nearly every day")
         
         # PHQ-9 Core Trackers
-        q1 = st.radio("1. Little interest or pleasure in doing things at work or home:", [0, 1, 2, 3], horizontal=True)
-        q2 = st.radio("2. Feeling down, depressed, flat, or hopeless:", [0, 1, 2, 3], horizontal=True)
-        q3 = st.radio("3. Feeling tired, sluggish, or having chronically low energy volumes:", [0, 1, 2, 3], horizontal=True)
+        q1 = st.radio("1. Little interest or pleasure in doing things at work or home:", (0, 1, 2, 3), horizontal=True)
+        q2 = st.radio("2. Feeling down, depressed, flat, or hopeless:", (0, 1, 2, 3), horizontal=True)
+        q3 = st.radio("3. Feeling tired, sluggish, or having chronically low energy volumes:", (0, 1, 2, 3), horizontal=True)
         
         # GAD-7 Core Trackers
-        q4 = st.radio("4. Feeling nervous, anxious, on edge, or overwhelmed by quotas:", [0, 1, 2, 3], horizontal=True)
-        q5 = st.radio("5. Trouble relaxing, muscle tension, or constant overthinking:", [0, 1, 2, 3], horizontal=True)
-        q6 = st.radio("6. Becoming easily annoyed, hyper-irritable with peers, or cross-functional friction:", [0, 1, 2, 3], horizontal=True)
+        q4 = st.radio("4. Feeling nervous, anxious, on edge, or overwhelmed by quotas:", (0, 1, 2, 3), horizontal=True)
+        q5 = st.radio("5. Trouble relaxing, muscle tension, or constant overthinking:", (0, 1, 2, 3), horizontal=True)
+        q6 = st.radio("6. Becoming easily annoyed, hyper-irritable with peers, or cross-functional friction:", (0, 1, 2, 3), horizontal=True)
         
         # PHQ-9 Question 9 Self-Harm Override Radar
-        q9 = st.radio("⚠️ 7. Thoughts that you would be better off dead, or of hurting yourself in some way:", [0, 1, 2, 3], horizontal=True)
+        q9 = st.radio("⚠️ 7. Thoughts that you would be better off dead, or of hurting yourself in some way:", (0, 1, 2, 3), horizontal=True)
         
         if st.button("🚀 SUBMIT ANONYMOUS WELLNESS SCREENING"):
             # Compute total clinical metrics
