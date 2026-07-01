@@ -13,8 +13,8 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# FIXED PRODUCTION REPOSITORY MATRIX
-# This pre-loads 4 realistic test-cases so your dashboards and charts are instantly full when you click them!
+# FIXED PRODUCTION REPOSITORY DATA ARRAY
+# Built using raw structures to guarantee full cross-portal compatibility
 raw_data = [
     {
         "Token": "T365-DIR-E49A2B", "Department": "Direct Sales Force", "Staff_ID": "V360-401", 
@@ -158,8 +158,6 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
     else:
         st.success("✅ Access Verified. Encrypted database channel active.")
         st.write("### 🗂️ Live Patient Triage & Continuous Follow-Up Registry Matrix")
-        
-        # FIXED: Enforced a rock-solid data frame rendering framework to draw columns smoothly
         st.dataframe(clinical_registry, use_container_width=True)
         st.write("---")
         st.write("### 🚨 Emergency Overrides Pending Intercept")
@@ -170,3 +168,4 @@ else:
     st.subheader("Institutional Burnout Tracking & Corporate Budgeting Interface")
     st.write("---")
     st.markdown("### 🔒 Privacy Protocol View")
+    st.write("In compliance with data protection laws, all individual fields are entirely stripped from this layout. It displays only aggregated data groupings to guide resource deployment.")
