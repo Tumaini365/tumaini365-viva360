@@ -37,7 +37,7 @@ def compute_triage_tier(phq9, gad7, self_harm):
         return "GREEN TIER", "🟢 GREEN TIER: OPTIMAL WORKFORCE RESILIENCE", "Preventive care loop activated. Staff member granted immediate on-demand access to the 14-day digital decompression micro-learning files."
 
 # ==========================================
-# 2. BRANDING SIDEBAR WITH LOGO SEARCH LINK
+# 2. BRANDING SIDEBAR WITH LOGO REPOSITORY LINK
 # ==========================================
 with st.sidebar:
     st.image("https://githubusercontent.com", use_container_width=True, caption="Tumaini 365 - Your Hope Everyday")
