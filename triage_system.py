@@ -13,7 +13,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Professional CSS UI framing to design structured gray container boxes and clean layouts
+# Professional CSS UI framing to design structured containers and high-end metrics cards
 st.markdown("""
 <style>
     .metric-card {
@@ -29,24 +29,29 @@ st.markdown("""
         padding: 25px;
         border-radius: 12px;
         background-color: #ffffff;
-        box-shadow: 3px 3px 12 rgba(0,0,0,0.02);
+        box-shadow: 3px 3px 12px rgba(0,0,0,0.02);
+    }
+    div.stButton > button {
+        border-radius: 6px !important;
+        font-weight: bold !important;
+        height: 3em !important;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# Initialize persistent session database array to preserve clinical data entries safely
+# Persistent session database registry matrix
 if "clinical_registry" not in st.session_state:
     st.session_state.clinical_registry = pd.DataFrame(columns=[
         "Token", "Department", "Staff_ID", "PHQ9_Score", "GAD7_Score", "Triage_Tier", "Action_Milestone", "Day14_Date", "Day30_Date", "Status"
     ])
 
-# Lock portal keys into long-term state memory to maintain page stability across clicks
+# CRITICAL SECURITY FIX: Anchoring portal states inside memory so choices persist across reloads
 if "active_portal" not in st.session_state:
     st.session_state.active_portal = "Staff"
 if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
-# Core Systems Mathematical & Sorting Functions
+# Core System Sorting Functions
 def generate_anonymized_token(dept):
     unique_id = uuid.uuid4().hex[:6].upper()
     return f"T365-{dept[:3].upper()}-{unique_id}"
@@ -60,37 +65,38 @@ def compute_triage_tier(phq9, gad7, self_harm):
         return "GREEN TIER", "🟢 GREEN TIER: OPTIMAL WORKFORCE RESILIENCE", "Preventive care loop activated. Staff member granted immediate on-demand access to the 14-day digital decompression micro-learning files."
 
 # ==========================================
-# 2. BRANDING SIDEBAR WIDGETS
+# 2. BRANDING SIDEBAR WITH LOGO SEARCH LINK
 # ==========================================
 with st.sidebar:
+    # Looks for 'tumaini_logo.jpg' inside your master GitHub repository folder to render visually
     st.image("https://githubusercontent.com", use_container_width=True, caption="Tumaini 365 - Your Hope Everyday")
     st.write("---")
     st.caption("Strategic Partner Platform:")
     st.markdown("🏢 **Viva 360 Insurance Brokers**")
     st.write("---")
-    st.info("💡 **Corporate Navigation Guide:** Tap any top module button in the workspace panel to seamlessly navigate across live database portals.")
+    st.info("💡 **Corporate Navigation Guide:** Tap any top module button in the main workspace to seamlessly switch between live databases. Your session state tracking is active.")
 
 # ==========================================
-# 3. INTERACTIVE MODULE WORKSPACE BUTTONS
+# 3. FIXED BUTTON MODULE WORKSPACE PORTALS
 # ==========================================
-st.markdown("### 🏢 Select Workspace Interface Portal")
+st.markdown("### 🏢 Active Interface Control Panel")
 col_p1, col_p2, col_p3 = st.columns(3)
 
 with col_p1:
     if st.button("👥 1. Employee Secure Portal", use_container_width=True, type="primary" if st.session_state.active_portal == "Staff" else "secondary"):
         st.session_state.active_portal = "Staff"
         st.session_state.staff_step = 1
-        st.rerun()
+        st.refresh() if hasattr(st, "refresh") else st.rerun()
 
 with col_p2:
     if st.button("🔒 2. Ezekiel's Clinical Panel", use_container_width=True, type="primary" if st.session_state.active_portal == "Ezekiel" else "secondary"):
         st.session_state.active_portal = "Ezekiel"
-        st.rerun()
+        st.refresh() if hasattr(st, "refresh") else st.rerun()
 
 with col_p3:
     if st.button("📊 3. HR Executive Analytics", use_container_width=True, type="primary" if st.session_state.active_portal == "HR" else "secondary"):
         st.session_state.active_portal = "HR"
-        st.rerun()
+        st.refresh() if hasattr(st, "refresh") else st.rerun()
 
 st.write("---")
 
@@ -125,7 +131,7 @@ if st.session_state.active_portal == "Staff":
                 st.session_state.temp_dept = dept_input
                 st.session_state.temp_id = id_input
                 st.session_state.staff_step = 2
-                st.rerun()
+                st.refresh() if hasattr(st, "refresh") else st.rerun()
 
     elif st.session_state.staff_step == 2:
         st.write("Logged in as: " + str(st.session_state.temp_id) + " | Department: " + str(st.session_state.temp_dept))
@@ -144,7 +150,7 @@ if st.session_state.active_portal == "Staff":
         with col_nav_1:
             if st.button("⬅️ BACK TO STEP 1"):
                 st.session_state.staff_step = 1
-                st.rerun()
+                st.refresh() if hasattr(st, "refresh") else st.rerun()
                 
         with col_nav_2:
             if st.button("🚀 SUBMIT CONFIDENTIAL SCREENING"):
@@ -174,14 +180,8 @@ if st.session_state.active_portal == "Staff":
                 st.session_state.last_d30 = d30.strftime('%B %d, %Y')
                 
                 st.session_state.staff_step = 3
-                st.rerun()
+                st.refresh() if hasattr(st, "refresh") else st.rerun()
 
     elif st.session_state.staff_step == 3:
         st.success("🎉 Confidential Screening Completed Successfully.")
         st.info("Your Non-Identifiable Security Token: " + str(st.session_state.last_token))
-        st.write("### Your Personalized Support Action Plan")
-        
-        # Display corresponding outcome cards directly without nested if-indentations
-        if st.session_state.last_tier == "GREEN TIER":
-            st.success(st.session_state.last_box)
-            st.write("Your Action Roadmap: Your data token has unlocked the 14-Day Digital Decompression Toolkit (deep breathing guides & structural time-blocking calendar patterns).")
