@@ -122,9 +122,11 @@ if selected_portal == "1. Employee Secure Portal":
             st.error("🚨 RED TIER ESCALATION: ACUTE CRISIS INTERCEPT")
             st.write("Emergency Care Activated: Secure alerts are logged on Ezekiel Kiago's console. Under our high-priority support framework, you are required to establish an immediate link with our clinical hotline.")
             
-            # FIXED EXTRA SECURITY: Enforced absolute HTML routing to fully isolate phone links
-            html_link = f'<div style="margin-top:20px;"><a href="https://whatsapp.com{st.session_state.last_token}" target="_blank" style="background-color:#25D366; color:white; padding:12px 24px; text-decoration:none; font-weight:bold; border-radius:8px; display:inline-block;">📲 CONNECT IMMEDIATELY TO WHATSAPP HOTLINE</a></div>'
-            st.markdown(html_link, unsafe_allow_html=True)
+            # FIXED: Using Streamlit's official built-in link button to guarantee unblockable page navigation parameters
+            st.link_button(
+                "📲 CONNECT IMMEDIATELY TO WHATSAPP HOTLINE",
+                f"https://wa.me{st.session_state.last_token}"
+            )
             
         elif st.session_state.last_tier == "YELLOW TIER":
             st.warning("🟡 YELLOW TIER ALERT: FUNCTIONAL BURNOUT RISK")
@@ -151,3 +153,5 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
             tier_badge = "🔴 RED TIER CRISIS" if row['Triage_Tier'] == "RED TIER" else "🟡 YELLOW RISK" if row['Triage_Tier'] == "YELLOW TIER" else "🟢 GREEN RESILIENCE"
             
             st.markdown(f"#### **{tier_badge}** | Anonymized Token: `{row['Token']}`")
+            st.write(f"🏢 **Cadre Department:** {row['Department']} | 🆔 **Employee Staff ID:** `{row['Staff_ID']}`")
+            st.write(f"📞 **Telephone Mobile Number:** `{row['Mobile_Number']}` | ✉️ **Corporate Email:** `{row['Email_Address']}`")
