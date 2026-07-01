@@ -26,44 +26,29 @@ if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
 # ==========================================
-# 2. SIDEBAR NAVIGATION WITH NATIVE LOGO VECTOR
+# 2. SIDEBAR NAVIGATION WITH PRO DESIGN
 # ==========================================
-with st.sidebar:
-    # UNBLOCKABLE EMBEDDED GRAPHIC: This draws your exact brand vectors using native browser rendering.
-    # Completely immune to internet file-loading restrictions or layout asset lags.
-    logo_svg = """
-    <div style="text-align: center; margin-bottom: 15px; padding: 10px; background-color: #fAF9FE; border-radius: 8px; border: 1px solid #E2D9F3;">
-        <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://w3.org">
-            <circle cx="50" cy="50" r="45" fill="#241B45" stroke="#7B2CBF" stroke-width="2"/>
-            <path d="M50 75V45" stroke="#90E0EF" stroke-width="5" stroke-linecap="round"/>
-            <path d="M50 55C62 55 72 45 72 32C72 20 55 20 50 45C45 20 28 20 28 32C28 45 38 55 50 55Z" fill="#7B2CBF"/>
-            <path d="M50 45C53 32 65 28 65 34C65 40 55 45 50 45Z" fill="#90E0EF" opacity="0.6"/>
-            <path d="M25 75H75" stroke="#90E0EF" stroke-width="3" stroke-linecap="round"/>
-        </svg>
-        <h2 style="color: #241B45; font-family: system-ui, sans-serif; margin-top: 8px; margin-bottom: 0px; font-weight: 800; font-size: 22px; letter-spacing: 0.5px;">TUMAINI 365</h2>
-        <p style="color: #7B2CBF; font-family: system-ui, sans-serif; font-size: 11px; margin-top: 2px; margin-bottom: 0px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">Your Hope Everyday</p>
-    </div>
-    """
-    st.markdown(logo_svg, unsafe_allow_html=True)
-    st.write("---")
-    
-    st.markdown("🏢 **Strategic Partner Platform:**")
-    st.markdown("#### **Viva 360 Insurance Brokers**")
-    st.write("---")
-    
-    st.subheader("🚪 System Portal Navigation")
-    selected_portal = st.selectbox(
-        "Choose Interface to Open:",
-        ["1. Employee Secure Portal", "2. Ezekiel's Clinical Panel", "3. HR Executive Analytics"]
-    )
-    st.write("---")
-    
-    pin_input = ""
-    if selected_portal == "2. Ezekiel's Clinical Panel":
-        st.subheader("🔒 Administrator Login")
-        pin_input = st.text_input("Enter Access PIN:", type="password", key="ez_sidebar_pin")
-        
-    st.info("💡 **Boardroom Note:** Baseline datasets are active. Portal views preserve and display data perfectly.")
+st.sidebar.markdown("## 🌱 TUMAINI 365")
+st.sidebar.markdown("### `TOTAL WELLNESS ECOSYSTEM`")
+st.sidebar.caption("✨ Your Hope Everyday")
+st.sidebar.write("---")
+st.sidebar.markdown("🤝 **Strategic Partner Platform:**")
+st.sidebar.markdown("#### **Viva 360 Insurance Brokers**")
+st.sidebar.write("---")
+
+st.sidebar.subheader("🚪 System Portal Navigation")
+selected_portal = st.sidebar.selectbox(
+    "Choose Interface to Open:",
+    ["1. Employee Secure Portal", "2. Ezekiel's Clinical Panel", "3. HR Executive Analytics"]
+)
+st.sidebar.write("---")
+
+pin_input = ""
+if selected_portal == "2. Ezekiel's Clinical Panel":
+    st.sidebar.subheader("🔒 Administrator Login")
+    pin_input = st.sidebar.text_input("Enter Access PIN:", type="password", key="ez_sidebar_pin")
+
+st.sidebar.info("💡 **Boardroom Note:** Baseline datasets are active. Portal views preserve and display data perfectly.")
 
 # ==========================================
 # PORTAL INTERFACE GATEWAY ROUTING
@@ -77,11 +62,9 @@ if selected_portal == "1. Employee Secure Portal":
         st.markdown("### 🔒 Data Protection & Confidentiality Declaration")
         st.write("In strict compliance with the Data Protection Act of Kenya, your screening inputs are treated as sensitive personal data. Your specific clinical scores are entirely hidden from Viva 360 HR and executive management. This system utilizes advanced token pseudonymization to guarantee absolute anonymity.")
         st.write("#### Step 1: Corporate Validation")
-        col_a, col_b = st.columns(2)
-        with col_a:
-            dept_input = st.selectbox("Your Department Grouping:", ["Direct Sales Force", "Underwriting & Risk", "Claims Adjustment Cadre", "Administration & HR"], key="staff_dept")
-        with col_b:
-            id_input = st.text_input("Enter Active Viva 360 Staff ID:", placeholder="e.g., V360-104", key="staff_id_num")
+        
+        dept_input = st.selectbox("Your Department Grouping:", ["Direct Sales Force", "Underwriting & Risk", "Claims Adjustment Cadre", "Administration & HR"], key="staff_dept")
+        id_input = st.text_input("Enter Active Viva 360 Staff ID:", placeholder="e.g., V360-104", key="staff_id_num")
         consent_input = st.checkbox("I consent to this screening under the Data Protection Act parameters to access my wellness roadmap.", key="staff_consent")
         
         if st.button("➡️ PROCEED TO ASSESSMENT (NEXT STEP)"):
@@ -96,6 +79,8 @@ if selected_portal == "1. Employee Secure Portal":
     elif st.session_state.staff_step == 2:
         st.write("Logged in as: " + str(st.session_state.temp_id) + " | Department: " + str(st.session_state.temp_dept))
         st.write("#### Step 2: The Core Screening Matrix (DSM-5-TR Psychometric Tracker)")
+        st.caption("Scale: 0 = Not at all | 1 = Several days | 2 = More than half the days | 3 = Nearly every day")
+        
         q1 = st.radio("1. Little interest or pleasure in doing things at work or home:", (0, 1, 2, 3), horizontal=True)
         q2 = st.radio("2. Feeling down, depressed, flat, or hopeless:", (0, 1, 2, 3), horizontal=True)
         q3 = st.radio("3. Feeling tired, sluggish, or having chronically low energy volumes:", (0, 1, 2, 3), horizontal=True)
@@ -103,20 +88,19 @@ if selected_portal == "1. Employee Secure Portal":
         q5 = st.radio("5. Trouble relaxing, muscle tension, or constant overthinking:", (0, 1, 2, 3), horizontal=True)
         q6 = st.radio("6. Becoming easily annoyed, hyper-irritable with peers, or cross-functional friction:", (0, 1, 2, 3), horizontal=True)
         q9 = st.radio("⚠️ 7. Thoughts that you would be better off dead, or of hurting yourself in some way:", (0, 1, 2, 3), horizontal=True)
-        col_nav_1, col_nav_2 = st.columns(2)
-        with col_nav_1:
-            if st.button("⬅️ BACK TO STEP 1"):
-                st.session_state.staff_step = 1
-                st.rerun()
-        with col_nav_2:
-            if st.button("🚀 SUBMIT CONFIDENTIAL SCREENING"):
-                st.session_state.last_token = "T365-MOCK-" + str(uuid.uuid4().hex[:4].upper())
-                st.session_state.last_tier = "YELLOW TIER"
-                st.session_state.last_box = "🟡 YELLOW TIER ALERT: FUNCTIONAL BURNOUT RISK"
-                st.session_state.last_d14 = "July 15, 2026"
-                st.session_state.last_d30 = "July 31, 2026"
-                st.session_state.staff_step = 3
-                st.rerun()
+        
+        if st.button("⬅️ BACK TO STEP 1"):
+            st.session_state.staff_step = 1
+            st.rerun()
+            
+        if st.button("🚀 SUBMIT CONFIDENTIAL SCREENING"):
+            st.session_state.last_token = "T365-MOCK-" + str(uuid.uuid4().hex[:4].upper())
+            st.session_state.last_tier = "YELLOW TIER"
+            st.session_state.last_box = "🟡 YELLOW TIER ALERT: FUNCTIONAL BURNOUT RISK"
+            st.session_state.last_d14 = "July 15, 2026"
+            st.session_state.last_d30 = "July 31, 2026"
+            st.session_state.staff_step = 3
+            st.rerun()
 
     elif st.session_state.staff_step == 3:
         st.success("🎉 Confidential Screening Completed Successfully.")
@@ -125,6 +109,7 @@ if selected_portal == "1. Employee Secure Portal":
         st.warning(st.session_state.last_box)
         st.write("Your Action Roadmap: Your profile highlights functional burnout. Your token matches you directly to this month's voluntary Virtual Wellness Booster Pod.")
         st.info("📅 Continuous Follow-up: Your booster pod will monitor accountability metrics on " + str(st.session_state.last_d30))
+        
         if st.button("🔄 RESTART FRESH ASSESSMENT"):
             st.session_state.staff_step = 1
             st.rerun()
@@ -151,9 +136,22 @@ else:
     st.write("In compliance with data protection laws, all individual fields are entirely stripped from this layout. It displays only aggregated data groupings to guide resource deployment.")
     st.write("---")
     
-    col_m1, col_m2, col_m3 = st.columns(3)
-    with col_m1:
-        st.metric("Total Active Staff Screened", "4 Personnel")
-    with col_m2:
-        st.metric("Green Tier (Resilience Ratio)", "25.0%")
-    with col_m3:
+    st.write("### 📈 Workforce Resilience Summary")
+    st.write("📊 **Total Active Staff Screened:** 4 Personnel")
+    st.write("🟢 **Green Tier (Resilience Ratio):** 25.0%")
+    st.write("🟡 **Yellow Tier (Burnout Density):** 50.0%")
+    st.write("---")
+    
+    st.write("### 📑 Departmental Burnout Distribution Metrics")
+    st.markdown("#### 🔥 **Direct Sales Force Grouping**")
+    st.write("- Green Resilience: 0 Staff | Yellow Burnout Risk: 2 Staff | Red Crisis Urgency: 0 Staff")
+    st.markdown("#### ⏳ **Underwriting & Risk Grouping**")
+    st.write("- Green Resilience: 1 Staff | Yellow Burnout Risk: 0 Staff | Red Crisis Urgency: 0 Staff")
+    st.markdown("#### 🚨 **Claims Adjustment Cadre**")
+    st.write("- Green Resilience: 0 Staff | Yellow Burnout Risk: 0 Staff | Red Crisis Urgency: 1 Staff")
+        
+    st.write("---")
+    st.error("🎯 **STRATEGIC BUDGET ALLOCATION RECOMMENDATION:** High burnout density values tracked inside your Direct Sales Force pipeline (Quota Fatigue). Tumaini 365 advises human resource scheduling of a specialized 'Preventive Financial Therapy Safari' workshop next month to protect premium acquisition targets before absenteeism spikes occur.")
+
+st.write("---")
+st.caption("🔒 Corporate Solution Platform powered by Tumaini 365 Limited Data Protection Architecture.")
