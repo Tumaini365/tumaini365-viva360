@@ -13,27 +13,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Professional CSS UI framing to design structured containers and high-end metrics cards
-st.markdown("""
-<style>
-    .metric-card {
-        background-color: #f8f9fa;
-        padding: 20px;
-        border-radius: 10px;
-        border-left: 5px solid #7b2cbf;
-        box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
-        margin-bottom: 15px;
-    }
-    .panel-frame {
-        border: 1px solid #e0e0e0;
-        padding: 25px;
-        border-radius: 12px;
-        background-color: #ffffff;
-        box-shadow: 3px 3px 12px rgba(0,0,0,0.02);
-    }
-</style>
-""", unsafe_allow_html=True)
-
 # Persistent session database registry matrix
 if "clinical_registry" not in st.session_state:
     st.session_state.clinical_registry = pd.DataFrame(columns=[
@@ -66,7 +45,7 @@ with st.sidebar:
     st.caption("Strategic Partner Platform:")
     st.markdown("🏢 **Viva 360 Insurance Brokers**")
     st.write("---")
-    st.info("💡 **Corporate Navigation Guide:** Click through the visual tabs right in the main window workspace to toggle seamlessly between your live dashboards.")
+    st.info("💡 **Corporate Navigation Guide:** Click through the tabs in the main workspace window to toggle seamlessly between your live portals.")
 
 # ==========================================
 # 3. LIVE TAB CONTROL INFRASTRUCTURE
@@ -84,7 +63,6 @@ tab_staff, tab_ezekiel, tab_hr = st.tabs([
 # TAB 1: EMPLOYEE SECURE PORTAL
 # ==========================================
 with tab_staff:
-    st.markdown("<div class='panel-frame'>", unsafe_allow_html=True)
     st.title("🌱 Tumaini Three Sixty Five Limited")
     st.subheader("Employee Secure Well-being Assessment Portal")
     st.write("---")
@@ -180,3 +158,19 @@ with tab_staff:
         elif st.session_state.last_tier == "RED TIER":
             st.error(st.session_state.last_box)
             st.write("Emergency Override Plan: Secure emergency alerts logged on Ezekiel Kiago's console. Click below for immediate clinical link routing.")
+            st.markdown("[📲 OPEN SECURE WHATSAPP CRISIS ESCALATION LINK TO EZEKIEL](https://wa.me)")
+            
+        if st.button("🔄 RESTART FRESH ASSESSMENT"):
+            st.session_state.staff_step = 1
+            st.rerun()
+
+# ==========================================
+# TAB 2: EZEKIEL'S PRIVATE CLINICAL WORKSPACE
+# ==========================================
+with tab_ezekiel:
+    st.title("🔒 Tumaini 365: Clinical Administration Workspace")
+    st.subheader("Lead Consultant Console: Ezekiel Kiago Wangunyu")
+    st.write("---")
+    
+    pin = st.text_input("Enter Clinical Security Access PIN:", type="password", key="ezekiel_pin_key")
+    if pin == "365":
