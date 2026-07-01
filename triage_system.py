@@ -36,10 +36,9 @@ st.sidebar.markdown("🤝 **Strategic Partner Platform:**")
 st.sidebar.markdown("#### **Viva 360 Insurance Brokers**")
 st.sidebar.write("---")
 
-st.sidebar.subheader("🚪 System Portal Navigation")
 selected_portal = st.sidebar.selectbox(
-        "Choose Interface to Open:",
-        ["1. Employee Secure Portal", "2. Ezekiel's Clinical Panel", "3. HR Executive Analytics"]
+    "Choose Interface to Open:",
+    ["1. Employee Secure Portal", "2. Ezekiel's Clinical Panel", "3. HR Executive Analytics"]
 )
 st.sidebar.write("---")
 
@@ -122,10 +121,11 @@ if selected_portal == "1. Employee Secure Portal":
             st.error("🚨 RED TIER ESCALATION: ACUTE CRISIS INTERCEPT")
             st.write("Emergency Care Activated: Secure alerts are logged on Ezekiel Kiago's console. Under our high-priority support framework, you are required to establish an immediate link with our clinical hotline.")
             
-            # FIXED: Using Streamlit's official built-in link button to guarantee unblockable page navigation parameters
+            staff_msg = f"Hello Ezekiel, my assessment flagged a Red Tier alert under Token {st.session_state.last_token}. Please open my care intake file."
+            encoded_staff_msg = staff_msg.replace(" ", "%20")
             st.link_button(
                 "📲 CONNECT IMMEDIATELY TO WHATSAPP HOTLINE",
-                f"https://wa.me{st.session_state.last_token}"
+                f"https://wa.me{encoded_staff_msg}"
             )
             
         elif st.session_state.last_tier == "YELLOW TIER":
@@ -155,3 +155,5 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
             st.markdown(f"#### **{tier_badge}** | Anonymized Token: `{row['Token']}`")
             st.write(f"🏢 **Cadre Department:** {row['Department']} | 🆔 **Employee Staff ID:** `{row['Staff_ID']}`")
             st.write(f"📞 **Telephone Mobile Number:** `{row['Mobile_Number']}` | ✉️ **Corporate Email:** `{row['Email_Address']}`")
+            
+            if row['Triage_Tier'] == "RED TIER":
