@@ -26,13 +26,16 @@ if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
 # ==========================================
-# 2. BRANDING SIDEBAR WITH LOGO & NAV
+# 2. SIDEBAR NAVIGATION WITH SECURE IMAGE LINKS
 # ==========================================
 with st.sidebar:
-    st.image("https://githubusercontent.com", use_container_width=True, caption="Tumaini 365 - Your Hope Everyday")
-    st.write("---")
-    st.caption("Strategic Partner Platform:")
-    st.markdown("🏢 **Viva 360 Insurance Brokers**")
+    # FIXED PIPELINE: Using high-availability cloud imagery links to ensure instant display on your browser
+    col_logo1, col_logo2 = st.columns(2)
+    with col_logo1:
+        st.image("https://icons8.com", use_container_width=True, caption="Tumaini 365")
+    with col_logo2:
+        st.image("https://icons8.com", use_container_width=True, caption="Viva 360")
+    
     st.write("---")
     st.subheader("🚪 System Portal Navigation")
     selected_portal = st.selectbox(
@@ -40,10 +43,13 @@ with st.sidebar:
         ["1. Employee Secure Portal", "2. Ezekiel's Clinical Panel", "3. HR Executive Analytics"]
     )
     st.write("---")
+    
     pin_input = ""
     if selected_portal == "2. Ezekiel's Clinical Panel":
         st.subheader("🔒 Administrator Login")
         pin_input = st.text_input("Enter Access PIN:", type="password", key="ez_sidebar_pin")
+        
+    st.info("💡 **Boardroom Demo Note:** Pre-loaded baseline datasets are now permanently active. Changing portal views above will preserve and display data perfectly.")
 
 # ==========================================
 # PORTAL INTERFACE GATEWAY ROUTING
@@ -131,15 +137,16 @@ else:
     st.write("In compliance with data protection laws, all individual fields are entirely stripped from this layout. It displays only aggregated data groupings to guide resource deployment.")
     st.write("---")
     
-    # STABILIZED SUMMARY ELEMENTS
-    st.info("📊 **Total Active Staff Screened:** 4 Personnel")
-    st.success("🟢 **Green Tier (Resilience Ratio):** 25.0%")
-    st.warning("🟡 **Yellow Tier (Burnout Density Threshold):** 50.0%")
+    col_m1, col_m2, col_m3 = st.columns(3)
+    with col_m1:
+        st.metric("Total Active Staff Screened", "4 Personnel")
+    with col_m2:
+        st.metric("Green Tier (Resilience Ratio)", "25.0%")
+    with col_m3:
+        st.metric("Yellow Tier (Burnout Density)", "50.0%")
     st.write("---")
     
     st.write("### 📑 Departmental Burnout Distribution Metrics")
-    
-    # FIXED METRICS: Extracted the chart structure into standard columns to guarantee immediate cloud rendering
     col_chart_1, col_chart_2, col_chart_3 = st.columns(3)
     with col_chart_1:
         st.write("🔥 **Direct Sales Force Grouping**")
@@ -158,6 +165,3 @@ else:
         st.write("- Red Crisis Urgency: 1 Staff")
         
     st.write("---")
-    st.error("🎯 **STRATEGIC BUDGET ALLOCATION RECOMMENDATION:** High burnout density values tracked inside your Direct Sales Force pipeline (Quota Fatigue). Tumaini 365 advises human resource scheduling of a specialized 'Preventive Financial Therapy Safari' workshop next month to protect premium acquisition targets before absenteeism spikes occur.")
-
-st.write("---")
