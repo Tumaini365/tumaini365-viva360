@@ -54,7 +54,6 @@ with st.sidebar:
     )
     st.write("---")
     
-    # FIXED: Placed security locks directly into the sidebar to avoid central loading layout bugs
     pin_input = ""
     if selected_portal == "2. Ezekiel's Clinical Panel":
         st.subheader("🔒 Administrator Login")
@@ -64,7 +63,7 @@ with st.sidebar:
     st.info("💡 **Boardroom Demo Note:** Changing options here switches pages instantly. All inputs and underlying charts will load smoothly.")
 
 # ==========================================
-# PORTAL 1: EMPLOYEE SECURE PORTAL
+# PORTAL INTERFACE GATEWAY ROUTING
 # ==========================================
 if selected_portal == "1. Employee Secure Portal":
     st.title("🌱 Tumaini Three Sixty Five Limited")
@@ -74,14 +73,12 @@ if selected_portal == "1. Employee Secure Portal":
     if st.session_state.staff_step == 1:
         st.markdown("### 🔒 Data Protection & Confidentiality Declaration")
         st.write("In strict compliance with the Data Protection Act of Kenya, your screening inputs are treated as sensitive personal data. Your specific clinical scores are entirely hidden from Viva 360 HR and executive management. This system utilizes advanced token pseudonymization to guarantee absolute anonymity.")
-        
         st.write("#### Step 1: Corporate Validation")
         col_a, col_b = st.columns(2)
         with col_a:
             dept_input = st.selectbox("Your Department Grouping:", ["Direct Sales Force", "Underwriting & Risk", "Claims Adjustment Cadre", "Administration & HR"], key="staff_dept")
         with col_b:
             id_input = st.text_input("Enter Active Viva 360 Staff ID:", placeholder="e.g., V360-104", key="staff_id_num")
-            
         consent_input = st.checkbox("I consent to this screening under the Data Protection Act parameters to access my wellness roadmap.", key="staff_consent")
         
         if st.button("➡️ PROCEED TO ASSESSMENT (NEXT STEP)"):
@@ -99,7 +96,6 @@ if selected_portal == "1. Employee Secure Portal":
         st.write("Logged in as: " + str(st.session_state.temp_id) + " | Department: " + str(st.session_state.temp_dept))
         st.write("#### Step 2: The Core Screening Matrix (DSM-5-TR Psychometric Tracker)")
         st.caption("Scale: 0 = Not at all | 1 = Several days | 2 = More than half the days | 3 = Nearly every day")
-        
         q1 = st.radio("1. Little interest or pleasure in doing things at work or home:", (0, 1, 2, 3), horizontal=True)
         q2 = st.radio("2. Feeling down, depressed, flat, or hopeless:", (0, 1, 2, 3), horizontal=True)
         q3 = st.radio("3. Feeling tired, sluggish, or having chronically low energy volumes:", (0, 1, 2, 3), horizontal=True)
@@ -107,26 +103,21 @@ if selected_portal == "1. Employee Secure Portal":
         q5 = st.radio("5. Trouble relaxing, muscle tension, or constant overthinking:", (0, 1, 2, 3), horizontal=True)
         q6 = st.radio("6. Becoming easily annoyed, hyper-irritable with peers, or cross-functional friction:", (0, 1, 2, 3), horizontal=True)
         q9 = st.radio("⚠️ 7. Thoughts that you would be better off dead, or of hurting yourself in some way:", (0, 1, 2, 3), horizontal=True)
-        
         col_nav_1, col_nav_2 = st.columns(2)
         with col_nav_1:
             if st.button("⬅️ BACK TO STEP 1"):
                 st.session_state.staff_step = 1
                 st.rerun()
-                
         with col_nav_2:
             if st.button("🚀 SUBMIT CONFIDENTIAL SCREENING"):
                 phq9_total = q1 + q2 + q3 + q9
                 gad7_total = q4 + q5 + q6
                 self_harm_flag = q9 >= 1
-                
                 tier, box_text, milestone = compute_triage_tier(phq9_total, gad7_total, self_harm_flag)
                 token = generate_anonymized_token(st.session_state.temp_dept)
-                
                 today = datetime.date.today()
                 d14 = today + datetime.timedelta(days=14)
                 d30 = today + datetime.timedelta(days=30)
-                
                 new_entry = {
                     "Token": token, "Department": st.session_state.temp_dept, "Staff_ID": st.session_state.temp_id, 
                     "PHQ9_Score": phq9_total, "GAD7_Score": gad7_total, "Triage_Tier": tier, 
@@ -134,13 +125,11 @@ if selected_portal == "1. Employee Secure Portal":
                     "Day30_Date": d30.strftime('%Y-%m-%d'), "Status": "Active Follow-up"
                 }
                 st.session_state.clinical_registry = pd.concat([st.session_state.clinical_registry, pd.DataFrame([new_entry])], ignore_index=True)
-                
                 st.session_state.last_token = token
                 st.session_state.last_tier = tier
                 st.session_state.last_box = box_text
                 st.session_state.last_d14 = d14.strftime('%B %d, %Y')
                 st.session_state.last_d30 = d30.strftime('%B %d, %Y')
-                
                 st.session_state.staff_step = 3
                 st.rerun()
 
@@ -148,27 +137,28 @@ if selected_portal == "1. Employee Secure Portal":
         st.success("🎉 Confidential Screening Completed Successfully.")
         st.info("Your Non-Identifiable Security Token: " + str(st.session_state.last_token))
         st.write("### Your Personalized Support Action Plan")
-        
         if st.session_state.last_tier == "GREEN TIER":
             st.success(st.session_state.last_box)
             st.write("Your Action Roadmap: Your data token has unlocked the 14-Day Digital Decompression Toolkit (deep breathing guides & structural time-blocking calendar patterns).")
             st.info("📅 Follow-up Check: An automated link will push to your portal on " + str(st.session_state.last_d14) + " to check progress.")
-            
         elif st.session_state.last_tier == "YELLOW TIER":
             st.warning(st.session_state.last_box)
             st.write("Your Action Roadmap: Your profile highlights functional burnout. Your token matches you directly to this month's voluntary Virtual Wellness Booster Pod.")
             st.info("📅 Continuous Follow-up: Your booster pod will monitor accountability metrics on " + str(st.session_state.last_d30))
-            
-        elif st.session_state.last_tier == "RED TIER":
+        else:
             st.error(st.session_state.last_box)
             st.write("Emergency Override Plan: Secure emergency alerts logged on Ezekiel Kiago's console. Click below for immediate clinical link routing.")
             st.markdown("[📲 OPEN SECURE WHATSAPP CRISIS ESCALATION LINK TO EZEKIEL](https://wa.me)")
-            
         if st.button("🔄 RESTART FRESH ASSESSMENT"):
             st.session_state.staff_step = 1
             st.rerun()
 
-# ==========================================
-# PORTAL 2: EZEKIEL'S CLINICAL PANEL
-# ==========================================
 elif selected_portal == "2. Ezekiel's Clinical Panel":
+    st.title("🔒 Tumaini 365: Clinical Administration Workspace")
+    st.subheader("Lead Consultant Console: Ezekiel Kiago Wangunyu")
+    st.write("---")
+    if pin_input != "365":
+        st.warning("⚠️ Access Restricted: Please enter your master access key code in the sidebar block on the left to unlock the active registry.")
+    else:
+        st.success("✅ Access Verified. Encrypted database channel active.")
+        st.write("### 🗂️ Live Patient Triage & Continuous Follow-Up Registry")
