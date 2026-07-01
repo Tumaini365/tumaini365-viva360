@@ -60,12 +60,8 @@ if st.session_state.portal_page == "Staff":
     
     # STEP 1: COMPLIANCE & IDENTITY VERIFICATION
     if st.session_state.staff_step == 1:
-        st.markdown("""
-        ### 🔒 Data Protection & Confidentiality Declaration
-        In strict compliance with the **Data Protection Act of Kenya**, your screening inputs are treated as sensitive personal data. 
-        **Your specific clinical scores are entirely hidden from Viva 365 HR and executive management.** 
-        This system utilizes advanced token pseudonymization to guarantee absolute anonymity.
-        """)
+        st.markdown("### 🔒 Data Protection & Confidentiality Declaration")
+        st.write("In strict compliance with the Data Protection Act of Kenya, your screening inputs are treated as sensitive personal data. Your specific clinical scores are entirely hidden from Viva 365 HR and executive management. This system utilizes advanced token pseudonymization to guarantee absolute anonymity.")
         
         st.write("#### Step 1: Corporate Validation")
         col_a, col_b = st.columns(2)
@@ -150,12 +146,12 @@ if st.session_state.portal_page == "Staff":
         st.write("### Your Personalized Automated Support Action Plan")
         if st.session_state.last_tier == "GREEN TIER":
             st.success(st.session_state.last_box)
-            st.markdown("* **Your Action Roadmap:** Your baseline psychological resilience is optimal. Your data token has unlocked the **14-Day Digital Decompression Toolkit** containing deep breathing audio cues, sleep hygiene parameters, and structural time-blocking calendar patterns.")
+            st.write("* **Your Action Roadmap:** Your baseline psychological resilience is optimal. Your data token has unlocked the **14-Day Digital Decompression Toolkit** containing deep breathing audio cues, sleep hygiene parameters, and structural time-blocking calendar patterns.")
             st.info("📅 **Follow-up Check:** An automated verification link will be pushed to your portal on " + str(st.session_state.last_d14) + " to ensure your boundaries are holding up.")
         elif st.session_state.last_tier == "YELLOW TIER":
             st.warning(st.session_state.last_box)
-            st.markdown("* **Your Action Roadmap:** Your profile highlights functional burnout and quota fatigue. To protect your productivity, your token has bypassed standard one-off training and matched you directly to this month's **Voluntary Virtual Wellness Booster Pod**.")
+            st.write("* **Your Action Roadmap:** Your profile highlights functional burnout and quota fatigue. To protect your productivity, your token has bypassed standard one-off training and matched you directly to this month's **Voluntary Virtual Wellness Booster Pod**.")
             st.info("📅 **Continuous Follow-up:** Your pod will run accountability metrics on " + str(st.session_state.last_d30) + " to track your coping structures.")
         else:
             st.error(st.session_state.last_box)
-            st.markdown("""
+            st.write("* **Emergency Override Action Plan:** Your screening flags severe clinical or situational crisis conditions. An immediate secure payload alert has been logged on Lead Psychologist Ezekiel Kiago's private console.")
