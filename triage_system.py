@@ -19,7 +19,9 @@ if "clinical_registry" not in st.session_state:
         "Token", "Department", "Staff_ID", "PHQ9_Score", "GAD7_Score", "Triage_Tier", "Action_Milestone", "Day14_Date", "Day30_Date", "Status"
     ])
 
-# Step tracking for the Staff assessment flow
+# Initialize persistent navigation locks to survive text field reloads
+if "selected_portal" not in st.session_state:
+    st.session_state.selected_portal = "👥 1. Employee Secure Portal"
 if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
@@ -37,32 +39,31 @@ def compute_triage_tier(phq9, gad7, self_harm):
         return "GREEN TIER", "🟢 GREEN TIER: OPTIMAL WORKFORCE RESILIENCE", "Preventive care loop activated. Staff member granted immediate on-demand access to the 14-day digital decompression micro-learning files."
 
 # ==========================================
-# 2. BRANDING SIDEBAR WITH LOGO REPOSITORY LINK
+# 2. BRANDING SIDEBAR WITH LOGO & NAVIGATION CONTROLS
 # ==========================================
 with st.sidebar:
+    # Looks for 'tumaini_logo.jpg' inside your master GitHub repository folder to render visually
     st.image("https://githubusercontent.com", use_container_width=True, caption="Tumaini 365 - Your Hope Everyday")
     st.write("---")
     st.caption("Strategic Partner Platform:")
     st.markdown("🏢 **Viva 360 Insurance Brokers**")
     st.write("---")
-    st.info("💡 **Corporate Navigation Guide:** Click through the tabs in the main workspace window to toggle seamlessly between your live portals.")
+    
+    # ISOLATED NAVIGATION CONTROL MODULE (Saves state memory safely across text reloads)
+    st.subheader("🏢 Workspace Interface Portal")
+    choice = st.radio(
+        "Choose Your View:",
+        ["👥 1. Employee Secure Portal", "🔒 2. Ezekiel's Clinical Panel", "📊 3. HR Executive Analytics"],
+        label_visibility="collapsed"
+    )
+    st.session_state.selected_portal = choice
+    st.write("---")
+    st.info("💡 **Corporate Navigation Guide:** Select your module tab above in the sidebar. This isolates backend operations and secures your live database workflows.")
 
 # ==========================================
-# 3. LIVE TAB CONTROL INFRASTRUCTURE
+# PORTAL 1: EMPLOYEE SECURE PORTAL
 # ==========================================
-st.markdown("### 🏢 Active Interface Control Panel")
-
-# Creating native tabs to eliminate page reload navigation bugs completely
-tab_staff, tab_ezekiel, tab_hr = st.tabs([
-    "👥 1. Employee Secure Portal", 
-    "🔒 2. Ezekiel's Clinical Panel", 
-    "📊 3. HR Executive Analytics"
-])
-
-# ==========================================
-# TAB 1: EMPLOYEE SECURE PORTAL
-# ==========================================
-with tab_staff:
+if st.session_state.selected_portal == "👥 1. Employee Secure Portal":
     st.title("🌱 Tumaini Three Sixty Five Limited")
     st.subheader("Employee Secure Well-being Assessment Portal")
     st.write("---")
@@ -165,12 +166,5 @@ with tab_staff:
             st.rerun()
 
 # ==========================================
-# TAB 2: EZEKIEL'S PRIVATE CLINICAL WORKSPACE
+# PORTAL 2: EZEKIEL'S PRIVATE CLINICAL WORKSPACE
 # ==========================================
-with tab_ezekiel:
-    st.title("🔒 Tumaini 365: Clinical Administration Workspace")
-    st.subheader("Lead Consultant Console: Ezekiel Kiago Wangunyu")
-    st.write("---")
-    
-    pin = st.text_input("Enter Clinical Security Access PIN:", type="password", key="ezekiel_pin_key")
-    
