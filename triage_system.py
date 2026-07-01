@@ -7,8 +7,7 @@ import uuid
 st.set_page_config(
     page_title="Tumaini 365 Total Wellness Ecosystem", 
     page_icon="🌱", 
-    layout="wide",
-    initial_sidebar_state="expanded"
+    layout="wide"
 )
 
 # Initialize a clean session array list to securely handle live data intakes
@@ -19,7 +18,7 @@ if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
 # ==========================================
-# 2. SIDEBAR NAVIGATION CONTROLS
+# 2. FIXED SIDEBAR BRANDING BLOCK
 # ==========================================
 st.sidebar.markdown("## 🌱 TUMAINI 365")
 st.sidebar.markdown("### `TOTAL WELLNESS ECOSYSTEM`")
@@ -28,25 +27,22 @@ st.sidebar.write("---")
 st.sidebar.markdown("🤝 **Strategic Partner Platform:**")
 st.sidebar.markdown("#### **Viva 360 Insurance Brokers**")
 st.sidebar.write("---")
-
-st.sidebar.subheader("🚪 System Portal Navigation")
-selected_portal = st.sidebar.selectbox(
-    "Choose Interface to Open:",
-    ["1. Employee Secure Portal", "2. Ezekiel's Clinical Panel", "3. HR Executive Analytics"]
-)
-st.sidebar.write("---")
-
-pin_input = ""
-if selected_portal == "2. Ezekiel's Clinical Panel":
-    st.sidebar.subheader("🔒 Administrator Login")
-    pin_input = st.sidebar.text_input("Enter Access PIN:", type="password", key="ez_sidebar_pin")
-
-st.sidebar.info("💡 **Boardroom Note:** Pre-loaded baseline datasets are active. Portal views preserve and display data perfectly.")
+st.sidebar.success("✅ Multi-Module Security Active")
 
 # ==========================================
-# PORTAL 1: EMPLOYEE SECURE PORTAL
+# 3. UNBLOCKABLE TAB BUTTONS (MAIN SCREEN)
 # ==========================================
-if selected_portal == "1. Employee Secure Portal":
+# This completely replaces the broken sidebar dropdown with native, unblockable browser tabs
+tab1, tab2, tab3 = st.tabs([
+    "🌱 1. Employee Secure Portal", 
+    "🔒 2. Ezekiel's Clinical Panel", 
+    "📊 3. HR Executive Analytics"
+])
+
+# ------------------------------------------
+# MODULE 1: EMPLOYEE SECURE PORTAL
+# ------------------------------------------
+with tab1:
     st.title("🌱 Tumaini Three Sixty Five Limited")
     st.subheader("Employee Secure Well-being Assessment Portal")
     st.write("---")
@@ -107,7 +103,7 @@ if selected_portal == "1. Employee Secure Portal":
             st.rerun()
 
     elif st.session_state.staff_step == 3:
-        st.success("Confidential Screening Completed Successfully.")
+        st.success("🎉 Confidential Screening Completed Successfully.")
         st.info("Your Non-Identifiable Security Token: " + str(st.session_state.last_token))
         st.write("### Your Personalized Support Action Plan")
         
@@ -133,21 +129,22 @@ if selected_portal == "1. Employee Secure Portal":
             st.session_state.staff_step = 1
             st.rerun()
 
-# ==========================================
-# PORTAL 2: EZEKIEL'S CLINICAL PANEL
-# ==========================================
-elif selected_portal == "2. Ezekiel's Clinical Panel":
+# ------------------------------------------
+# MODULE 2: EZEKIEL'S CLINICAL PANEL
+# ------------------------------------------
+with tab2:
     st.title("🔒 Tumaini 365: Clinical Administration Workspace")
     st.subheader("Lead Consultant Console: Ezekiel Kiago Wangunyu")
     st.write("---")
     
+    pin_input = st.text_input("Enter Access PIN to Unlock Database Registry:", type="password", key="ez_tab_pin")
     if pin_input != "365":
-        st.warning("Awaiting proper credential parameters. Access blocked under Data Protection Act framework.")
+        st.warning("🔒 Restrictive Access Active: Awaiting verified security token inputs.")
     else:
-        st.success("Access Verified. Secure encrypted database connection active.")
+        st.success("✅ Access Verified. Secure database channel active.")
         st.write("### 🗂️ Live Patient Triage & Active Contact Intercept Registry")
         
-        # FIXED RENDER PIPELINE: High-availability pre-compiled text data cards to eliminate internal database crashes entirely
+        # Room entries displayed cleanly in un-nested blocks
         st.markdown("#### 🔴 **RED TIER CRISIS** | Anonymized Token: `T365-CLA-F56D1A`")
         st.write("🏢 **Cadre Department:** Claims Adjustment Cadre | 🆔 **Employee Staff ID:** `V360-205`")
         st.write("📞 **Telephone Mobile Number:** `+254733444555` | ✉️ **Corporate Email:** `claims5@viva360.co.ke`")
@@ -166,3 +163,8 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
         st.write("---")
         
         st.markdown("#### 🟢 **GREEN RESILIENCE** | Anonymized Token: `T365-UND-B81C9F`")
+        st.write("🏢 **Cadre Department:** Underwriting & Risk | 🆔 **Employee Staff ID:** `V360-112`")
+        st.write("📞 **Telephone Mobile Number:** `+254722333444` | ✉️ **Corporate Email:** `risk2@viva360.co.ke`")
+        st.write("---")
+
+        if st.session_state.live_submissions:
