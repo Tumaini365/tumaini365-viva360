@@ -13,19 +13,17 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Initialize global tracking variables in memory so choices survive page refreshes completely
+# Persistent session database registry matrix
 if "clinical_registry" not in st.session_state:
     st.session_state.clinical_registry = pd.DataFrame(columns=[
         "Token", "Department", "Staff_ID", "PHQ9_Score", "GAD7_Score", "Triage_Tier", "Action_Milestone", "Day14_Date", "Day30_Date", "Status"
     ])
 
+# Step tracking for the Staff assessment flow
 if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
-if "ezekiel_authenticated" not in st.session_state:
-    st.session_state.ezekiel_authenticated = False
-
-# Core System Logic Functions
+# Core System Sorting Functions
 def generate_anonymized_token(dept):
     unique_id = uuid.uuid4().hex[:6].upper()
     return "T365-" + str(dept[:3].upper()) + "-" + str(unique_id)
@@ -48,13 +46,21 @@ with st.sidebar:
     st.markdown("🏢 **Viva 360 Insurance Brokers**")
     st.write("---")
     
-    # MASTER SELECTION DROPDOWN - This avoids all reload and locking bugs caused by flat buttons
+    # SYSTEM INTERFACE DROPDOWN
     st.subheader("🚪 System Portal Navigation")
     selected_portal = st.selectbox(
         "Choose Interface to Open:",
         ["1. Employee Secure Portal", "2. Ezekiel's Clinical Panel", "3. HR Executive Analytics"]
     )
     st.write("---")
+    
+    # FIXED: Placed security locks directly into the sidebar to avoid central loading layout bugs
+    pin_input = ""
+    if selected_portal == "2. Ezekiel's Clinical Panel":
+        st.subheader("🔒 Administrator Login")
+        pin_input = st.text_input("Enter Access PIN:", type="password", key="ez_sidebar_pin")
+        st.write("---")
+        
     st.info("💡 **Boardroom Demo Note:** Changing options here switches pages instantly. All inputs and underlying charts will load smoothly.")
 
 # ==========================================
@@ -166,8 +172,3 @@ if selected_portal == "1. Employee Secure Portal":
 # PORTAL 2: EZEKIEL'S CLINICAL PANEL
 # ==========================================
 elif selected_portal == "2. Ezekiel's Clinical Panel":
-    st.title("🔒 Tumaini 365: Clinical Administration Workspace")
-    st.subheader("Lead Consultant Console: Ezekiel Kiago Wangunyu")
-    st.write("---")
-    
-    # Flat validation layout to guarantee error-free deployment
