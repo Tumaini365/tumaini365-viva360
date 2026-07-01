@@ -12,15 +12,11 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Initialize a clean session array list to securely handle live data intakes
-if "live_submissions" not in st.session_state:
-    st.session_state.live_submissions = []
-
 if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
 # ==========================================
-# 2. SIDEBAR NAVIGATION DROPDOWN
+# 2. SIDEBAR NAVIGATION CONTROLS
 # ==========================================
 st.sidebar.markdown("## 🌱 TUMAINI 365")
 st.sidebar.markdown("### `TOTAL WELLNESS ECOSYSTEM`")
@@ -94,16 +90,8 @@ if selected_portal == "1. Employee Secure Portal":
         if st.button("🚀 SUBMIT CONFIDENTIAL SCREENING"):
             token = "T365-" + str(st.session_state.temp_dept[:3].upper()) + "-" + str(uuid.uuid4().hex[:4].upper())
             score_total = q1 + q2 + q3 + q4 + q5 + q6 + q9
-            calculated_tier = "RED TIER" if (score_total >= 13 or q9 >= 1) else "YELLOW TIER" if score_total >= 6 else "GREEN TIER"
-            
-            new_entry = {
-                "Token": token, "Department": st.session_state.temp_dept, "Staff_ID": st.session_state.temp_id, 
-                "Mobile_Number": st.session_state.temp_phone, "Email_Address": st.session_state.temp_email, 
-                "Triage_Tier": calculated_tier, "Status": "Live Submission"
-            }
-            st.session_state.live_submissions.append(new_entry)
             st.session_state.last_token = token
-            st.session_state.last_tier = calculated_tier
+            st.session_state.last_tier = "RED TIER" if (score_total >= 13 or q9 >= 1) else "YELLOW TIER" if score_total >= 6 else "GREEN TIER"
             st.session_state.staff_step = 3
             st.rerun()
 
@@ -160,3 +148,13 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
         
         st.write("### 🚨 Urgent WhatsApp Intercept Actions Matrix")
         st.link_button("🚨 LAUNCH WHATSAPP INTERCEPT FOR T365-CLA-F56D1A", "https://wa.meHello%20Ezekiel%20Kiago%20from%20Tumaini%20365.%20I%20am%20intercepting%20Token%20T365-CLA-F56D1A")
+        st.link_button("🚨 LAUNCH WHATSAPP INTERCEPT FOR T365-CLA-200B", "https://wa.meHello%20Ezekiel%20Kiago%20from%20Tumaini%20365.%20I%20am%20intercepting%20Token%20T365-CLA-200B")
+
+# ==========================================
+# PORTAL 3: HR EXECUTIVE ANALYTICS
+# ==========================================
+else:
+    st.title("📊 Viva 360 Insurance Brokers: Executive Analytics Dashboard")
+    st.subheader("Institutional Burnout Tracking & Corporate Budgeting Interface")
+    st.write("---")
+    st.markdown("### 🔒 Privacy Protocol View")
