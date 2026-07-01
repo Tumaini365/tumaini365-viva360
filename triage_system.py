@@ -1,5 +1,4 @@
 import streamlit as st
-import uuid
 
 # ==========================================
 # 1. APPLICATION INITIALIZATION & CONFIG
@@ -9,10 +8,6 @@ st.set_page_config(
     page_icon="🌱", 
     layout="wide"
 )
-
-# Initialize a clean session array list to securely handle live data intakes
-if "live_submissions" not in st.session_state:
-    st.session_state.live_submissions = []
 
 if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
@@ -32,7 +27,6 @@ st.sidebar.success("✅ Multi-Module Security Active")
 # ==========================================
 # 3. UNBLOCKABLE TAB BUTTONS (MAIN SCREEN)
 # ==========================================
-# This completely replaces the broken sidebar dropdown with native, unblockable browser tabs
 tab1, tab2, tab3 = st.tabs([
     "🌱 1. Employee Secure Portal", 
     "🔒 2. Ezekiel's Clinical Panel", 
@@ -87,18 +81,9 @@ with tab1:
             st.rerun()
             
         if st.button("🚀 SUBMIT CONFIDENTIAL SCREENING"):
-            token = "T365-" + str(st.session_state.temp_dept[:3].upper()) + "-" + str(uuid.uuid4().hex[:4].upper())
+            st.session_state.last_token = "T365-MOCK-" + str(uuid.uuid4().hex[:4].upper())
             score_total = q1 + q2 + q3 + q4 + q5 + q6 + q9
-            calculated_tier = "RED TIER" if (score_total >= 13 or q9 >= 1) else "YELLOW TIER" if score_total >= 6 else "GREEN TIER"
-            
-            new_entry = {
-                "Token": token, "Department": st.session_state.temp_dept, "Staff_ID": st.session_state.temp_id, 
-                "Mobile_Number": st.session_state.temp_phone, "Email_Address": st.session_state.temp_email, 
-                "Triage_Tier": calculated_tier, "Status": "Live Submission"
-            }
-            st.session_state.live_submissions.append(new_entry)
-            st.session_state.last_token = token
-            st.session_state.last_tier = calculated_tier
+            st.session_state.last_tier = "RED TIER" if (score_total >= 13 or q9 >= 1) else "YELLOW TIER" if score_total >= 6 else "GREEN TIER"
             st.session_state.staff_step = 3
             st.rerun()
 
@@ -144,7 +129,6 @@ with tab2:
         st.success("✅ Access Verified. Secure database channel active.")
         st.write("### 🗂️ Live Patient Triage & Active Contact Intercept Registry")
         
-        # Room entries displayed cleanly in un-nested blocks
         st.markdown("#### 🔴 **RED TIER CRISIS** | Anonymized Token: `T365-CLA-F56D1A`")
         st.write("🏢 **Cadre Department:** Claims Adjustment Cadre | 🆔 **Employee Staff ID:** `V360-205`")
         st.write("📞 **Telephone Mobile Number:** `+254733444555` | ✉️ **Corporate Email:** `claims5@viva360.co.ke`")
@@ -167,4 +151,20 @@ with tab2:
         st.write("📞 **Telephone Mobile Number:** `+254722333444` | ✉️ **Corporate Email:** `risk2@viva360.co.ke`")
         st.write("---")
 
-        if st.session_state.live_submissions:
+# ------------------------------------------
+# MODULE 3: HR EXECUTIVE ANALYTICS
+# ------------------------------------------
+with tab3:
+    st.title("📊 Viva 360 Insurance Brokers: Executive Analytics Dashboard")
+    st.subheader("Institutional Burnout Tracking & Corporate Budgeting Interface")
+    st.write("---")
+    st.markdown("### 🔒 Privacy Protocol View")
+    st.write("In compliance with data protection laws, all individual phone numbers, emails, and staff identification fields are entirely stripped from this layout. It displays only aggregated data metrics to guide resource deployment.")
+    st.write("---")
+    
+    st.write("### 📈 Workforce Resilience Summary Indicators")
+    st.info("📊 **Total Active Staff Screened:** 4 Personnel")
+    st.success("🟢 **Green Tier (Resilience Ratio):** 25.0%")
+    st.warning("🟡 **Yellow Tier (Burnout Density):** 50.0%")
+    st.write("---")
+    
