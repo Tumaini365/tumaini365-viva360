@@ -174,4 +174,3 @@ with tab_ezekiel:
     
     pin = st.text_input("Enter Clinical Security Access PIN:", type="password", key="ezekiel_pin_key")
     
-    if pin == "365":
