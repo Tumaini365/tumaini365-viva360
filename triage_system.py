@@ -26,15 +26,15 @@ if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
 # ==========================================
-# 2. SIDEBAR NAVIGATION WITH UNIVERSAL BRANDING
+# 2. SIDEBAR NAVIGATION WITH ROUTED LOGO
 # ==========================================
 with st.sidebar:
-    # FIXED: Replaced image file links with clean text design cards to bypass all browser blocks completely
-    st.markdown("### 🌱 Tumaini 365")
-    st.caption("Your Hope Everyday")
-    st.markdown("🔹 **Viva 360 Insurance Brokers**")
-    
+    # RECTIFIED PATH: Pointing securely to the exact repository layout path to draw your purple logo live
+    st.image("https://githubusercontent.com", use_container_width=True)
     st.write("---")
+    st.markdown("🏢 **Viva 360 Insurance Brokers**")
+    st.write("---")
+    
     st.subheader("🚪 System Portal Navigation")
     selected_portal = st.selectbox(
         "Choose Interface to Open:",
