@@ -13,7 +13,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# FIXED PRE-POPULATED MATRICES TO SURVIVE ALL REFRESHEs
+# PRE-POPULATED BASELINE REPOSITORY REGISTRY MATRIX
 if "clinical_registry" not in st.session_state:
     st.session_state.clinical_registry = pd.DataFrame([
         {"Token": "T365-DIR-E49A2B", "Department": "Direct Sales Force", "Staff_ID": "V360-401", "Mobile_Number": "+254711222333", "Email_Address": "sales1@viva360.co.ke", "Triage_Tier": "YELLOW TIER", "Status": "Active Follow-up"},
@@ -26,7 +26,7 @@ if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
 # ==========================================
-# 2. SIDEBAR NAVIGATION CONTROLS
+# 2. SIDEBAR BRANDING & ROUTING NAVIGATION
 # ==========================================
 st.sidebar.markdown("## 🌱 TUMAINI 365")
 st.sidebar.markdown("### `TOTAL WELLNESS ECOSYSTEM`")
@@ -37,27 +37,24 @@ st.sidebar.markdown("#### **Viva 360 Insurance Brokers**")
 st.sidebar.write("---")
 
 st.sidebar.subheader("🚪 System Portal Navigation")
-# FIXED: Using simple number mapping keys for background logic to prevent server rendering bugs
-portal_menu = {
-    "1. Employee Secure Portal": "1",
-    "2. Ezekiel's Clinical Panel": "2",
-    "3. HR Executive Analytics": "3"
-}
-display_selection = st.sidebar.selectbox("Choose Interface to Open:", list(portal_menu.keys()))
-selected_portal = portal_menu[display_selection]
+# FIXED PIPELINE: Using explicit direct string matching for unblockable page navigation parameters
+selected_portal = st.sidebar.selectbox(
+    "Choose Interface to Open:",
+    ["1. Employee Secure Portal", "2. Ezekiel's Clinical Panel", "3. HR Executive Analytics"]
+)
 st.sidebar.write("---")
 
 pin_input = ""
-if selected_portal == "2":
+if selected_portal == "2. Ezekiel's Clinical Panel":
     st.sidebar.subheader("🔒 Administrator Login")
     pin_input = st.sidebar.text_input("Enter Access PIN:", type="password", key="ez_sidebar_pin")
 
 st.sidebar.info("💡 **Boardroom Note:** Pre-loaded baseline datasets are active. Portal views preserve and display data perfectly.")
 
 # ==========================================
-# PORTAL INTERFACE GATEWAY ROUTING
+# PORTAL 1: EMPLOYEE SECURE PORTAL
 # ==========================================
-if selected_portal == "1":
+if selected_portal == "1. Employee Secure Portal":
     st.title("🌱 Tumaini Three Sixty Five Limited")
     st.subheader("Employee Secure Well-being Assessment Portal")
     st.write("---")
@@ -82,7 +79,7 @@ if selected_portal == "1":
                 st.session_state.staff_step = 2
                 st.rerun()
             else:
-                st.error("Validation Error: Please fill in all fields and check the data protection consent box.")
+                st.error("Validation Error: Please check required inputs and mark the data protection consent box.")
 
     elif st.session_state.staff_step == 2:
         st.write("Logged in as: " + str(st.session_state.temp_id))
@@ -144,18 +141,22 @@ if selected_portal == "1":
             st.session_state.staff_step = 1
             st.rerun()
 
-elif selected_portal == "2":
+# ==========================================
+# PORTAL 2: EZEKIEL'S CLINICAL PANEL
+# ==========================================
+elif selected_portal == "2. Ezekiel's Clinical Panel":
     st.title("🔒 Tumaini 365: Clinical Administration Workspace")
     st.subheader("Lead Consultant Console: Ezekiel Kiago Wangunyu")
     st.write("---")
+    
     if pin_input != "365":
         st.warning("⚠️ Access Restricted: Please enter your master access key code in the sidebar block on the left to unlock the active registry.")
     else:
         st.success("✅ Access Verified. Encrypted database channel active.")
         st.write("### 🗂️ Live Patient Triage & Active Contact Intercept Registry")
         
-        for idx, row in st.session_state.clinical_registry.iterrows():
-            tier_badge = "🔴 RED TIER CRISIS" if row['Triage_Tier'] == "RED TIER" else "🟡 YELLOW RISK" if row['Triage_Tier'] == "YELLOW TIER" else "🟢 GREEN RESILIENCE"
-            
-            st.markdown(f"#### **{tier_badge}** | Anonymized Token: `{row['Token']}`")
-            st.write(f"🏢 **Cadre Department:** {row['Department']} | 🆔 **Employee Staff ID:** `{row['Staff_ID']}`")
+        # FIXED: Renders full database registry containing all contact tokens, phone numbers, and emails in a tabular grid format
+        st.dataframe(st.session_state.clinical_registry, use_container_width=True)
+        st.write("---")
+        
+        # WhatsApp Care Intercept Hotline Action Launchers
