@@ -3,9 +3,9 @@ import datetime
 import uuid
 import pandas as pd
 
-# ====================================================================
-# 1. LIVE CONFIGURATION & LAYOUT FRAMING
-# ====================================================================
+# ==========================================
+# 1. LIVE APP CONFIGURATION & STYLE FRAMING
+# ==========================================
 st.set_page_config(
     page_title="Tumaini 365 Total Wellness Ecosystem", 
     page_icon="🌱", 
@@ -29,7 +29,7 @@ st.markdown("""
         padding: 25px;
         border-radius: 12px;
         background-color: #ffffff;
-        box-shadow: 3px 3px 12px rgba(0,0,0,0.02);
+        box-shadow: 3px 3px 12 rgba(0,0,0,0.02);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -40,7 +40,7 @@ if "clinical_registry" not in st.session_state:
         "Token", "Department", "Staff_ID", "PHQ9_Score", "GAD7_Score", "Triage_Tier", "Action_Milestone", "Day14_Date", "Day30_Date", "Status"
     ])
 
-# CRITICAL WORKAROUND: Lock portal keys into long-term state memory to maintain page stability across clicks
+# Lock portal keys into long-term state memory to maintain page stability across clicks
 if "active_portal" not in st.session_state:
     st.session_state.active_portal = "Staff"
 if "staff_step" not in st.session_state:
@@ -59,27 +59,24 @@ def compute_triage_tier(phq9, gad7, self_harm):
     else:
         return "GREEN TIER", "🟢 GREEN TIER: OPTIMAL WORKFORCE RESILIENCE", "Preventive care loop activated. Staff member granted immediate on-demand access to the 14-day digital decompression micro-learning files."
 
-# ====================================================================
+# ==========================================
 # 2. BRANDING SIDEBAR WIDGETS
-# ====================================================================
+# ==========================================
 with st.sidebar:
-    # Anchor point for your Tumaini 365 Logo
     st.image("https://githubusercontent.com", use_container_width=True, caption="Tumaini 365 - Your Hope Everyday")
     st.write("---")
-    
     st.caption("Strategic Partner Platform:")
     st.markdown("🏢 **Viva 360 Insurance Brokers**")
     st.write("---")
     st.info("💡 **Corporate Navigation Guide:** Tap any top module button in the workspace panel to seamlessly navigate across live database portals.")
 
-# ====================================================================
-# 3. INTERACTIVE MODULE WORKSPACE BUTTONS (ANCHORED CALLBACKS)
-# ====================================================================
+# ==========================================
+# 3. INTERACTIVE MODULE WORKSPACE BUTTONS
+# ==========================================
 st.markdown("### 🏢 Select Workspace Interface Portal")
 col_p1, col_p2, col_p3 = st.columns(3)
 
 with col_p1:
-    # Locking click state values directly to active registry keys before forcing reruns
     if st.button("👥 1. Employee Secure Portal", use_container_width=True, type="primary" if st.session_state.active_portal == "Staff" else "secondary"):
         st.session_state.active_portal = "Staff"
         st.session_state.staff_step = 1
@@ -97,9 +94,9 @@ with col_p3:
 
 st.write("---")
 
-# ====================================================================
+# ==========================================
 # INTERFACE GATEWAY 1: EMPLOYEE SECURE PORTAL
-# ====================================================================
+# ==========================================
 if st.session_state.active_portal == "Staff":
     st.markdown("<div class='panel-frame'>", unsafe_allow_html=True)
     st.title("🌱 Tumaini Three Sixty Five Limited")
@@ -131,7 +128,7 @@ if st.session_state.active_portal == "Staff":
                 st.rerun()
 
     elif st.session_state.staff_step == 2:
-        st.write(f"**Logged in as:** `{st.session_state.temp_id}` | **Department:** {st.session_state.temp_dept}")
+        st.write("Logged in as: " + str(st.session_state.temp_id) + " | Department: " + str(st.session_state.temp_dept))
         st.write("#### Step 2: The Core Screening Matrix (DSM-5-TR Psychometric Tracker)")
         st.caption("Scale: 0 = Not at all | 1 = Several days | 2 = More than half the days | 3 = Nearly every day")
         
@@ -182,6 +179,9 @@ if st.session_state.active_portal == "Staff":
     elif st.session_state.staff_step == 3:
         st.success("🎉 Confidential Screening Completed Successfully.")
         st.info("Your Non-Identifiable Security Token: " + str(st.session_state.last_token))
-        
         st.write("### Your Personalized Support Action Plan")
+        
+        # Display corresponding outcome cards directly without nested if-indentations
         if st.session_state.last_tier == "GREEN TIER":
+            st.success(st.session_state.last_box)
+            st.write("Your Action Roadmap: Your data token has unlocked the 14-Day Digital Decompression Toolkit (deep breathing guides & structural time-blocking calendar patterns).")
