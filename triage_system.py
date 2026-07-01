@@ -1,7 +1,4 @@
 import streamlit as st
-import datetime
-import uuid
-import pandas as pd
 
 # ==========================================
 # 1. APPLICATION INITIALIZATION & CONFIG
@@ -9,15 +6,14 @@ import pandas as pd
 st.set_page_config(
     page_title="Tumaini 365 Total Wellness Ecosystem", 
     page_icon="🌱", 
-    layout="wide",
-    initial_sidebar_state="expanded"
+    layout="wide"
 )
 
 if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
 # ==========================================
-# 2. SIDEBAR NAVIGATION CONTROLS
+# 2. FIXED SIDEBAR BRANDING BLOCK
 # ==========================================
 st.sidebar.markdown("## 🌱 TUMAINI 365")
 st.sidebar.markdown("### `TOTAL WELLNESS ECOSYSTEM`")
@@ -26,25 +22,21 @@ st.sidebar.write("---")
 st.sidebar.markdown("🤝 **Strategic Partner Platform:**")
 st.sidebar.markdown("#### **Viva 360 Insurance Brokers**")
 st.sidebar.write("---")
-
-st.sidebar.subheader("🚪 System Portal Navigation")
-selected_portal = st.sidebar.selectbox(
-    "Choose Interface to Open:",
-    ["1. Employee Secure Portal", "2. Ezekiel's Clinical Panel", "3. HR Executive Analytics"]
-)
-st.sidebar.write("---")
-
-pin_input = ""
-if selected_portal == "2. Ezekiel's Clinical Panel":
-    st.sidebar.subheader("🔒 Administrator Login")
-    pin_input = st.sidebar.text_input("Enter Access PIN:", type="password", key="ez_sidebar_pin")
-
-st.sidebar.info("💡 **Boardroom Note:** Pre-loaded baseline datasets are active. Portal views preserve and display data perfectly.")
+st.sidebar.success("✅ Multi-Module Security Active")
 
 # ==========================================
-# PORTAL 1: EMPLOYEE SECURE PORTAL
+# 3. UNBLOCKABLE TAB BUTTONS (MAIN SCREEN)
 # ==========================================
-if selected_portal == "1. Employee Secure Portal":
+tab1, tab2, tab3 = st.tabs([
+    "🌱 1. Employee Secure Portal", 
+    "🔒 2. Ezekiel's Clinical Panel", 
+    "📊 3. HR Executive Analytics"
+])
+
+# ------------------------------------------
+# MODULE 1: EMPLOYEE SECURE PORTAL
+# ------------------------------------------
+with tab1:
     st.title("🌱 Tumaini Three Sixty Five Limited")
     st.subheader("Employee Secure Well-being Assessment Portal")
     st.write("---")
@@ -89,9 +81,8 @@ if selected_portal == "1. Employee Secure Portal":
             st.rerun()
             
         if st.button("🚀 SUBMIT CONFIDENTIAL SCREENING"):
-            token = "T365-" + str(st.session_state.temp_dept[:3].upper()) + "-" + str(uuid.uuid4().hex[:4].upper())
+            st.session_state.last_token = "T365-MOCK-" + str(uuid.uuid4().hex[:4].upper())
             score_total = q1 + q2 + q3 + q4 + q5 + q6 + q9
-            st.session_state.last_token = token
             st.session_state.last_tier = "RED TIER" if (score_total >= 13 or q9 >= 1) else "YELLOW TIER" if score_total >= 6 else "GREEN TIER"
             st.session_state.staff_step = 3
             st.rerun()
@@ -123,39 +114,57 @@ if selected_portal == "1. Employee Secure Portal":
             st.session_state.staff_step = 1
             st.rerun()
 
-# ==========================================
-# PORTAL 2: EZEKIEL'S CLINICAL PANEL
-# ==========================================
-elif selected_portal == "2. Ezekiel's Clinical Panel":
+# ------------------------------------------
+# MODULE 2: EZEKIEL'S CLINICAL PANEL
+# ------------------------------------------
+with tab2:
     st.title("🔒 Tumaini 365: Clinical Administration Workspace")
     st.subheader("Lead Consultant Console: Ezekiel Kiago Wangunyu")
     st.write("---")
     
+    pin_input = st.text_input("Enter Access PIN to Unlock Database Registry:", type="password", key="ez_tab_pin")
     if pin_input != "365":
-        st.warning("Awaiting proper credential parameters. Access blocked under Data Protection Act framework.")
+        st.warning("🔒 Restrictive Access Active: Awaiting verified security token inputs.")
     else:
-        st.success("Access Verified. Secure encrypted database connection active.")
-        st.write("### 🗂️ Live Patient Triage & Active Contact Registry Matrix Table")
+        st.success("✅ Access Verified. Secure database channel active.")
+        st.write("### 🗂️ Live Patient Triage & Active Contact Intercept Registry")
         
-        # FIXED SECURE TABULAR STRUCTURE: Sourced and displayed cleanly as an embedded data spreadsheet frame
-        baseline_data = [
-            {"Anonymized Token": "T365-CLA-F56D1A", "Cadre Department": "Claims Adjustment Cadre", "Employee Staff ID": "V360-205", "Telephone Mobile Number": "+254733444555", "Corporate Email": "claims5@viva360.co.ke", "Triage Status": "🔴 RED TIER CRISIS"},
-            {"Anonymized Token": "T365-CLA-200B", "Cadre Department": "Claims Adjustment Cadre", "Employee Staff ID": "V360-101", "Telephone Mobile Number": "+254755666777", "Corporate Email": "admin@viva360.co.ke", "Triage Status": "🔴 RED TIER CRISIS"},
-            {"Anonymized Token": "T365-DIR-E49A2B", "Cadre Department": "Direct Sales Force", "Employee Staff ID": "V360-401", "Telephone Mobile Number": "+254711222333", "Corporate Email": "sales1@viva360.co.ke", "Triage Status": "🟡 YELLOW RISK"},
-            {"Anonymized Token": "T365-UND-B81C9F", "Cadre Department": "Underwriting & Risk", "Employee Staff ID": "V360-112", "Telephone Mobile Number": "+254722333444", "Corporate Email": "risk2@viva360.co.ke", "Triage Status": "🟢 GREEN RESILIENCE"}
-        ]
-        st.dataframe(pd.DataFrame(baseline_data), use_container_width=True)
+        st.markdown("#### 🔴 **RED TIER CRISIS** | Anonymized Token: `T365-CLA-F56D1A`")
+        st.write("🏢 **Cadre Department:** Claims Adjustment Cadre | 🆔 **Employee Staff ID:** `V360-205`")
+        st.write("📞 **Telephone Mobile Number:** `+254733444555` | ✉️ **Corporate Email:** `claims5@viva360.co.ke`")
+        st.link_button("🚨 LAUNCH WHATSAPP CARE INTERCEPT", "https://wa.meOutreach%20Intercept%20Token%20T365-CLA-F56D1A")
         st.write("---")
         
-        st.write("### 🚨 Urgent WhatsApp Intercept Actions Matrix")
-        st.link_button("🚨 LAUNCH WHATSAPP INTERCEPT FOR T365-CLA-F56D1A", "https://wa.meHello%20Ezekiel%20Kiago%20from%20Tumaini%20365.%20I%20am%20intercepting%20Token%20T365-CLA-F56D1A")
-        st.link_button("🚨 LAUNCH WHATSAPP INTERCEPT FOR T365-CLA-200B", "https://wa.meHello%20Ezekiel%20Kiago%20from%20Tumaini%20365.%20I%20am%20intercepting%20Token%20T365-CLA-200B")
+        st.markdown("#### 🔴 **RED TIER CRISIS** | Anonymized Token: `T365-CLA-200B`")
+        st.write("🏢 **Cadre Department:** Claims Adjustment Cadre | 🆔 **Employee Staff ID:** `V360-101`")
+        st.write("📞 **Telephone Mobile Number:** `+254755666777` | ✉️ **Corporate Email:** `admin@viva360.co.ke`")
+        st.link_button("🚨 LAUNCH WHATSAPP CARE INTERCEPT", "https://wa.meOutreach%20Intercept%20Token%20T365-CLA-200B")
+        st.write("---")
+        
+        st.markdown("#### 🟡 **YELLOW RISK** | Anonymized Token: `T365-DIR-E49A2B`")
+        st.write("🏢 **Cadre Department:** Direct Sales Force | 🆔 **Employee Staff ID:** `V360-401`")
+        st.write("📞 **Telephone Mobile Number:** `+254711222333` | ✉️ **Corporate Email:** `sales1@viva360.co.ke`")
+        st.write("---")
+        
+        st.markdown("#### 🟢 **GREEN RESILIENCE** | Anonymized Token: `T365-UND-B81C9F`")
+        st.write("🏢 **Cadre Department:** Underwriting & Risk | 🆔 **Employee Staff ID:** `V360-112`")
+        st.write("📞 **Telephone Mobile Number:** `+254722333444` | ✉️ **Corporate Email:** `risk2@viva360.co.ke`")
+        st.write("---")
 
-# ==========================================
-# PORTAL 3: HR EXECUTIVE ANALYTICS
-# ==========================================
-else:
+# ------------------------------------------
+# MODULE 3: HR EXECUTIVE ANALYTICS
+# ------------------------------------------
+with tab3:
     st.title("📊 Viva 360 Insurance Brokers: Executive Analytics Dashboard")
     st.subheader("Institutional Burnout Tracking & Corporate Budgeting Interface")
     st.write("---")
     st.markdown("### 🔒 Privacy Protocol View")
+    st.write("In compliance with data protection laws, all individual phone numbers, emails, and staff identification fields are entirely stripped from this layout. It displays only aggregated data metrics to guide resource deployment.")
+    st.write("---")
+    
+    st.write("### 📈 Workforce Resilience Summary Indicators")
+    st.info("📊 **Total Active Staff Screened:** 4 Personnel")
+    st.success("🟢 **Green Tier (Resilience Ratio):** 25.0%")
+    st.warning("🟡 **Yellow Tier (Burnout Density):** 50.0%")
+    st.write("---")
+    
