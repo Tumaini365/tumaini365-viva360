@@ -58,7 +58,8 @@ if app_mode == "1. Employee Secure Portal":
         staff_id = st.text_input("Enter Active Viva 365 Staff ID:", placeholder="e.g., V365-104")
         
     consent = st.checkbox("I consent to this screening under the Data Protection Act parameters to access my wellness roadmap.")
-if consent and staff_id:
+    
+    if consent and staff_id:
         st.write("---")
         st.write("#### Step 2: The Core Screening Matrix (DSM-5-TR Psychometric Tracker)")
         
@@ -77,7 +78,8 @@ if consent and staff_id:
         
         # PHQ-9 Question 9 Self-Harm Override Radar
         q9 = st.radio("⚠️ 7. Thoughts that you would be better off dead, or of hurting yourself in some way:", (0, 1, 2, 3), horizontal=True)
-if st.button("🚀 SUBMIT ANONYMOUS WELLNESS SCREENING"):
+        
+        if st.button("🚀 SUBMIT ANONYMOUS WELLNESS SCREENING"):
             # Compute total clinical metrics
             phq9_total = q1 + q2 + q3 + q9
             gad7_total = q4 + q5 + q6
@@ -105,19 +107,19 @@ if st.button("🚀 SUBMIT ANONYMOUS WELLNESS SCREENING"):
             st.info(f"**Your Non-Identifiable Security Token:** `{token}` (Write this down to track your progress)")
             
             st.write("### Your Personalized Automated Support Action Plan")
-if tier == "GREEN TIER":
+            if tier == "GREEN TIER":
                 st.success(box_text)
                 st.markdown("""
                 * **Your Action Roadmap:** Your baseline psychological resilience is optimal. Your data token has unlocked the **14-Day Digital Decompression Toolkit** containing deep breathing audio cues, sleep hygiene parameters, and structural time-blocking calendar patterns. 
                 * **Follow-up Check:** An automated verification link will be pushed to your portal on **{}** to ensure your boundaries are holding up.
                 """.format(d14.strftime('%B %d, %Y')))
-elif tier == "YELLOW TIER":
+            elif tier == "YELLOW TIER":
                 st.warning(box_text)
                 st.markdown("""
                 * **Your Action Roadmap:** Your profile highlights functional burnout and quota fatigue. To protect your productivity, your token has bypassed standard one-off training and matched you directly to this month's **Voluntary Virtual Wellness Booster Pod**. 
                 * **Continuous Follow-up:** Your pod will run accountability metrics on **{}** to track your coping structures.
                 """.format(d30.strftime('%B %d, %Y')))
-else:
+            else:
                 st.error(box_text)
                 st.markdown("""
                 * **Emergency Override Action Plan:** Your screening flags severe clinical or situational crisis conditions. **An immediate secure payload alert has been logged on Lead Psychologist Ezekiel Kiago's private console.**
@@ -135,21 +137,23 @@ elif app_mode == "2. Ezekiel's Clinical Panel":
     
     # Security lock to verify Lead Psychologist access
     pin = st.text_input("Enter Clinical Security Access PIN:", type="password")
-if pin == "365": # Simulation entry pin
+    if pin == "365":
         st.success("Access Granted. Secure encrypted database connection active.")
-        
         st.write("### 🗂️ Live Patient Triage & Continuous Follow-Up Registry")
-if st.session_state.clinical_registry.empty:
+        if st.session_state.clinical_registry.empty:
             st.warning("No entries currently recorded in the active screening stream.")
         else:
-            # Display full relational clinical tracking dataframe
-            st.dataframe(st.session_state.clinical_registry.drop(columns=["Staff_ID"])) # Hide Staff ID from general panel to enforce data protocol
+            st.dataframe(st.session_state.clinical_registry.drop(columns=["Staff_ID"]))
             
         st.write("### 🚨 Emergency Overrides Pending Intercept")
         red_cases = st.session_state.clinical_registry[st.session_state.clinical_registry["Triage_Tier"] == "RED TIER"]
-if not red_cases.empty:
+        if not red_cases.empty:
             for idx, row in red_cases.iterrows():
                 st.error(f"**CRITICAL ALERT:** Token `{row['Token']}` from `{row['Department']}` has matched Red Tier parameters. Required: Call back to encrypted verification matching user ID: `{row['Staff_ID']}`.")
         else:
             st.success("Zero critical emergency case overloads pending on your workspace matrix.")
-elif pin:
+    elif pin:
+        st.error("Invalid Security Credentials. Access Blocked under Data Protection Act framework.")
+
+# ====================================================================
+# PORTAL 3: HR EXECUTIVE ANALYTICS DASHBOARD (MACRO VISIBILITY)
