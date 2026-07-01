@@ -4,7 +4,7 @@ import uuid
 import pandas as pd
 
 # ==========================================
-# 1. LIVE APP CONFIGURATION & STYLE FRAMING
+# 1. APPLICATION INITIALIZATION & CONFIG
 # ==========================================
 st.set_page_config(
     page_title="Tumaini 365 Total Wellness Ecosystem", 
@@ -31,11 +31,6 @@ st.markdown("""
         background-color: #ffffff;
         box-shadow: 3px 3px 12px rgba(0,0,0,0.02);
     }
-    div.stButton > button {
-        border-radius: 6px !important;
-        font-weight: bold !important;
-        height: 3em !important;
-    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -45,9 +40,7 @@ if "clinical_registry" not in st.session_state:
         "Token", "Department", "Staff_ID", "PHQ9_Score", "GAD7_Score", "Triage_Tier", "Action_Milestone", "Day14_Date", "Day30_Date", "Status"
     ])
 
-# CRITICAL SECURITY FIX: Anchoring portal states inside memory so choices persist across reloads
-if "active_portal" not in st.session_state:
-    st.session_state.active_portal = "Staff"
+# Step tracking for the Staff assessment flow
 if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
@@ -68,42 +61,29 @@ def compute_triage_tier(phq9, gad7, self_harm):
 # 2. BRANDING SIDEBAR WITH LOGO SEARCH LINK
 # ==========================================
 with st.sidebar:
-    # Looks for 'tumaini_logo.jpg' inside your master GitHub repository folder to render visually
     st.image("https://githubusercontent.com", use_container_width=True, caption="Tumaini 365 - Your Hope Everyday")
     st.write("---")
     st.caption("Strategic Partner Platform:")
     st.markdown("🏢 **Viva 360 Insurance Brokers**")
     st.write("---")
-    st.info("💡 **Corporate Navigation Guide:** Tap any top module button in the main workspace to seamlessly switch between live databases. Your session state tracking is active.")
+    st.info("💡 **Corporate Navigation Guide:** Click through the visual tabs right in the main window workspace to toggle seamlessly between your live dashboards.")
 
 # ==========================================
-# 3. FIXED BUTTON MODULE WORKSPACE PORTALS
+# 3. LIVE TAB CONTROL INFRASTRUCTURE
 # ==========================================
 st.markdown("### 🏢 Active Interface Control Panel")
-col_p1, col_p2, col_p3 = st.columns(3)
 
-with col_p1:
-    if st.button("👥 1. Employee Secure Portal", use_container_width=True, type="primary" if st.session_state.active_portal == "Staff" else "secondary"):
-        st.session_state.active_portal = "Staff"
-        st.session_state.staff_step = 1
-        st.refresh() if hasattr(st, "refresh") else st.rerun()
-
-with col_p2:
-    if st.button("🔒 2. Ezekiel's Clinical Panel", use_container_width=True, type="primary" if st.session_state.active_portal == "Ezekiel" else "secondary"):
-        st.session_state.active_portal = "Ezekiel"
-        st.refresh() if hasattr(st, "refresh") else st.rerun()
-
-with col_p3:
-    if st.button("📊 3. HR Executive Analytics", use_container_width=True, type="primary" if st.session_state.active_portal == "HR" else "secondary"):
-        st.session_state.active_portal = "HR"
-        st.refresh() if hasattr(st, "refresh") else st.rerun()
-
-st.write("---")
+# Creating native tabs to eliminate page reload navigation bugs completely
+tab_staff, tab_ezekiel, tab_hr = st.tabs([
+    "👥 1. Employee Secure Portal", 
+    "🔒 2. Ezekiel's Clinical Panel", 
+    "📊 3. HR Executive Analytics"
+])
 
 # ==========================================
-# INTERFACE GATEWAY 1: EMPLOYEE SECURE PORTAL
+# TAB 1: EMPLOYEE SECURE PORTAL
 # ==========================================
-if st.session_state.active_portal == "Staff":
+with tab_staff:
     st.markdown("<div class='panel-frame'>", unsafe_allow_html=True)
     st.title("🌱 Tumaini Three Sixty Five Limited")
     st.subheader("Employee Secure Well-being Assessment Portal")
@@ -131,7 +111,7 @@ if st.session_state.active_portal == "Staff":
                 st.session_state.temp_dept = dept_input
                 st.session_state.temp_id = id_input
                 st.session_state.staff_step = 2
-                st.refresh() if hasattr(st, "refresh") else st.rerun()
+                st.rerun()
 
     elif st.session_state.staff_step == 2:
         st.write("Logged in as: " + str(st.session_state.temp_id) + " | Department: " + str(st.session_state.temp_dept))
@@ -150,7 +130,7 @@ if st.session_state.active_portal == "Staff":
         with col_nav_1:
             if st.button("⬅️ BACK TO STEP 1"):
                 st.session_state.staff_step = 1
-                st.refresh() if hasattr(st, "refresh") else st.rerun()
+                st.rerun()
                 
         with col_nav_2:
             if st.button("🚀 SUBMIT CONFIDENTIAL SCREENING"):
@@ -180,8 +160,23 @@ if st.session_state.active_portal == "Staff":
                 st.session_state.last_d30 = d30.strftime('%B %d, %Y')
                 
                 st.session_state.staff_step = 3
-                st.refresh() if hasattr(st, "refresh") else st.rerun()
+                st.rerun()
 
     elif st.session_state.staff_step == 3:
         st.success("🎉 Confidential Screening Completed Successfully.")
         st.info("Your Non-Identifiable Security Token: " + str(st.session_state.last_token))
+        st.write("### Your Personalized Support Action Plan")
+        
+        if st.session_state.last_tier == "GREEN TIER":
+            st.success(st.session_state.last_box)
+            st.write("Your Action Roadmap: Your data token has unlocked the 14-Day Digital Decompression Toolkit (deep breathing guides & structural time-blocking calendar patterns).")
+            st.info("📅 Follow-up Check: An automated link will push to your portal on " + str(st.session_state.last_d14) + " to check progress.")
+            
+        elif st.session_state.last_tier == "YELLOW TIER":
+            st.warning(st.session_state.last_box)
+            st.write("Your Action Roadmap: Your profile highlights functional burnout. Your token matches you directly to this month's voluntary Virtual Wellness Booster Pod.")
+            st.info("📅 Continuous Follow-up: Your booster pod will monitor accountability metrics on " + str(st.session_state.last_d30))
+            
+        elif st.session_state.last_tier == "RED TIER":
+            st.error(st.session_state.last_box)
+            st.write("Emergency Override Plan: Secure emergency alerts logged on Ezekiel Kiago's console. Click below for immediate clinical link routing.")
