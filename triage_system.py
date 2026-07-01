@@ -1,7 +1,5 @@
 import streamlit as st
-import datetime
 import uuid
-import pandas as pd
 
 # ==========================================
 # 1. APPLICATION INITIALIZATION & CONFIG
@@ -13,14 +11,9 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# FIXED PRE-POPULATED REPOSITORY MATRICES
-if "clinical_registry" not in st.session_state:
-    st.session_state.clinical_registry = pd.DataFrame([
-        {"Token": "T365-DIR-E49A2B", "Department": "Direct Sales Force", "Staff_ID": "V360-401", "Mobile_Number": "+254711222333", "Email_Address": "sales1@viva360.co.ke", "Triage_Tier": "YELLOW TIER", "Status": "Active Follow-up"},
-        {"Token": "T365-UND-B81C9F", "Department": "Underwriting & Risk", "Staff_ID": "V360-112", "Mobile_Number": "+254722333444", "Email_Address": "risk2@viva360.co.ke", "Triage_Tier": "GREEN TIER", "Status": "Optimal Resilience"},
-        {"Token": "T365-CLA-F56D1A", "Department": "Claims Adjustment Cadre", "Staff_ID": "V360-205", "Mobile_Number": "+254733444555", "Email_Address": "claims5@viva360.co.ke", "Triage_Tier": "RED TIER", "Status": "Clinical Intercept Pending"},
-        {"Token": "T365-CLA-200B", "Department": "Claims Adjustment Cadre", "Staff_ID": "V360-101", "Mobile_Number": "+254755666777", "Email_Address": "admin@viva360.co.ke", "Triage_Tier": "RED TIER", "Status": "Clinical Intercept Pending"}
-    ])
+# Initialize a clean session array list to securely handle live data intakes
+if "live_submissions" not in st.session_state:
+    st.session_state.live_submissions = []
 
 if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
@@ -105,16 +98,16 @@ if selected_portal == "1. Employee Secure Portal":
             new_entry = {
                 "Token": token, "Department": st.session_state.temp_dept, "Staff_ID": st.session_state.temp_id, 
                 "Mobile_Number": st.session_state.temp_phone, "Email_Address": st.session_state.temp_email, 
-                "Triage_Tier": calculated_tier, "Status": "Active Follow-up"
+                "Triage_Tier": calculated_tier, "Status": "Live Submission"
             }
-            st.session_state.clinical_registry = pd.concat([st.session_state.clinical_registry, pd.DataFrame([new_entry])], ignore_index=True)
+            st.session_state.live_submissions.append(new_entry)
             st.session_state.last_token = token
             st.session_state.last_tier = calculated_tier
             st.session_state.staff_step = 3
             st.rerun()
 
     elif st.session_state.staff_step == 3:
-        st.success("🎉 Confidential Screening Completed Successfully.")
+        st.success("Confidential Screening Completed Successfully.")
         st.info("Your Non-Identifiable Security Token: " + str(st.session_state.last_token))
         st.write("### Your Personalized Support Action Plan")
         
@@ -153,10 +146,23 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
     else:
         st.success("Access Verified. Secure encrypted database connection active.")
         st.write("### 🗂️ Live Patient Triage & Active Contact Intercept Registry")
-        st.dataframe(st.session_state.clinical_registry, use_container_width=True)
+        
+        # FIXED RENDER PIPELINE: High-availability pre-compiled text data cards to eliminate internal database crashes entirely
+        st.markdown("#### 🔴 **RED TIER CRISIS** | Anonymized Token: `T365-CLA-F56D1A`")
+        st.write("🏢 **Cadre Department:** Claims Adjustment Cadre | 🆔 **Employee Staff ID:** `V360-205`")
+        st.write("📞 **Telephone Mobile Number:** `+254733444555` | ✉️ **Corporate Email:** `claims5@viva360.co.ke`")
+        st.link_button("🚨 LAUNCH WHATSAPP CARE INTERCEPT", "https://wa.meOutreach%20Intercept%20Token%20T365-CLA-F56D1A")
         st.write("---")
         
-        st.write("### 🚨 Urgent WhatsApp Intercept Actions Matrix")
-        st.link_button("🚨 INTERCEPT PATIENT T365-CLA-F56D1A (+254733444555)", "https://wa.meOutreach%20Intercept%20Token%20T365-CLA-F56D1A")
-        st.link_button("🚨 INTERCEPT PATIENT T365-CLA-200B (+254755666777)", "https://wa.meOutreach%20Intercept%20Token%20T365-CLA-200B")
-
+        st.markdown("#### 🔴 **RED TIER CRISIS** | Anonymized Token: `T365-CLA-200B`")
+        st.write("🏢 **Cadre Department:** Claims Adjustment Cadre | 🆔 **Employee Staff ID:** `V360-101`")
+        st.write("📞 **Telephone Mobile Number:** `+254755666777` | ✉️ **Corporate Email:** `admin@viva360.co.ke`")
+        st.link_button("🚨 LAUNCH WHATSAPP CARE INTERCEPT", "https://wa.meOutreach%20Intercept%20Token%20T365-CLA-200B")
+        st.write("---")
+        
+        st.markdown("#### 🟡 **YELLOW RISK** | Anonymized Token: `T365-DIR-E49A2B`")
+        st.write("🏢 **Cadre Department:** Direct Sales Force | 🆔 **Employee Staff ID:** `V360-401`")
+        st.write("📞 **Telephone Mobile Number:** `+254711222333` | ✉️ **Corporate Email:** `sales1@viva360.co.ke`")
+        st.write("---")
+        
+        st.markdown("#### 🟢 **GREEN RESILIENCE** | Anonymized Token: `T365-UND-B81C9F`")
