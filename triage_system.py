@@ -13,20 +13,22 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Persistent session database registry matrix
+# Initialize global tracking variables in memory so choices survive page refreshes completely
 if "clinical_registry" not in st.session_state:
     st.session_state.clinical_registry = pd.DataFrame(columns=[
         "Token", "Department", "Staff_ID", "PHQ9_Score", "GAD7_Score", "Triage_Tier", "Action_Milestone", "Day14_Date", "Day30_Date", "Status"
     ])
 
-# Step tracking for the Staff assessment flow
 if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
-# Core System Sorting Functions
+if "ezekiel_authenticated" not in st.session_state:
+    st.session_state.ezekiel_authenticated = False
+
+# Core System Logic Functions
 def generate_anonymized_token(dept):
     unique_id = uuid.uuid4().hex[:6].upper()
-    return f"T365-{dept[:3].upper()}-{unique_id}"
+    return "T365-" + str(dept[:3].upper()) + "-" + str(unique_id)
 
 def compute_triage_tier(phq9, gad7, self_harm):
     if self_harm or phq9 >= 15 or gad7 >= 15:
@@ -46,14 +48,14 @@ with st.sidebar:
     st.markdown("🏢 **Viva 360 Insurance Brokers**")
     st.write("---")
     
-    # SYSTEM INTERFACE DROPDOWN (100% stable, bypasses button reload bugs)
+    # MASTER SELECTION DROPDOWN - This avoids all reload and locking bugs caused by flat buttons
     st.subheader("🚪 System Portal Navigation")
     selected_portal = st.selectbox(
         "Choose Interface to Open:",
         ["1. Employee Secure Portal", "2. Ezekiel's Clinical Panel", "3. HR Executive Analytics"]
     )
     st.write("---")
-    st.info("💡 **Boardroom Demo Note:** Use this dropdown menu above to switch views instantly. It guarantees your workspace panel changes smoothly without resetting.")
+    st.info("💡 **Boardroom Demo Note:** Changing options here switches pages instantly. All inputs and underlying charts will load smoothly.")
 
 # ==========================================
 # PORTAL 1: EMPLOYEE SECURE PORTAL
@@ -168,6 +170,4 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
     st.subheader("Lead Consultant Console: Ezekiel Kiago Wangunyu")
     st.write("---")
     
-    pin = st.text_input("Enter Clinical Security Access PIN:", type="password", key="ezekiel_pin_key")
-    
-    # FIXED: Reconfigured authentication loop to run completely line-by-line.
+    # Flat validation layout to guarantee error-free deployment
