@@ -26,16 +26,33 @@ if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
 # ==========================================
-# 2. SIDEBAR NAVIGATION WITH PRO UI TEXT HEADERS
+# 2. SIDEBAR NAVIGATION WITH DIRECT LOGO CODE
 # ==========================================
 with st.sidebar:
-    # FIXED: Using zero-asset bold headers to prevent broken layout blocks completely
-    st.markdown("## 🏢 TUMAINI 365")
-    st.markdown("### `TOTAL WELLNESS ECOSYSTEM`")
-    st.caption("✨ Your Hope Everyday")
+    # UNBLOCKABLE LOGO CODE: This renders your precise brand colors directly via browser code paths.
+    # It completely bypasses internet loading, file names, or folder paths.
+    logo_svg = """
+    <div style="text-align: center; margin-bottom: 20px;">
+        <svg width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://w3.org">
+            <!-- Circular Background/Shield -->
+            <circle cx="50" cy="50" r="45" fill="#1A1528" stroke="#3A2A6B" stroke-width="2"/>
+            <!-- Sprout / Hope Stem Leaf Shape -->
+            <path d="M50 75V45" stroke="#90E0EF" stroke-width="5" stroke-linecap="round"/>
+            <path d="M50 55C60 55 70 45 70 35C70 25 55 25 50 45C45 25 30 25 30 35C30 45 40 55 50 55Z" fill="#7B2CBF"/>
+            <!-- Internal Glow Accents -->
+            <path d="M50 45C52 35 62 30 62 35C62 40 54 45 50 45Z" fill="#90E0EF" opacity="0.6"/>
+            <!-- Ground Base Line -->
+            <path d="M30 75H70" stroke="#90E0EF" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <h3 style="color: #7B2CBF; font-family: sans-serif; margin-top: 5px; margin-bottom: 0px; font-weight: bold;">TUMAINI 365</h3>
+        <p style="color: #6C757D; font-family: sans-serif; font-size: 12px; margin-top: 0px;">Your Hope Everyday</p>
+    </div>
+    """
+    st.markdown(logo_svg, unsafe_allow_html=True)
     st.write("---")
-    st.markdown("🤝 **Strategic Partner Platform:**")
-    st.markdown("#### **Viva 360 Insurance Brokers**")
+    
+    # Partner Brand Verification Title Block
+    st.markdown("🏢 **Viva 360 Insurance Brokers**")
     st.write("---")
     
     st.subheader("🚪 System Portal Navigation")
@@ -144,25 +161,3 @@ else:
     with col_m2:
         st.metric("Green Tier (Resilience Ratio)", "25.0%")
     with col_m3:
-        st.metric("Yellow Tier (Burnout Density)", "50.0%")
-    st.write("---")
-    
-    st.write("### 📑 Departmental Burnout Distribution Metrics")
-    col_chart_1, col_chart_2, col_chart_3 = st.columns(3)
-    with col_chart_1:
-        st.write("🔥 **Direct Sales Force Grouping**")
-        st.write("- Green Resilience: 1 Staff")
-        st.write("- Yellow Burnout Risk: 2 Staff")
-        st.write("- Red Crisis Urgency: 0 Staff")
-    with col_chart_2:
-        st.write("⏳ **Underwriting & Risk Grouping**")
-        st.write("- Green Resilience: 1 Staff")
-        st.write("- Yellow Burnout Risk: 0 Staff")
-        st.write("- Red Crisis Urgency: 0 Staff")
-    with col_chart_3:
-        st.write("🚨 **Claims Adjustment Cadre**")
-        st.write("- Green Resilience: 0 Staff")
-        st.write("- Yellow Burnout Risk: 0 Staff")
-        st.write("- Red Crisis Urgency: 1 Staff")
-        
-    st.write("---")
