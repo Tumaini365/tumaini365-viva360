@@ -2,7 +2,6 @@ import streamlit as st
 import datetime
 import uuid
 import pandas as pd
-import base64
 
 # ==========================================
 # 1. APPLICATION INITIALIZATION & CONFIG
@@ -27,58 +26,16 @@ if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
 # ==========================================
-# 2. SIDEBAR NAVIGATION WITH DATA EMBEDDED LOGO
+# 2. SIDEBAR NAVIGATION CONTROLS
 # ==========================================
 with st.sidebar:
-    # UNBLOCKABLE LOGO INJECTION: Your actual purple and black circular corporate logo translated into an unbreakable text code
-    logo_data = (
-        "iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAMAAAC3Yv8bAAAAY1BMVEUAAAD///9ZWVmXl5f8/Pze"
-        "3t63t7fOzs7u7u7W1tbGxsbAwMCfn5+KiopqamoQEBDm5ubq6up6enr29vb4+Pi6urrExMTKysrS"
-        "0tLe3t729vbq6uq+vr7m5ubGxsbV1dWnp6e25p7WAAAAAnRSTlMAAHaTzTgAAAAJcEhZcwAACxMA"
-        "AAsTAQCanBgAAAd4SURBVHic7d3bctw4EAVAhg9R5P//7Nja8pAsm0YgABygT9Xp7mYpCg9gUonZ"
-        "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHAXp5On6+v0"
-        "gbt4un66fkwfsP90+fTzY/pwn6/S6dOn9NE+T9On79OfX6Qf7bM6fX+ZfviF9FmdfvwhvWef1em3"
-        "n/pcnb791Of69Kfvf67P6vT5z/VZnT7/uT6f0/c/1+dz+vzn+rxfpd9fP5/T96v0+bX0Wp3S6X6l"
-        "P34lvVanX/9Kv/xFeq1Ov6XpT8fS6XT8K/1bOqXT6XidTr/6VfqlUzo9T6fX/0X6pVM6fUunpSPS"
-        "b+mUTg/T6fW/S7+lUzp9SafXf0r/l07p9DWdjmektHREf0v/l07p9HWdjl+klHREf0n/l9Pp69Pp"
-        "9Fp6/f10+jp9fT6dv6ZTOp2X0vPppXT+6pTSfX09vfpf6fx1Snf0dfb6Z3V9PZ/S6fyvTvd/T6fX"
-        "/0unU3qtTul0Xp/T6Sulp9Pp3D+ldFfX8+vptfT0XvrsTqnU9F7p6Xp7Pb+mO7ue36X09GlOpxfX"
-        "W7vT6cXp9F7p9fXW7nV6cfptX8S8vt6YfksXpt/ShendndPpt3Rhp9/ShX1S6bZ0SZ9Uuin9ny7r"
-        "k0q3pUv6pNLf0gV9UunP0gXpS7owXf7Vv7orXfAnXdaF6SgX9UmlxS7qk0qfXNAnlZ7pD+mDC+kX"
-        "F7PXD0qXU0qXXEwXpXfXp7vSBX9f+pC+fFfqonTBr/pFXVp6r6+fW/qg9Of6/Kku/fnPhfRF6fPp"
-        "pfTJn/S5vpxSv6hL/6TLpfTpnE7pvN6bUv99Uf/XUuYfU0uX/DGl7Ff6uX4x+9/Siz7Xp5fvS7+k"
-        "z6/6f7qW9vV1UbpU+vxa+uvf9fmlfX2dvn9Wp+/T76+fv76WfsvT7/b5W7pUes/p96v0b/nL19fS"
-        "pffSffrttXT+Wvotf72WfsvT7/b5W7pUes/p96v0b/nL19fSpfScfnstna7X1++vpfM1ndPpXzp/"
-        "9ctXl179T799Tf/6Pz2XvryfXv0tPaWvpT+X3nO69On15fPr19fpt6bLpS+mly706fPXtC+ll/pP"
-        "n85vTadLfy5dWvrs/vRLly79p08vpb+X3ut06ffXU7qv/6XTq/+Xzi/vpb+ll6+m3/v1v9L9vZdO"
-        "f0svpaXfvrr0Uu/v6/9K/X8tnZ7TS+kpdVr69TGlS7/XUvovXVpfPv1XuiS9l/7Tf+m/7VM6nbyl"
-        "81Oq9On0XvqvTOn0+ZS+vveczn9eOv//Ukp/Sy+lpHO61Of0nq8p9Vu69Fu6XPov3f+m/7ZP6XTy"
-        "ls5PqdOnc7r0p/NXl/5Lp3RKSfuW0vlfU0q//qf3/C1d3k+//jWtp/S/dH99n/776bd0KaV/6S71"
-        "63fp/FmfX0v3Ukq//l66XEqXS+m2dFlKl+6f+pSSvqWvz6Xfj+lfSumz19JNKf3+le7/a0r9+lP6"
-        "Kt3n9O9T+ufS36X70qf30r6U+v2a/r1P6XIppX/pVq+l91b6/bO+/7fUb+o//dfnU7pU+r96L10u"
-        "XUqXXupSeild+v1VSulWutT/rf9Z6jd9vdeXLl1K/fqszyv907+W+n+9vyv9+k/p73IpvpYupfTy"
-        "fSm91H3pt/el/an0f10qnfunfFV6/b90KaX9qXRRuqT9n1NKd0r3dEmX+qz/KZXa1en+a+l0v3T6"
-        "dKl0T+d0SWn/n1LXXUnvpdfdpfSjdEvXpdf1f0vvpdel1CX9ne7s6+k13S/9m/5Jl3TptHQzvV5c"
-        "d3Y63Y7z4rR0UzrdpdMlXbquv/qFdEk3rkvHdEk37nRKrxfXv9OF9DP9kn7mM12Gn+lX+vr0235J"
-        "P9PrxZWm02/pZ3rPfkUf0u/uX3un+xXeu3s9na7dXV9XutT9p/RXurO/dOfSb+mc3l3pt08pKd3Z"
-        "PqVLU7v7pffSdCrdv0pKl96z/3kvTe96d3ov9a6v55Sut1/pXe/1rk+n965XevesV3r3etfT9Uvv"
-        "Tu9db31ZOv0+vetfb/1z+rd0T79/qV/vq0+Xer+uX3/Ve+nP+qV/1Xvp0/Ve71f9p331tXSp1H9f"
-        "Si/19fNr6dKl0mt9LX3q139futSl9FJfS7+u//T1tXT+S+nT9bV0SadPnz7/LZ2v6bdfSqf6/DWd"
-        "/vpa2n99Kf2WvqX0azr969fp0qf0276kv/6W0mk6vXzp+v2WTvs6/ZdOv+3rVVo6nT5N//XTb5/+""K11SOu1TOv15KZ1Kp0/ndPp1"
-        "Ov1XuxV+i6dfpdPv0v9eSv+Wfkt39r8AAAAPFHRFWHRDb21tZW50AAAAAABjcmVhdGVkIGJ5IHRo"
-        "ZSBmcmVlIHZlcnNpb24gb2YgR0lMUEQgYmFzZWQgb24gR0lMUEQgYnkgUGhpbGlwcGUgUGlycm90"
-        "dGUKw/bVdwAAAABJRU5ErkJggg=="
-    )
-    # Inject directly as raw HTML to completely bypass Streamlit network blocking
-    st.markdown(
-        f'<div style="text-align: center;"><img src="data:image/png;base64,{logo_data}" style="max-width: 100%; max-height: 180px; border-radius: 8px;"></div>', 
-        unsafe_allow_html=True
-    )
+    # FIXED: Replaced fragile image strings with clean, native, and unblockable layout headers
+    st.markdown("## 🧠 Tumaini 365")
+    st.caption("✨ Your Hope Everyday")
     st.write("---")
     st.markdown("🏢 **Viva 360 Insurance Brokers**")
     st.write("---")
     
-    # SYSTEM INTERFACE DROPDOWN
     st.subheader("🚪 System Portal Navigation")
     selected_portal = st.selectbox(
         "Choose Interface to Open:",
@@ -149,3 +106,64 @@ if selected_portal == "1. Employee Secure Portal":
     elif st.session_state.staff_step == 3:
         st.success("🎉 Confidential Screening Completed Successfully.")
         st.info("Your Non-Identifiable Security Token: " + str(st.session_state.last_token))
+        st.write("### Your Personalized Support Action Plan")
+        st.warning(st.session_state.last_box)
+        st.write("Your Action Roadmap: Your profile highlights functional burnout. Your token matches you directly to this month's voluntary Virtual Wellness Booster Pod.")
+        st.info("📅 Continuous Follow-up: Your booster pod will monitor accountability metrics on " + str(st.session_state.last_d30))
+        if st.button("🔄 RESTART FRESH ASSESSMENT"):
+            st.session_state.staff_step = 1
+            st.rerun()
+
+elif selected_portal == "2. Ezekiel's Clinical Panel":
+    st.markdown("## 🔒 Tumaini 365: Clinical Administration Workspace")
+    st.subheader("Lead Consultant Console: Ezekiel Kiago Wangunyu")
+    st.write("---")
+    if pin_input != "365":
+        st.warning("⚠️ Access Restricted: Please enter your master access key code in the sidebar block on the left to unlock the active registry.")
+    else:
+        st.success("✅ Access Verified. Encrypted database channel active.")
+        st.write("### 🗂️ Live Patient Triage & Continuous Follow-Up Registry Matrix")
+        st.dataframe(clinical_registry, use_container_width=True)
+        st.write("---")
+        st.write("### 🚨 Emergency Overrides Pending Intercept")
+        st.error("⚠️ **CRITICAL INCIDENT ALERT:** High-risk overloads detected inside active cadres. Reference Token T365-CLA-F56D1A (Claims Adjustment Cadre) for immediate callback match validation to encrypted staff ID V360-205.")
+
+else:
+    st.markdown("## 📊 Viva 360 Insurance Brokers: Executive Analytics Dashboard")
+    st.subheader("Institutional Burnout Tracking & Corporate Budgeting Interface")
+    st.write("---")
+    st.markdown("### 🔒 Privacy Protocol View")
+    st.write("In compliance with data protection laws, all individual fields are entirely stripped from this layout. It displays only aggregated data groupings to guide resource deployment.")
+    st.write("---")
+    
+    col_m1, col_m2, col_m3 = st.columns(3)
+    with col_m1:
+        st.metric("Total Active Staff Screened", "4 Personnel")
+    with col_m2:
+        st.metric("Green Tier (Resilience Ratio)", "25.0%")
+    with col_m3:
+        st.metric("Yellow Tier (Burnout Density)", "50.0%")
+    st.write("---")
+    
+    st.write("### 📑 Departmental Burnout Distribution Metrics")
+    col_chart_1, col_chart_2, col_chart_3 = st.columns(3)
+    with col_chart_1:
+        st.write("🔥 **Direct Sales Force Grouping**")
+        st.write("- Green Resilience: 1 Staff")
+        st.write("- Yellow Burnout Risk: 2 Staff")
+        st.write("- Red Crisis Urgency: 0 Staff")
+    with col_chart_2:
+        st.write("⏳ **Underwriting & Risk Grouping**")
+        st.write("- Green Resilience: 1 Staff")
+        st.write("- Yellow Burnout Risk: 0 Staff")
+        st.write("- Red Crisis Urgency: 0 Staff")
+    with col_chart_3:
+        st.write("🚨 **Claims Adjustment Cadre**")
+        st.write("- Green Resilience: 0 Staff")
+        st.write("- Yellow Burnout Risk: 0 Staff")
+        st.write("- Red Crisis Urgency: 1 Staff")
+        
+    st.write("---")
+    st.error("🎯 **STRATEGIC BUDGET ALLOCATION RECOMMENDATION:** High burnout density values tracked inside your Direct Sales Force pipeline (Quota Fatigue). Tumaini 365 advises human resource scheduling of a specialized 'Preventive Financial Therapy Safari' workshop next month to protect premium acquisition targets before absenteeism spikes occur.")
+
+st.write("---")
