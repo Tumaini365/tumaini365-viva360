@@ -13,7 +13,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# FIXED PRE-POPULATED MATRICES TO SURVIVE ALL REFRESHEs
+# FIXED PRE-POPULATED MATRICES TO SURVIVE ALL REFRESHES
 if "clinical_registry" not in st.session_state:
     st.session_state.clinical_registry = pd.DataFrame([
         {"Token": "T365-DIR-E49A2B", "Department": "Direct Sales Force", "Staff_ID": "V360-401", "Mobile_Number": "+254711222333", "Email_Address": "sales1@viva360.co.ke", "Triage_Tier": "YELLOW TIER", "Status": "Active Follow-up"},
@@ -77,7 +77,7 @@ for idx, row in st.session_state.clinical_registry.iterrows():
     tier_badge = "🔴 RED TIER CRISIS" if row['Triage_Tier'] == "RED TIER" else "🟡 YELLOW RISK" if row['Triage_Tier'] == "YELLOW TIER" else "🟢 GREEN RESILIENCE"
     st.markdown(f"#### **{tier_badge}** | Anonymized Token: `{row['Token']}`")
     st.write(f"🏢 **Cadre Department:** {row['Department']} | 🆔 **Employee Staff ID:** `{row['Staff_ID']}`")
-    st.write(f"📞 **Telephone Mobile Number:** `{row['Mobile_Number']}` | ✉专 **Corporate Email:** `{row['Email_Address']}`")
+    st.write(f"📞 **Telephone Mobile Number:** `{row['Mobile_Number']}` | ✉️ **Corporate Email:** `{row['Email_Address']}`")
     
     if row['Triage_Tier'] == "RED TIER":
         crisis_text = f"Hello, this is Ezekiel Kiago from Tumaini 365. I am reaching out regarding your secure wellness alert flagged under Token {row['Token']}. Let us connect immediately."
@@ -109,7 +109,7 @@ st.write("- Green Resilience: 0 Staff | Yellow Burnout Risk: 2 Staff | Red Crisi
 st.markdown("#### ⏳ **Underwriting & Risk Grouping**")
 st.write("- Green Resilience: 1 Staff | Yellow Burnout Risk: 0 Staff | Red Crisis Urgency: 0 Staff")
 st.markdown("#### 🚨 **Claims Adjustment Cadre**")
-    st.write("- Green Resilience: 0 Staff | Yellow Burnout Risk: 0 Staff | Red Crisis Urgency: 2 Staff")
+st.write("- Green Resilience: 0 Staff | Yellow Burnout Risk: 0 Staff | Red Crisis Urgency: 2 Staff")
 st.write("---")
 st.error("🎯 **STRATEGIC BUDGET ALLOCATION RECOMMENDATION:** High burnout density values tracked inside your Direct Sales Force pipeline (Quota Fatigue). Tumaini 365 advises human resource scheduling of a specialized 'Preventive Financial Therapy Safari' workshop next month to protect premium acquisition targets before absenteeism spikes occur.")
 
