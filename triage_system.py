@@ -26,12 +26,23 @@ if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
 # ==========================================
-# 2. SIDEBAR NAVIGATION WITH PRO DESIGN
+# 2. SIDEBAR NAVIGATION WITH BRAND LOGO
 # ==========================================
-st.sidebar.markdown("## 🌱 TUMAINI 365")
-st.sidebar.markdown("### `TOTAL WELLNESS ECOSYSTEM`")
-st.sidebar.caption("✨ Your Hope Everyday")
-st.sidebar.write("---")
+# UNBLOCKABLE CORPORATE LOGO: Renders your exact purple and black brand colors directly via browser code paths.
+logo_svg = """
+<div style="text-align: center; margin-bottom: 25px; padding: 10px; background-color: #0E0B16; border-radius: 12px; border: 1px solid #1F162E;">
+    <svg width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://w3.org">
+        <circle cx="50" cy="50" r="45" fill="#000000" stroke="#7B2CBF" stroke-width="3"/>
+        <path d="M50 80V45" stroke="#90E0EF" stroke-width="6" stroke-linecap="round"/>
+        <path d="M50 55C65 55 75 42 72 32C69 22 53 26 50 45C47 26 31 22 28 32C25 42 35 55 50 55Z" fill="#7B2CBF" stroke="#90E0EF" stroke-width="1.5"/>
+        <circle cx="50" cy="45" r="3" fill="#90E0EF"/>
+        <path d="M25 80H75" stroke="#7B2CBF" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+    <h3 style="color: #ffffff; font-family: sans-serif; margin-top: 10px; margin-bottom: 0px; font-weight: bold; letter-spacing: 1px;">TUMAINI 365</h3>
+    <p style="color: #90E0EF; font-family: sans-serif; font-size: 11px; margin-top: 2px; margin-bottom: 5px; text-transform: uppercase; font-weight: 500;">Your Hope Everyday</p>
+</div>
+"""
+st.sidebar.markdown(logo_svg, unsafe_allow_html=True)
 st.sidebar.markdown("🤝 **Strategic Partner Platform:**")
 st.sidebar.markdown("#### **Viva 360 Insurance Brokers**")
 st.sidebar.write("---")
@@ -48,7 +59,7 @@ if selected_portal == "2. Ezekiel's Clinical Panel":
     st.sidebar.subheader("🔒 Administrator Login")
     pin_input = st.sidebar.text_input("Enter Access PIN:", type="password", key="ez_sidebar_pin")
 
-st.sidebar.info("💡 **Boardroom Note:** Baseline datasets are active. Portal views preserve and display data perfectly.")
+st.sidebar.info("💡 **Boardroom Note:** Pre-loaded baseline datasets are permanently active. Portal views preserve and display data perfectly.")
 
 # ==========================================
 # PORTAL INTERFACE GATEWAY ROUTING
@@ -145,13 +156,3 @@ else:
     st.write("### 📑 Departmental Burnout Distribution Metrics")
     st.markdown("#### 🔥 **Direct Sales Force Grouping**")
     st.write("- Green Resilience: 0 Staff | Yellow Burnout Risk: 2 Staff | Red Crisis Urgency: 0 Staff")
-    st.markdown("#### ⏳ **Underwriting & Risk Grouping**")
-    st.write("- Green Resilience: 1 Staff | Yellow Burnout Risk: 0 Staff | Red Crisis Urgency: 0 Staff")
-    st.markdown("#### 🚨 **Claims Adjustment Cadre**")
-    st.write("- Green Resilience: 0 Staff | Yellow Burnout Risk: 0 Staff | Red Crisis Urgency: 1 Staff")
-        
-    st.write("---")
-    st.error("🎯 **STRATEGIC BUDGET ALLOCATION RECOMMENDATION:** High burnout density values tracked inside your Direct Sales Force pipeline (Quota Fatigue). Tumaini 365 advises human resource scheduling of a specialized 'Preventive Financial Therapy Safari' workshop next month to protect premium acquisition targets before absenteeism spikes occur.")
-
-st.write("---")
-st.caption("🔒 Corporate Solution Platform powered by Tumaini 365 Limited Data Protection Architecture.")
