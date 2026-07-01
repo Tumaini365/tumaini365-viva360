@@ -26,39 +26,26 @@ if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
 # ==========================================
-# 2. SIDEBAR NAVIGATION WITH DIRECT LOGO CODE
+# 2. SIDEBAR NAVIGATION WITH PRO DESIGN
 # ==========================================
 with st.sidebar:
-    logo_svg = """
-    <div style="text-align: center; margin-bottom: 20px;">
-        <svg width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://w3.org">
-            <circle cx="50" cy="50" r="45" fill="#1A1528" stroke="#3A2A6B" stroke-width="2"/>
-            <path d="M50 75V45" stroke="#90E0EF" stroke-width="5" stroke-linecap="round"/>
-            <path d="M50 55C60 55 70 45 70 35C70 25 55 25 50 45C45 25 30 25 30 35C30 45 40 55 50 55Z" fill="#7B2CBF"/>
-            <path d="M50 45C52 35 62 30 62 35C62 40 54 45 50 45Z" fill="#90E0EF" opacity="0.6"/>
-            <path d="M30 75H70" stroke="#90E0EF" stroke-width="3" stroke-linecap="round"/>
-        </svg>
-        <h3 style="color: #7B2CBF; font-family: sans-serif; margin-top: 5px; margin-bottom: 0px; font-weight: bold;">TUMAINI 365</h3>
-        <p style="color: #6C757D; font-family: sans-serif; font-size: 12px; margin-top: 0px;">Your Hope Everyday</p>
-    </div>
-    """
-    st.markdown(logo_svg, unsafe_allow_html=True)
+    st.markdown("## 🌱 TUMAINI 365")
+    st.markdown("### `TOTAL WELLNESS ECOSYSTEM`")
+    st.caption("✨ Your Hope Everyday")
     st.write("---")
-    st.markdown("🏢 **Viva 360 Insurance Brokers**")
+    st.markdown("🤝 **Strategic Partner Platform:**")
+    st.markdown("#### **Viva 360 Insurance Brokers**")
     st.write("---")
-    
     st.subheader("🚪 System Portal Navigation")
     selected_portal = st.selectbox(
         "Choose Interface to Open:",
         ["1. Employee Secure Portal", "2. Ezekiel's Clinical Panel", "3. HR Executive Analytics"]
     )
     st.write("---")
-    
     pin_input = ""
     if selected_portal == "2. Ezekiel's Clinical Panel":
         st.subheader("🔒 Administrator Login")
         pin_input = st.text_input("Enter Access PIN:", type="password", key="ez_sidebar_pin")
-        
     st.info("💡 **Boardroom Note:** Baseline datasets are active. Portal views preserve and display data perfectly.")
 
 # ==========================================
@@ -68,7 +55,6 @@ if selected_portal == "1. Employee Secure Portal":
     st.markdown("## 🌱 Tumaini Three Sixty Five Limited")
     st.subheader("Employee Secure Well-being Assessment Portal")
     st.write("---")
-    
     if st.session_state.staff_step == 1:
         st.markdown("### 🔒 Data Protection & Confidentiality Declaration")
         st.write("In strict compliance with the Data Protection Act of Kenya, your screening inputs are treated as sensitive personal data. Your specific clinical scores are entirely hidden from Viva 360 HR and executive management. This system utilizes advanced token pseudonymization to guarantee absolute anonymity.")
@@ -79,7 +65,6 @@ if selected_portal == "1. Employee Secure Portal":
         with col_b:
             id_input = st.text_input("Enter Active Viva 360 Staff ID:", placeholder="e.g., V360-104", key="staff_id_num")
         consent_input = st.checkbox("I consent to this screening under the Data Protection Act parameters to access my wellness roadmap.", key="staff_consent")
-        
         if st.button("➡️ PROCEED TO ASSESSMENT (NEXT STEP)"):
             if id_input and consent_input:
                 st.session_state.temp_dept = dept_input
@@ -88,7 +73,6 @@ if selected_portal == "1. Employee Secure Portal":
                 st.rerun()
             else:
                 st.error("Please enter your Staff ID and accept the Data Protection consent box.")
-
     elif st.session_state.staff_step == 2:
         st.write("Logged in as: " + str(st.session_state.temp_id) + " | Department: " + str(st.session_state.temp_dept))
         st.write("#### Step 2: The Core Screening Matrix (DSM-5-TR Psychometric Tracker)")
@@ -113,7 +97,6 @@ if selected_portal == "1. Employee Secure Portal":
                 st.session_state.last_d30 = "July 31, 2026"
                 st.session_state.staff_step = 3
                 st.rerun()
-
     elif st.session_state.staff_step == 3:
         st.success("🎉 Confidential Screening Completed Successfully.")
         st.info("Your Non-Identifiable Security Token: " + str(st.session_state.last_token))
@@ -157,10 +140,19 @@ else:
     st.write("---")
     
     st.write("### 📑 Departmental Burnout Distribution Metrics")
-    col_chart_1, col_chart_2, col_chart_3 = st.columns(3)
-    with col_chart_1:
-        st.write("🔥 **Direct Sales Force Grouping**")
-        st.write("- Green Resilience: 0 Staff")
-        st.write("- Yellow Burnout Risk: 2 Staff")
-        st.write("- Red Crisis Urgency: 0 Staff")
-    with col_chart_2:
+    
+    # REMOVED COLUMNS HERE TO PREVENT BROKEN BLOCK LAYOUT VULNERABILITIES PERMANENTLY
+    st.markdown("#### 🔥 **Direct Sales Force Grouping**")
+    st.write("- Green Resilience: 0 Staff | Yellow Burnout Risk: 2 Staff | Red Crisis Urgency: 0 Staff")
+    
+    st.markdown("#### ⏳ **Underwriting & Risk Grouping**")
+    st.write("- Green Resilience: 1 Staff | Yellow Burnout Risk: 0 Staff | Red Crisis Urgency: 0 Staff")
+    
+    st.markdown("#### 🚨 **Claims Adjustment Cadre**")
+    st.write("- Green Resilience: 0 Staff | Yellow Burnout Risk: 0 Staff | Red Crisis Urgency: 1 Staff")
+        
+    st.write("---")
+    st.error("🎯 **STRATEGIC BUDGET ALLOCATION RECOMMENDATION:** High burnout density values tracked inside your Direct Sales Force pipeline (Quota Fatigue). Tumaini 365 advises human resource scheduling of a specialized 'Preventive Financial Therapy Safari' workshop next month to protect premium acquisition targets before absenteeism spikes occur.")
+
+st.write("---")
+st.caption("🔒 Corporate Solution Platform powered by Tumaini 365 Limited Data Protection Architecture.")
