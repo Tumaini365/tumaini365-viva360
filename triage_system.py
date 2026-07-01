@@ -26,10 +26,10 @@ if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
 # ==========================================
-# 2. SIDEBAR NAVIGATION CONTROLS
+# 2. SIDEBAR NAVIGATION WITH SECURE DESIGN
 # ==========================================
 with st.sidebar:
-    # FIXED: Sourced a highly resilient, universal vector graphic link that is immune to browser blocks and loads instantly
+    # RECTIFIED LOGO INFRASTRUCTURE: Replaced raw image file URLs with clean, native text elements
     st.markdown("## 🌱 Tumaini 365")
     st.caption("Your Hope Everyday")
     st.write("---")
@@ -115,7 +115,7 @@ if selected_portal == "1. Employee Secure Portal":
             st.rerun()
 
 elif selected_portal == "2. Ezekiel's Clinical Panel":
-    st.title("🔒 Tumaini 365: Clinical Administration Workspace")
+    st.markdown("## 🔒 Tumaini 365: Clinical Administration Workspace")
     st.subheader("Lead Consultant Console: Ezekiel Kiago Wangunyu")
     st.write("---")
     if pin_input != "365":
@@ -129,7 +129,7 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
         st.error("⚠️ **CRITICAL INCIDENT ALERT:** High-risk overloads detected inside active cadres. Reference Token T365-CLA-F56D1A (Claims Adjustment Cadre) for immediate callback match validation to encrypted staff ID V360-205.")
 
 else:
-    st.title("📊 Viva 360 Insurance Brokers: Executive Analytics Dashboard")
+    st.markdown("## 📊 Viva 360 Insurance Brokers: Executive Analytics Dashboard")
     st.subheader("Institutional Burnout Tracking & Corporate Budgeting Interface")
     st.write("---")
     st.markdown("### 🔒 Privacy Protocol View")
