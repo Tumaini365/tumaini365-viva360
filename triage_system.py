@@ -33,10 +33,10 @@ st.markdown("""
     }
     .stButton>button {
         border-radius: 6px;
-        font-weight: 6px;
+        font-weight: bold;
     }
 </style>
-""", unsafe_allow_index=True)
+""", unsafe_allow_html=True)
 
 # Persistent data registry matrix to safely track runtime screening inputs
 if "clinical_registry" not in st.session_state:
@@ -44,7 +44,7 @@ if "clinical_registry" not in st.session_state:
         "Token", "Department", "Staff_ID", "PHQ9_Score", "GAD7_Score", "Triage_Tier", "Action_Milestone", "Day14_Date", "Day30_Date", "Status"
     ])
 
-# FIXED: Memory configuration keys to anchor active navigation choices securely across page-reloads
+# Memory configuration keys to anchor active navigation choices securely across page-reloads
 if "current_portal" not in st.session_state:
     st.session_state.current_portal = "Staff"
 if "staff_step" not in st.session_state:
@@ -86,7 +86,6 @@ st.markdown("### 🏢 Active Operational Workspace Modules")
 col_p1, col_p2, col_p3 = st.columns(3)
 
 with col_p1:
-    # FIXED: Layout triggers write choice parameters directly to memory, guaranteeing active button state switches
     if st.button("👥 1. Employee Secure Portal", use_container_width=True, type="primary" if st.session_state.current_portal == "Staff" else "secondary"):
         st.session_state.current_portal = "Staff"
         st.session_state.staff_step = 1
@@ -190,3 +189,4 @@ if st.session_state.current_portal == "Staff":
         
         st.write("### Your Personalized Support Action Plan")
         if st.session_state.last_tier == "GREEN TIER":
+            st.success(st.session_state.last_box)
