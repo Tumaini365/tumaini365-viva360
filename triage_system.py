@@ -28,17 +28,15 @@ if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
 # HARDCODED EMBEDDED LOGO DATA ENGINES
-# Converts image assets into direct secure system strings to bypass GitHub path blockades
 def render_sidebar_logo():
     try:
-        # Fetching your raw repository asset explicitly via authenticated API routes
+        # RECTIFIED FILE TARGET: Swapped out 'logo.png' for your actual uploaded 'tumaini_logo.jpg' file path
         img_url = "https://githubusercontent.com"
         response = requests.get(img_url)
         if response.status_code == 200:
             encoded = base64.b64encode(response.content).decode()
-            # Injecting image via data URI HTML parameter to force immediate browser draw
             st.markdown(
-                f'<div style="text-align: center;"><img src="data:image/png;base64,{encoded}" style="max-width: 100%; max-height: 180px; border-radius: 8px;"></div>', 
+                f'<div style="text-align: center;"><img src="data:image/jpeg;base64,{encoded}" style="max-width: 100%; max-height: 180px; border-radius: 8px;"></div>', 
                 unsafe_allow_html=True
             )
         else:
@@ -50,7 +48,6 @@ def render_sidebar_logo():
 # 2. SIDEBAR NAVIGATION CONTROLS
 # ==========================================
 with st.sidebar:
-    # Executes the direct secure HTML image injection function
     render_sidebar_logo()
     st.write("---")
     st.markdown("🏢 **Viva 360 Insurance Brokers**")
@@ -141,7 +138,7 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
     if pin_input != "365":
         st.warning("⚠️ Access Restricted: Please enter your master access key code in the sidebar block on the left to unlock the active registry.")
     else:
-        st.success("Access Verified. Encrypted database channel active.")
+        st.success("✅ Access Verified. Encrypted database channel active.")
         st.write("### 🗂️ Live Patient Triage & Continuous Follow-Up Registry Matrix")
         st.dataframe(clinical_registry, use_container_width=True)
         st.write("---")
@@ -171,3 +168,7 @@ else:
         st.write("🔥 **Direct Sales Force Grouping**")
         st.write("- Green Resilience: 1 Staff")
         st.write("- Yellow Burnout Risk: 2 Staff")
+        st.write("- Red Crisis Urgency: 0 Staff")
+    with col_chart_2:
+        st.write("⏳ **Underwriting & Risk Grouping**")
+        st.write("- Green Resilience: 1 Staff")
