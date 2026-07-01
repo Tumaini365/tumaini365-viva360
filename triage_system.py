@@ -27,7 +27,6 @@ def compute_triage_tier(phq9, gad7, self_harm):
         return "GREEN TIER", "🟢 GREEN TIER: OPTIMAL WORKFORCE RESILIENCE", "Preventive care loop activated. Staff member granted immediate on-demand access to the 14-day digital decompression micro-learning files."
 
 # FIXED COMPATIBILITY BASELINE DATA REPOSITORY
-# Using completely flat text objects to ensure zero loading bottlenecks on the cloud server
 if "clinical_registry" not in st.session_state:
     st.session_state.clinical_registry = pd.DataFrame([
         {
@@ -61,7 +60,7 @@ if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
 # ==========================================
-# 2. BRANDING SIDEBAR WITH LOGO & DROPDOWN NAV
+# 2. BRANDING SIDEBAR WITH LOGO & NAV
 # ==========================================
 with st.sidebar:
     st.image("https://githubusercontent.com", use_container_width=True, caption="Tumaini 365 - Your Hope Everyday")
@@ -166,3 +165,4 @@ if selected_portal == "1. Employee Secure Portal":
             st.write("Your Action Roadmap: Your data token has unlocked the 14-Day Digital Decompression Toolkit (deep breathing guides & structural time-blocking calendar patterns).")
             st.info("📅 Follow-up Check: An automated link will push to your portal on " + str(st.session_state.last_d14) + " to check progress.")
         elif st.session_state.last_tier == "YELLOW TIER":
+            st.warning(st.session_state.last_box)
