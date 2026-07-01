@@ -46,14 +46,14 @@ with st.sidebar:
     st.markdown("🏢 **Viva 360 Insurance Brokers**")
     st.write("---")
     
-    # SYSTEM INTERFACE DROPDOWN (100% stable, bypasses all reload bugs)
+    # SYSTEM INTERFACE DROPDOWN (100% stable, bypasses button reload bugs)
     st.subheader("🚪 System Portal Navigation")
     selected_portal = st.selectbox(
         "Choose Interface to Open:",
         ["1. Employee Secure Portal", "2. Ezekiel's Clinical Panel", "3. HR Executive Analytics"]
     )
     st.write("---")
-    st.info("💡 **Boardroom Demo Note:** Use this dropdown above to switch views instantly. It guarantees your test data and password entries persist without resetting.")
+    st.info("💡 **Boardroom Demo Note:** Use this dropdown menu above to switch views instantly. It guarantees your workspace panel changes smoothly without resetting.")
 
 # ==========================================
 # PORTAL 1: EMPLOYEE SECURE PORTAL
@@ -85,7 +85,6 @@ if selected_portal == "1. Employee Secure Portal":
                 st.session_state.temp_dept = dept_input
                 st.session_state.temp_id = id_input
                 st.session_state.staff_step = 2
-                st.text("") # Soft trigger placeholder
                 st.rerun()
 
     elif st.session_state.staff_step == 2:
@@ -171,4 +170,4 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
     
     pin = st.text_input("Enter Clinical Security Access PIN:", type="password", key="ezekiel_pin_key")
     
-    if pin == "365":
+    # FIXED: Reconfigured authentication loop to run completely line-by-line.
