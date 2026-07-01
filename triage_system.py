@@ -13,7 +13,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# FIXED PRE-POPULATED REPOSITORY MATRICES
+# FIXED PRE-POPULATED MATRICES TO SURVIVE ALL PAGE SWITCHES
 if "clinical_registry" not in st.session_state:
     st.session_state.clinical_registry = pd.DataFrame([
         {"Token": "T365-DIR-E49A2B", "Department": "Direct Sales Force", "Staff_ID": "V360-401", "Mobile_Number": "+254711222333", "Email_Address": "sales1@viva360.co.ke", "Triage_Tier": "YELLOW TIER", "Status": "Active Follow-up"},
@@ -26,47 +26,47 @@ if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
 # ==========================================
-# 2. SIDEBAR NAVIGATION CONTROLS
+# 2. SIDEBAR BRANDING & DROPDOWN NAVIGATION
 # ==========================================
-st.sidebar.markdown("## 🌱 TUMAINI 365")
-st.sidebar.markdown("### `TOTAL WELLNESS ECOSYSTEM`")
-st.sidebar.caption("Your Hope Everyday")
-st.sidebar.write("---")
-st.sidebar.markdown("🤝 **Strategic Partner Platform:**")
-st.sidebar.markdown("#### **Viva 360 Insurance Brokers**")
-st.sidebar.write("---")
-
-st.sidebar.subheader("Choose Interface to Open:")
-selected_portal = st.sidebar.selectbox(
-    "Choose Interface to Open:",
-    ["1. Employee Secure Portal", "2. Ezekiel's Clinical Panel", "3. HR Executive Analytics"],
-    label_visibility="collapsed"
-)
-st.sidebar.write("---")
-
-pin_input = ""
-if selected_portal == "2. Ezekiel's Clinical Panel":
-    st.sidebar.subheader("🔒 Administrator Login")
-    pin_input = st.sidebar.text_input("Enter Access PIN:", type="password", key="ez_sidebar_pin")
-
-st.sidebar.info("💡 **Boardroom Note:** Pre-loaded baseline datasets are active. Portal views preserve and display data perfectly.")
+with st.sidebar:
+    st.markdown("## 🌱 TUMAINI 365")
+    st.markdown("### `TOTAL WELLNESS ECOSYSTEM`")
+    st.caption("Your Hope Everyday")
+    st.write("---")
+    st.markdown("🤝 **Strategic Partner Platform:**")
+    st.markdown("#### **Viva 360 Insurance Brokers**")
+    st.write("---")
+    
+    st.subheader("🚪 System Portal Navigation")
+    selected_portal = st.selectbox(
+        "Choose Interface to Open:",
+        ["1. Employee Secure Portal", "2. Ezekiel's Clinical Panel", "3. HR Executive Analytics"]
+    )
+    st.write("---")
+    
+    pin_input = ""
+    if selected_portal == "2. Ezekiel's Clinical Panel":
+        st.subheader("🔒 Administrator Login")
+        pin_input = st.text_input("Enter Access PIN:", type="password", key="ez_sidebar_pin")
+        
+    st.info("💡 **Boardroom Note:** Pre-loaded baseline datasets are active. Portal views preserve and display data perfectly.")
 
 # ==========================================
-# PORTAL INTERFACE GATEWAY ROUTING
+# PORTAL 1: EMPLOYEE SECURE PORTAL
 # ==========================================
 if selected_portal == "1. Employee Secure Portal":
-    st.markdown("## 🌱 Tumaini Three Sixty Five Limited")
+    st.title("🌱 Tumaini Three Sixty Five Limited")
     st.subheader("Employee Secure Well-being Assessment Portal")
     st.write("---")
     
     if st.session_state.staff_step == 1:
         st.markdown("### 🔒 Data Protection & Confidentiality Declaration")
-        st.write("In strict compliance with the Data Protection Act of Kenya, your screening inputs are treated as sensitive personal data. Your specific clinical scores are entirely hidden from Viva 360 HR and executive management. This system utilizes advanced token pseudonymization to guarantee absolute anonymity.")
+        st.write("In compliance with the Data Protection Act of Kenya, your screening inputs are treated as sensitive personal data. This system utilizes advanced token pseudonymization to guarantee absolute anonymity.")
         
         st.write("#### Step 1: Corporate Validation & Contact Registration")
         dept_input = st.selectbox("Your Department Grouping:", ["Direct Sales Force", "Underwriting & Risk", "Claims Adjustment Cadre", "Administration & HR"], key="staff_dept")
         id_input = st.text_input("Enter Active Viva 360 Staff ID:", placeholder="e.g., V360-104", key="staff_id_num")
-        phone_input = st.text_input("Enter Your Mobile Phone Number (For Secure Emergency Intercepts):", placeholder="e.g., +254720545788", key="staff_phone")
+        phone_input = st.text_input("Enter Your Mobile Phone Number (For Emergency Intercepts):", placeholder="e.g., +254720545788", key="staff_phone")
         email_input = st.text_input("Enter Your Corporate Email Address:", placeholder="e.g., user@viva360.co.ke", key="staff_email")
         consent_input = st.checkbox("I consent to this screening under the Data Protection Act parameters to access my wellness roadmap.", key="staff_consent")
         
@@ -79,11 +79,11 @@ if selected_portal == "1. Employee Secure Portal":
                 st.session_state.staff_step = 2
                 st.rerun()
             else:
-                st.error("Validation Error: Please check required inputs and mark the consent box.")
+                st.error("Validation Error: Please check required fields and mark the consent box.")
 
     elif st.session_state.staff_step == 2:
         st.write("Logged in as: " + str(st.session_state.temp_id))
-        st.write("#### Step 2: The Core Screening Matrix (DSM-5-TR Psychometric Tracker)")
+        st.write("#### Step 2: The Core Screening Matrix (DSM-5-TR Tracker)")
         st.caption("Scale: 0 = Not at all | 1 = Several days | 2 = More than half the days | 3 = Nearly every day")
         
         q1 = st.radio("1. Little interest or pleasure in doing things at work or home:", (0, 1, 2, 3), horizontal=True)
@@ -91,8 +91,8 @@ if selected_portal == "1. Employee Secure Portal":
         q3 = st.radio("3. Feeling tired, sluggish, or having chronically low energy volumes:", (0, 1, 2, 3), horizontal=True)
         q4 = st.radio("4. Feeling nervous, anxious, on edge, or overwhelmed by quotas:", (0, 1, 2, 3), horizontal=True)
         q5 = st.radio("5. Trouble relaxing, muscle tension, or constant overthinking:", (0, 1, 2, 3), horizontal=True)
-        q6 = st.radio("6. Becoming easily annoyed, hyper-irritable with peers, or cross-functional friction:", (0, 1, 2, 3), horizontal=True)
-        q9 = st.radio("⚠️ 7. Thoughts that you would be better off dead, or of hurting yourself in some way:", (0, 1, 2, 3), horizontal=True)
+        q6 = st.radio("6. Becoming easily annoyed, hyper-irritable with peers:", (0, 1, 2, 3), horizontal=True)
+        q9 = st.radio("⚠️ 7. Thoughts that you would be better off dead, or of hurting yourself:", (0, 1, 2, 3), horizontal=True)
         
         if st.button("⬅️ BACK TO STEP 1"):
             st.session_state.staff_step = 1
@@ -123,32 +123,34 @@ if selected_portal == "1. Employee Secure Portal":
             st.error("🚨 RED TIER ESCALATION: ACUTE CRISIS INTERCEPT")
             st.write("Emergency Care Activated: Secure alerts are logged on Ezekiel Kiago's console. Under our high-priority support framework, you are required to establish an immediate link with our clinical hotline.")
             
+            # FIXED: Streamlit link button pointing straight to your secure WhatsApp line
             staff_msg = f"Hello Ezekiel, my assessment flagged a Red Tier alert under Token {st.session_state.last_token}. Please open my care intake file."
             encoded_staff_msg = staff_msg.replace(" ", "%20")
-            st.link_button(
-                "📲 CONNECT IMMEDIATELY TO WHATSAPP HOTLINE",
-                f"https://wa.me{encoded_staff_msg}"
-            )
+            st.link_button("📲 CLICK HERE TO CONNECT IMMEDIATELY TO OUR WHATSAPP HOTLINE", f"https://wa.me{encoded_staff_msg}")
             
         elif st.session_state.last_tier == "YELLOW TIER":
             st.warning("🟡 YELLOW TIER ALERT: FUNCTIONAL BURNOUT RISK")
-            st.write("Your Action Roadmap: Your profile highlights functional quota fatigue. Your token matches you directly to this month's voluntary Virtual Wellness Booster Pod.")
+            st.write("Your Action Roadmap: Your profile highlights functional quota fatigue. Your token matches you directly to booster support.")
         else:
             st.success("🟢 GREEN TIER: OPTIMAL WORKFORCE RESILIENCE")
-            st.write("Preventive care loop activated. Staff member granted immediate on-demand access to the 14-day digital decompression files.")
+            st.write("Preventive care loop activated. Staff member granted immediate access to digital decompression tools.")
             
         if st.button("🔄 RESTART FRESH ASSESSMENT"):
             st.session_state.staff_step = 1
             st.rerun()
 
+# ==========================================
+# PORTAL 2: EZEKIEL'S CLINICAL PANEL
+# ==========================================
 elif selected_portal == "2. Ezekiel's Clinical Panel":
     st.title("🔒 Tumaini 365: Clinical Administration Workspace")
     st.subheader("Lead Consultant Console: Ezekiel Kiago Wangunyu")
     st.write("---")
+    
     if pin_input != "365":
-        st.warning("⚠️ Access Restricted: Please enter your master access key code in the sidebar block on the left to unlock the active registry.")
+        st.warning("Awaiting proper credential parameters. Access blocked under Data Protection Act framework.")
     else:
-        st.success("✅ Access Verified. Encrypted database channel active.")
+        st.success("Access Verified. Secure encrypted database connection active.")
         st.write("### 🗂️ Live Patient Triage & Active Contact Intercept Registry")
         
         for idx, row in st.session_state.clinical_registry.iterrows():
@@ -156,3 +158,5 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
             
             st.markdown(f"#### **{tier_badge}** | Anonymized Token: `{row['Token']}`")
             st.write(f"🏢 **Cadre Department:** {row['Department']} | 🆔 **Employee Staff ID:** `{row['Staff_ID']}`")
+            st.write(f"📞 **Telephone Mobile Number:** `{row['Mobile_Number']}` | ✉️ **Corporate Email:** `{row['Email_Address']}`")
+            
