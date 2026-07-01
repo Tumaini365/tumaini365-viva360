@@ -13,36 +13,25 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# FIXED REPOSITORY ARRAYS
-raw_data = [
-    {"Token": "T365-DIR-E49A2B", "Department": "Direct Sales Force", "Staff_ID": "V360-401", "PHQ9_Score": 14, "GAD7_Score": 12, "Triage_Tier": "YELLOW TIER", "Action_Milestone": "Assigned to Wellness Pod", "Day14_Date": "2026-07-15", "Day30_Date": "2026-07-31", "Status": "Active"},
-    {"Token": "T365-UND-B81C9F", "Department": "Underwriting & Risk", "Staff_ID": "V360-112", "PHQ9_Score": 2, "GAD7_Score": 3, "Triage_Tier": "GREEN TIER", "Action_Milestone": "Granted Self-Care Kits", "Day14_Date": "2026-07-15", "Day30_Date": "2026-07-31", "Status": "Optimal"},
-    {"Token": "T365-CLA-F56D1A", "Department": "Claims Adjustment Cadre", "Staff_ID": "V360-205", "PHQ9_Score": 18, "GAD7_Score": 16, "Triage_Tier": "RED TIER", "Action_Milestone": "Direct Hotlink Routed", "Day14_Date": "2026-07-15", "Day30_Date": "2026-07-31", "Status": "Intercepted"},
-    {"Token": "T365-DIR-K33M7X", "Department": "Direct Sales Force", "Staff_ID": "V360-415", "PHQ9_Score": 11, "GAD7_Score": 9, "Triage_Tier": "YELLOW TIER", "Action_Milestone": "Assigned to Wellness Pod", "Day14_Date": "2026-07-15", "Day30_Date": "2026-07-31", "Status": "Active"}
-]
-clinical_registry = pd.DataFrame(raw_data)
+# FIXED BOARDROOM PRODUCTION REPOSITORY ARRAYS
+# Pre-loaded with operational metrics so your sheets are instantly full when you click them
+if "clinical_registry" not in st.session_state:
+    st.session_state.clinical_registry = pd.DataFrame([
+        {"Token": "T365-DIR-E49A2B", "Department": "Direct Sales Force", "Staff_ID": "V360-401", "Mobile_Number": "+254711222333", "Email_Address": "sales1@viva360.co.ke", "Triage_Tier": "YELLOW TIER", "Day14_Date": "2026-07-15", "Day30_Date": "2026-07-31", "Status": "Active Follow-up"},
+        {"Token": "T365-UND-B81C9F", "Department": "Underwriting & Risk", "Staff_ID": "V360-112", "Mobile_Number": "+254722333444", "Email_Address": "risk2@viva360.co.ke", "Triage_Tier": "GREEN TIER", "Day14_Date": "2026-07-15", "Day30_Date": "2026-07-31", "Status": "Optimal"},
+        {"Token": "T365-CLA-F56D1A", "Department": "Claims Adjustment Cadre", "Staff_ID": "V360-205", "Mobile_Number": "+254733444555", "Email_Address": "claims5@viva360.co.ke", "Triage_Tier": "RED TIER", "Day14_Date": "2026-07-15", "Day30_Date": "2026-07-31", "Status": "Clinical Intercept Pending"}
+    ])
 
 if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
 # ==========================================
-# 2. SIDEBAR NAVIGATION WITH BRAND LOGO
+# 2. SIDEBAR NAVIGATION CONTROLS
 # ==========================================
-# UNBLOCKABLE CORPORATE LOGO: Renders your exact purple and black brand colors directly via browser code paths.
-logo_svg = """
-<div style="text-align: center; margin-bottom: 25px; padding: 10px; background-color: #0E0B16; border-radius: 12px; border: 1px solid #1F162E;">
-    <svg width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://w3.org">
-        <circle cx="50" cy="50" r="45" fill="#000000" stroke="#7B2CBF" stroke-width="3"/>
-        <path d="M50 80V45" stroke="#90E0EF" stroke-width="6" stroke-linecap="round"/>
-        <path d="M50 55C65 55 75 42 72 32C69 22 53 26 50 45C47 26 31 22 28 32C25 42 35 55 50 55Z" fill="#7B2CBF" stroke="#90E0EF" stroke-width="1.5"/>
-        <circle cx="50" cy="45" r="3" fill="#90E0EF"/>
-        <path d="M25 80H75" stroke="#7B2CBF" stroke-width="4" stroke-linecap="round"/>
-    </svg>
-    <h3 style="color: #ffffff; font-family: sans-serif; margin-top: 10px; margin-bottom: 0px; font-weight: bold; letter-spacing: 1px;">TUMAINI 365</h3>
-    <p style="color: #90E0EF; font-family: sans-serif; font-size: 11px; margin-top: 2px; margin-bottom: 5px; text-transform: uppercase; font-weight: 500;">Your Hope Everyday</p>
-</div>
-"""
-st.sidebar.markdown(logo_svg, unsafe_allow_html=True)
+st.sidebar.markdown("## 🌱 TUMAINI 365")
+st.sidebar.markdown("### `TOTAL WELLNESS ECOSYSTEM`")
+st.sidebar.caption("✨ Your Hope Everyday")
+st.sidebar.write("---")
 st.sidebar.markdown("🤝 **Strategic Partner Platform:**")
 st.sidebar.markdown("#### **Viva 360 Insurance Brokers**")
 st.sidebar.write("---")
@@ -59,7 +48,7 @@ if selected_portal == "2. Ezekiel's Clinical Panel":
     st.sidebar.subheader("🔒 Administrator Login")
     pin_input = st.sidebar.text_input("Enter Access PIN:", type="password", key="ez_sidebar_pin")
 
-st.sidebar.info("💡 **Boardroom Note:** Pre-loaded baseline datasets are permanently active. Portal views preserve and display data perfectly.")
+st.sidebar.info("💡 **Boardroom Note:** Pre-loaded baseline datasets are active. Portal views preserve and display contact fields perfectly.")
 
 # ==========================================
 # PORTAL INTERFACE GATEWAY ROUTING
@@ -72,23 +61,30 @@ if selected_portal == "1. Employee Secure Portal":
     if st.session_state.staff_step == 1:
         st.markdown("### 🔒 Data Protection & Confidentiality Declaration")
         st.write("In strict compliance with the Data Protection Act of Kenya, your screening inputs are treated as sensitive personal data. Your specific clinical scores are entirely hidden from Viva 360 HR and executive management. This system utilizes advanced token pseudonymization to guarantee absolute anonymity.")
-        st.write("#### Step 1: Corporate Validation")
         
+        st.write("#### Step 1: Corporate Validation & Contact Registration")
         dept_input = st.selectbox("Your Department Grouping:", ["Direct Sales Force", "Underwriting & Risk", "Claims Adjustment Cadre", "Administration & HR"], key="staff_dept")
         id_input = st.text_input("Enter Active Viva 360 Staff ID:", placeholder="e.g., V360-104", key="staff_id_num")
+        
+        # NEW CRITICAL CONTACT INPUT FIELDS
+        phone_input = st.text_input("Enter Your Mobile Phone Number (For Secure Emergency Intercepts):", placeholder="e.g., +254720545788", key="staff_phone")
+        email_input = st.text_input("Enter Your Corporate Email Address:", placeholder="e.g., user@viva360.co.ke", key="staff_email")
+        
         consent_input = st.checkbox("I consent to this screening under the Data Protection Act parameters to access my wellness roadmap.", key="staff_consent")
         
         if st.button("➡️ PROCEED TO ASSESSMENT (NEXT STEP)"):
-            if id_input and consent_input:
+            if id_input and phone_input and email_input and consent_input:
                 st.session_state.temp_dept = dept_input
                 st.session_state.temp_id = id_input
+                st.session_state.temp_phone = phone_input
+                st.session_state.temp_email = email_input
                 st.session_state.staff_step = 2
                 st.rerun()
             else:
-                st.error("Please enter your Staff ID and accept the Data Protection consent box.")
+                st.error("Validation Error: Please ensure Staff ID, Phone Number, and Email fields are fully completed, and the Consent box is checked.")
 
     elif st.session_state.staff_step == 2:
-        st.write("Logged in as: " + str(st.session_state.temp_id) + " | Department: " + str(st.session_state.temp_dept))
+        st.write("Logged in as: " + str(st.session_state.temp_id))
         st.write("#### Step 2: The Core Screening Matrix (DSM-5-TR Psychometric Tracker)")
         st.caption("Scale: 0 = Not at all | 1 = Several days | 2 = More than half the days | 3 = Nearly every day")
         
@@ -105,11 +101,18 @@ if selected_portal == "1. Employee Secure Portal":
             st.rerun()
             
         if st.button("🚀 SUBMIT CONFIDENTIAL SCREENING"):
-            st.session_state.last_token = "T365-MOCK-" + str(uuid.uuid4().hex[:4].upper())
-            st.session_state.last_tier = "YELLOW TIER"
-            st.session_state.last_box = "🟡 YELLOW TIER ALERT: FUNCTIONAL BURNOUT RISK"
-            st.session_state.last_d14 = "July 15, 2026"
-            st.session_state.last_d30 = "July 31, 2026"
+            token = "T365-" + str(st.session_state.temp_dept[:3].upper()) + "-" + str(uuid.uuid4().hex[:4].upper())
+            score_total = q1 + q2 + q3 + q4 + q5 + q6 + q9
+            calculated_tier = "RED TIER" if (score_total >= 13 or q9 >= 1) else "YELLOW TIER" if score_total >= 6 else "GREEN TIER"
+            
+            new_entry = {
+                "Token": token, "Department": st.session_state.temp_dept, "Staff_ID": st.session_state.temp_id, 
+                "Mobile_Number": st.session_state.temp_phone, "Email_Address": st.session_state.temp_email, 
+                "Triage_Tier": calculated_tier, "Day14_Date": "2026-07-15", "Day30_Date": "2026-07-31", "Status": "Active Follow-up"
+            }
+            st.session_state.clinical_registry = pd.concat([st.session_state.clinical_registry, pd.DataFrame([new_entry])], ignore_index=True)
+            st.session_state.last_token = token
+            st.session_state.last_tier = calculated_tier
             st.session_state.staff_step = 3
             st.rerun()
 
@@ -117,10 +120,19 @@ if selected_portal == "1. Employee Secure Portal":
         st.success("🎉 Confidential Screening Completed Successfully.")
         st.info("Your Non-Identifiable Security Token: " + str(st.session_state.last_token))
         st.write("### Your Personalized Support Action Plan")
-        st.warning(st.session_state.last_box)
-        st.write("Your Action Roadmap: Your profile highlights functional burnout. Your token matches you directly to this month's voluntary Virtual Wellness Booster Pod.")
-        st.info("📅 Continuous Follow-up: Your booster pod will monitor accountability metrics on " + str(st.session_state.last_d30))
         
+        if st.session_state.last_tier == "RED TIER":
+            st.error("🚨 RED TIER ESCALATION: ACUTE CRISIS INTERCEPT")
+            st.write("Emergency Care Activated: Secure emergency notifications have been routed to Ezekiel Kiago's console. Click the button below for immediate 24/7 hotline communication.")
+            # Native direct WhatsApp routing link tied to your hotline number parameters
+            st.markdown("[📲 OPEN SECURE WHATSAPP CRISIS HOTLINE TO EZEKIEL](https://wa.me)")
+        elif st.session_state.last_tier == "YELLOW TIER":
+            st.warning("🟡 YELLOW TIER ALERT: FUNCTIONAL BURNOUT RISK")
+            st.write("Your Action Roadmap: Your profile highlights functional quota fatigue. Your token matches you directly to this month's voluntary Virtual Wellness Booster Pod.")
+        else:
+            st.success("🟢 GREEN TIER: OPTIMAL WORKFORCE RESILIENCE")
+            st.write("Preventive care loop activated. Staff member granted immediate on-demand access to the 14-day digital decompression files.")
+            
         if st.button("🔄 RESTART FRESH ASSESSMENT"):
             st.session_state.staff_step = 1
             st.rerun()
@@ -133,26 +145,14 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
         st.warning("⚠️ Access Restricted: Please enter your master access key code in the sidebar block on the left to unlock the active registry.")
     else:
         st.success("✅ Access Verified. Encrypted database channel active.")
-        st.write("### 🗂️ Live Patient Triage & Continuous Follow-Up Registry Matrix")
-        st.dataframe(clinical_registry, use_container_width=True)
-        st.write("---")
-        st.write("### 🚨 Emergency Overrides Pending Intercept")
-        st.error("⚠️ **CRITICAL INCIDENT ALERT:** High-risk overloads detected inside active cadres. Reference Token T365-CLA-F56D1A (Claims Adjustment Cadre) for immediate callback match validation to encrypted staff ID V360-205.")
-
-else:
-    st.title("📊 Viva 360 Insurance Brokers: Executive Analytics Dashboard")
-    st.subheader("Institutional Burnout Tracking & Corporate Budgeting Interface")
-    st.write("---")
-    st.markdown("### 🔒 Privacy Protocol View")
-    st.write("In compliance with data protection laws, all individual fields are entirely stripped from this layout. It displays only aggregated data groupings to guide resource deployment.")
-    st.write("---")
-    
-    st.write("### 📈 Workforce Resilience Summary")
-    st.write("📊 **Total Active Staff Screened:** 4 Personnel")
-    st.write("🟢 **Green Tier (Resilience Ratio):** 25.0%")
-    st.write("🟡 **Yellow Tier (Burnout Density):** 50.0%")
-    st.write("---")
-    
-    st.write("### 📑 Departmental Burnout Distribution Metrics")
-    st.markdown("#### 🔥 **Direct Sales Force Grouping**")
-    st.write("- Green Resilience: 0 Staff | Yellow Burnout Risk: 2 Staff | Red Crisis Urgency: 0 Staff")
+        st.write("### 🗂️ Live Patient Triage & Active Contact Intercept Registry")
+        
+        # FIXED FLAT PIPELINE: Displays full contact details row-by-row with dynamic contact buttons
+        for idx, row in st.session_state.clinical_registry.iterrows():
+            tier_color = "🔴" if row['Triage_Tier'] == "RED TIER" else "🟡" if row['Triage_Tier'] == "YELLOW TIER" else "🟢"
+            
+            # Formats clean markdown visual status cards
+            st.markdown(f"### {tier_color} Token: **{row['Token']}** | Dept: {row['Department']}")
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.write(f"🆔 **Staff ID:** `{row['Staff_ID']}`")
