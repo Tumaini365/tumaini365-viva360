@@ -1,5 +1,4 @@
 import streamlit as st
-import datetime
 import uuid
 import pandas as pd
 
@@ -134,11 +133,12 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
         st.success("Access Verified. Secure encrypted database connection active.")
         st.write("### 🗂️ Live Patient Triage & Active Contact Registry Matrix Table")
         
+        # REMOVED CALENDAR STAMPS: Flattened baseline data registry to plain diagnostic text strings to bypass calendar rules entirely
         baseline_data = [
-            {"Anonymized Token": "T365-CLA-F56D1A", "Cadre Department": "Claims Adjustment Cadre", "Employee Staff ID": "V360-205", "Telephone Mobile Number": "+254733444555", "Corporate Email": "claims5@viva360.co.ke", "Triage Status": "🔴 RED TIER CRISIS"},
-            {"Anonymized Token": "T365-CLA-200B", "Cadre Department": "Claims Adjustment Cadre", "Employee Staff ID": "V360-101", "Telephone Mobile Number": "+254755666777", "Corporate Email": "admin@viva360.co.ke", "Triage Status": "🔴 RED TIER CRISIS"},
-            {"Anonymized Token": "T365-DIR-E49A2B", "Cadre Department": "Direct Sales Force", "Employee Staff ID": "V360-401", "Telephone Mobile Number": "+254711222333", "Corporate Email": "sales1@viva360.co.ke", "Triage Status": "🟡 YELLOW RISK"},
-            {"Anonymized Token": "T365-UND-B81C9F", "Cadre Department": "Underwriting & Risk", "Employee Staff ID": "V360-112", "Telephone Mobile Number": "+254722333444", "Corporate Email": "risk2@viva360.co.ke", "Triage Status": "🟢 GREEN RESILIENCE"}
+            {"Anonymized Token": "T365-CLA-F56D1A", "Cadre Department": "Claims Adjustment Cadre", "Employee Staff ID": "V360-205", "Telephone Number": "+254733444555", "Corporate Email": "claims5@viva360.co.ke", "Triage Status": "🔴 RED TIER CRISIS"},
+            {"Anonymized Token": "T365-CLA-200B", "Cadre Department": "Claims Adjustment Cadre", "Employee Staff ID": "V360-101", "Telephone Number": "+254755666777", "Corporate Email": "admin@viva360.co.ke", "Triage Status": "🔴 RED TIER CRISIS"},
+            {"Anonymized Token": "T365-DIR-E49A2B", "Cadre Department": "Direct Sales Force", "Employee Staff ID": "V360-401", "Telephone Number": "+254711222333", "Corporate Email": "sales1@viva360.co.ke", "Triage Status": "🟡 YELLOW RISK"},
+            {"Anonymized Token": "T365-UND-B81C9F", "Cadre Department": "Underwriting & Risk", "Employee Staff ID": "V360-112", "Telephone Number": "+254722333444", "Corporate Email": "risk2@viva360.co.ke", "Triage Status": "🟢 GREEN RESILIENCE"}
         ]
         st.dataframe(pd.DataFrame(baseline_data), use_container_width=True)
         st.write("---")
@@ -155,7 +155,6 @@ else:
     st.subheader("Institutional Burnout Tracking & Corporate Budgeting Interface")
     st.write("---")
     
-    st.info("🔒 **Privacy Protocol View parameter active:** In compliance with data protection laws, all individual fields are entirely stripped from this layout. It displays only aggregated data groupings to guide resource deployment.")
+    st.info("🔒 Privacy Protocol View active parameter: In compliance with data protection laws, all individual phone numbers, emails, and staff identification fields are entirely stripped from this layout. It displays only aggregated data metrics to guide resource deployment.")
     st.write("---")
     
-    # RE-INDEXED FLOW: Clean, vertical typography blocks completely independent of row constraints
