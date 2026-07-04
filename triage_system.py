@@ -33,12 +33,6 @@ selected_portal = st.sidebar.selectbox(
     ["1. Employee Secure Portal", "2. Ezekiel's Clinical Panel", "3. HR Executive Analytics"]
 )
 st.sidebar.write("---")
-
-pin_input = ""
-if selected_portal == "2. Ezekiel's Clinical Panel":
-    st.sidebar.subheader("🔒 Administrator Login")
-    pin_input = st.sidebar.text_input("Enter Access PIN:", type="password", key="ez_sidebar_pin")
-
 st.sidebar.info("💡 **Boardroom Note:** Pre-loaded baseline datasets are active. Portal views preserve and display data perfectly.")
 
 # ==========================================
@@ -96,6 +90,33 @@ if selected_portal == "1. Employee Secure Portal":
             st.session_state.staff_step = 3
             st.rerun()
 
+    elif st.session_state.staff_step == 3:
+        st.success("🎉 Confidential Screening Completed Successfully.")
+        st.info("Your Non-Identifiable Security Token: " + str(st.session_state.last_token))
+        st.write("### Your Personalized Support Action Plan")
+        
+        if st.session_state.last_tier == "RED TIER":
+            st.error("🚨 RED TIER ESCALATION: ACUTE CRISIS INTERCEPT")
+            st.write("Emergency Care Activated: Secure alerts are logged on Ezekiel Kiago's console. Under our high-priority support framework, you are required to establish an immediate link with our clinical hotline.")
+            
+            staff_msg = f"Hello Ezekiel, my assessment flagged a Red Tier alert under Token {st.session_state.last_token}. Please open my care intake file."
+            encoded_staff_msg = staff_msg.replace(" ", "%20")
+            st.link_button(
+                "📲 CONNECT IMMEDIATELY TO WHATSAPP HOTLINE",
+                f"https://wa.me{encoded_staff_msg}"
+            )
+            
+        elif st.session_state.last_tier == "YELLOW TIER":
+            st.warning("🟡 YELLOW TIER ALERT: FUNCTIONAL BURNOUT RISK")
+            st.write("Your Action Roadmap: Your profile highlights functional quota fatigue. Your token matches you directly to this month's voluntary Virtual Wellness Booster Pod.")
+        else:
+            st.success("🟢 GREEN TIER: OPTIMAL WORKFORCE RESILIENCE")
+            st.write("Preventive care loop activated. Staff member granted immediate on-demand access to the 14-day digital decompression files.")
+            
+        if st.button("🔄 RESTART FRESH ASSESSMENT"):
+            st.session_state.staff_step = 1
+            st.rerun()
+
 # ==========================================
 # PAGE 2: EZEKIEL'S CLINICAL PANEL
 # ==========================================
@@ -103,6 +124,9 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
     st.title("🔒 Tumaini 365: Clinical Administration Workspace")
     st.subheader("Lead Consultant Console: Ezekiel Kiago Wangunyu")
     st.write("---")
+    
+    # FIXED: Placed password entry field directly in center screen area to avoid sidebar vanishing bugs entirely
+    pin_input = st.text_input("Enter Administrator Access PIN:", type="password", placeholder="Type master PIN here...")
     
     if pin_input != "365":
         st.warning("Awaiting proper credential parameters. Access blocked under Data Protection Act framework.")
@@ -120,8 +144,8 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
         st.write("---")
         
         st.write("### 🚨 Urgent WhatsApp Intercept Actions Matrix")
-        st.link_button("🚨 LAUNCH WHATSAPP INTERCEPT FOR T365-CLA-F56D1A", "https://wa.me")
-        st.link_button("🚨 LAUNCH WHATSAPP INTERCEPT FOR T365-CLA-200B", "https://wa.me")
+        st.link_button("🚨 LAUNCH WHATSAPP INTERCEPT FOR T365-CLA-F56D1A", "https://wa.meHello%20Ezekiel%20Kiago%20from%20Tumaini%20365.%20I%20am%20intercepting%20Token%20T365-CLA-F56D1A")
+        st.link_button("🚨 LAUNCH WHATSAPP INTERCEPT FOR T365-CLA-200B", "https://wa.meHello%20Ezekiel%20Kiago%20from%20Tumaini%20365.%20I%20am%20intercepting%20Token%20T365-CLA-200B")
 
 # ==========================================
 # PAGE 3: HR EXECUTIVE ANALYTICS
@@ -131,25 +155,3 @@ else:
     st.subheader("Institutional Burnout Tracking & Corporate Budgeting Interface")
     st.write("---")
     st.markdown("### 🔒 Privacy Protocol View")
-    st.write("In compliance with data protection laws, all individual phone numbers, emails, and staff identification fields are entirely stripped from this layout. It displays only aggregated data metrics to guide resource deployment.")
-    st.write("---")
-    
-    st.markdown("### 🔒 Privacy Protocol View")
-    st.markdown("### 📈 Workforce Resilience Summary Indicators")
-    st.info("📊 **Total Active Staff Screened:** 4 Personnel")
-    st.success("🟢 **Green Tier (Resilience Ratio):** 25.0%")
-    st.warning("🟡 **Yellow Tier (Burnout Density):** 50.0%")
-    st.write("---")
-    
-    st.write("### 📑 Departmental Burnout Distribution Metrics Matrix")
-    st.markdown("#### 🔥 **Direct Sales Force Grouping**")
-    st.write("- Green Resilience: 0 Staff | Yellow Burnout Risk: 2 Staff | Red Crisis Urgency: 0 Staff")
-    st.markdown("#### ⏳ **Underwriting & Risk Grouping**")
-    st.write("- Green Resilience: 1 Staff | Yellow Burnout Risk: 0 Staff | Red Crisis Urgency: 0 Staff")
-    st.markdown("#### 🚨 **Claims Adjustment Cadre**")
-    st.write("- Green Resilience: 0 Staff | Yellow Burnout Risk: 0 Staff | Red Crisis Urgency: 2 Staff")
-    st.write("---")
-    st.error("🎯 **STRATEGIC BUDGET ALLOCATION RECOMMENDATION:** High burnout density values tracked inside your Direct Sales Force pipeline (Quota Fatigue). Tumaini 365 advises human resource scheduling of a specialized 'Preventive Financial Therapy Safari' workshop next month to protect premium acquisition targets before absenteeism spikes occur.")
-
-st.write("---")
-st.caption("🔒 Corporate Solution Platform powered by Tumaini 365 Limited Data Protection Architecture.")
