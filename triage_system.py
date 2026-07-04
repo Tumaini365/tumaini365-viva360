@@ -74,6 +74,7 @@ if selected_portal == "1. Employee Secure Portal":
         q2 = st.radio("2. Feeling down, depressed, flat, or hopeless:", (0, 1, 2, 3), horizontal=True)
         q3 = st.radio("3. Feeling tired, sluggish, or having chronically low energy volumes:", (0, 1, 2, 3), horizontal=True)
         q4 = st.radio("4. Feeling nervous, anxious, on edge, or overwhelmed by quotas:", (0, 1, 2, 3), horizontal=True)
+        st.write("---")
         q5 = st.radio("5. Trouble relaxing, muscle tension, or constant overthinking:", (0, 1, 2, 3), horizontal=True)
         q6 = st.radio("6. Becoming easily annoyed, hyper-irritable with peers, or cross-functional friction:", (0, 1, 2, 3), horizontal=True)
         q9 = st.radio("⚠️ 7. Thoughts that you would be better off dead, or of hurting yourself in some way:", (0, 1, 2, 3), horizontal=True)
@@ -90,32 +91,32 @@ if selected_portal == "1. Employee Secure Portal":
             st.session_state.staff_step = 3
             st.rerun()
 
-    elif st.session_state.staff_step == 3:
-        st.success("🎉 Confidential Screening Completed Successfully.")
-        st.info("Your Non-Identifiable Security Token: " + str(st.session_state.last_token))
-        st.write("### Your Personalized Support Action Plan")
+elif st.session_state.staff_step == 3:
+    st.success("🎉 Confidential Screening Completed Successfully.")
+    st.info("Your Non-Identifiable Security Token: " + str(st.session_state.last_token))
+    st.write("### Your Personalized Support Action Plan")
+    
+    if st.session_state.last_tier == "RED TIER":
+        st.error("🚨 RED TIER ESCALATION: ACUTE CRISIS INTERCEPT")
+        st.write("Emergency Care Activated: Secure alerts are logged on Ezekiel Kiago's console. Under our high-priority support framework, you are required to establish an immediate link with our clinical hotline.")
         
-        if st.session_state.last_tier == "RED TIER":
-            st.error("🚨 RED TIER ESCALATION: ACUTE CRISIS INTERCEPT")
-            st.write("Emergency Care Activated: Secure alerts are logged on Ezekiel Kiago's console. Under our high-priority support framework, you are required to establish an immediate link with our clinical hotline.")
-            
-            staff_msg = f"Hello Ezekiel, my assessment flagged a Red Tier alert under Token {st.session_state.last_token}. Please open my care intake file."
-            encoded_staff_msg = staff_msg.replace(" ", "%20")
-            st.link_button(
-                "📲 CONNECT IMMEDIATELY TO WHATSAPP HOTLINE",
-                f"https://wa.me{encoded_staff_msg}"
-            )
-            
-        elif st.session_state.last_tier == "YELLOW TIER":
-            st.warning("🟡 YELLOW TIER ALERT: FUNCTIONAL BURNOUT RISK")
-            st.write("Your Action Roadmap: Your profile highlights functional quota fatigue. Your token matches you directly to this month's voluntary Virtual Wellness Booster Pod.")
-        else:
-            st.success("🟢 GREEN TIER: OPTIMAL WORKFORCE RESILIENCE")
-            st.write("Preventive care loop activated. Staff member granted immediate on-demand access to the 14-day digital decompression files.")
-            
-        if st.button("🔄 RESTART FRESH ASSESSMENT"):
-            st.session_state.staff_step = 1
-            st.rerun()
+        staff_msg = f"Hello Ezekiel, my assessment flagged a Red Tier alert under Token {st.session_state.last_token}. Please open my care intake file."
+        encoded_staff_msg = staff_msg.replace(" ", "%20")
+        st.link_button(
+            "📲 CONNECT IMMEDIATELY TO WHATSAPP HOTLINE",
+            f"https://wa.me{encoded_staff_msg}"
+        )
+        
+    elif st.session_state.last_tier == "YELLOW TIER":
+        st.warning("🟡 YELLOW TIER ALERT: FUNCTIONAL BURNOUT RISK")
+        st.write("Your Action Roadmap: Your profile highlights functional quota fatigue. Your token matches you directly to this month's voluntary Virtual Wellness Booster Pod.")
+    else:
+        st.success("🟢 GREEN TIER: OPTIMAL WORKFORCE RESILIENCE")
+        st.write("Preventive care loop activated. Staff member granted immediate on-demand access to the 14-day digital decompression files.")
+        
+    if st.button("🔄 RESTART FRESH ASSESSMENT"):
+        st.session_state.staff_step = 1
+        st.rerun()
 
 # ==========================================
 # PAGE 2: EZEKIEL'S CLINICAL PANEL
@@ -125,7 +126,6 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
     st.subheader("Lead Consultant Console: Ezekiel Kiago Wangunyu")
     st.write("---")
     
-    # FIXED: Placed password entry field directly in center screen area to avoid sidebar vanishing bugs entirely
     pin_input = st.text_input("Enter Administrator Access PIN:", type="password", placeholder="Type master PIN here...")
     
     if pin_input != "365":
@@ -154,4 +154,8 @@ else:
     st.title("📊 Viva 360 Insurance Brokers: Executive Analytics Dashboard")
     st.subheader("Institutional Burnout Tracking & Corporate Budgeting Interface")
     st.write("---")
-    st.markdown("### 🔒 Privacy Protocol View")
+    
+    st.info("🔒 **Privacy Protocol View parameter active:** In compliance with data protection laws, all individual fields are entirely stripped from this layout. It displays only aggregated data groupings to guide resource deployment.")
+    st.write("---")
+    
+    # RE-INDEXED FLOW: Clean, vertical typography blocks completely independent of row constraints
