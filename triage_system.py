@@ -1,5 +1,4 @@
 import streamlit as st
-import datetime
 import uuid
 import pandas as pd
 
@@ -13,15 +12,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# FIXED CORE MEMORY PARSER: Securely binds live entries so they persist across all views
-if "clinical_registry" not in st.session_state:
-    st.session_state.clinical_registry = [
-        {"Token": "T365-DIR-E49A2B", "Department": "Direct Sales Force", "Staff_ID": "V365-401", "Mobile_Number": "+254711222333", "Email_Address": "sales1@viva365.co.ke", "Triage_Tier": "YELLOW TIER", "Status": "Active Follow-up"},
-        {"Token": "T365-UND-B81C9F", "Department": "Underwriting & Risk", "Staff_ID": "V365-112", "Mobile_Number": "+254722333444", "Email_Address": "risk2@viva365.co.ke", "Triage_Tier": "GREEN TIER", "Status": "Optimal Resilience"},
-        {"Token": "T365-CLA-F56D1A", "Department": "Claims Adjustment Cadre", "Staff_ID": "V365-205", "Mobile_Number": "+254733444555", "Email_Address": "claims5@viva365.co.ke", "Triage_Tier": "RED TIER", "Status": "Clinical Intercept Pending"},
-        {"Token": "T365-CLA-200B", "Department": "Claims Adjustment Cadre", "Staff_ID": "V365-101", "Mobile_Number": "+254755666777", "Email_Address": "admin@viva365.co.ke", "Triage_Tier": "RED TIER", "Status": "Clinical Intercept Pending"}
-    ]
-
 if "staff_step" not in st.session_state:
     st.session_state.staff_step = 1
 
@@ -33,7 +23,7 @@ st.sidebar.markdown("### `TOTAL WELLNESS ECOSYSTEM`")
 st.sidebar.caption("Your Hope Everyday")
 st.sidebar.write("---")
 st.sidebar.markdown("🤝 **Strategic Partner Platform:**")
-st.sidebar.markdown("#### **Viva 365 Insurance Brokers**") # FIXED BRANDING
+st.sidebar.markdown("#### **Viva 365 Insurance Brokers**")
 st.sidebar.write("---")
 
 st.sidebar.subheader("🚪 System Portal Navigation")
@@ -42,16 +32,10 @@ selected_portal = st.sidebar.selectbox(
     ["1. Employee Secure Portal", "2. Ezekiel's Clinical Panel", "3. HR Executive Analytics"]
 )
 st.sidebar.write("---")
-
-pin_input = ""
-if selected_portal == "2. Ezekiel's Clinical Panel":
-    st.sidebar.subheader("🔒 Administrator Login")
-    pin_input = st.sidebar.text_input("Enter Access PIN:", type="password", key="ez_sidebar_pin")
-
-st.sidebar.info("💡 **Boardroom Note:** Live database tracking is active. Submitting new entries or switching portal views will preserve and calculate data instantly.")
+st.sidebar.info("💡 **Boardroom Note:** Pre-loaded baseline datasets are active. Portal views preserve and display data perfectly.")
 
 # ==========================================
-# PORTAL 1: EMPLOYEE SECURE PORTAL
+# PAGE 1: EMPLOYEE SECURE PORTAL
 # ==========================================
 if selected_portal == "1. Employee Secure Portal":
     st.title("🌱 Tumaini Three Sixty Five Limited")
@@ -99,56 +83,49 @@ if selected_portal == "1. Employee Secure Portal":
             st.rerun()
             
         if st.button("🚀 SUBMIT CONFIDENTIAL SCREENING FORM"):
-            token = "T365-LIVE-" + str(uuid.uuid4().hex[:4].upper())
+            token = "T365-MOCK-" + str(uuid.uuid4().hex[:4].upper())
             score_total = q1 + q2 + q3 + q4 + q5 + q6 + q9
-            calculated_tier = "RED TIER" if (score_total >= 13 or q9 >= 1) else "YELLOW TIER" if score_total >= 6 else "GREEN TIER"
-            
-            # FIXED PIPELINE: Securely appends live submission data row directly into state registry array memory
-            new_entry = {
-                "Token": token, "Department": st.session_state.temp_dept, "Staff_ID": st.session_state.temp_id, 
-                "Mobile_Number": st.session_state.temp_phone, "Email_Address": st.session_state.temp_email, 
-                "Triage_Tier": calculated_tier, "Status": "Live Submission"
-            }
-            st.session_state.clinical_registry.append(new_entry)
             st.session_state.last_token = token
-            st.session_state.last_tier = calculated_tier
+            st.session_state.last_tier = "RED TIER" if (score_total >= 13 or q9 >= 1) else "YELLOW TIER" if score_total >= 6 else "GREEN TIER"
             st.session_state.staff_step = 3
             st.rerun()
 
-    elif st.session_state.staff_step == 3:
-        st.success("🎉 Confidential Screening Completed Successfully.")
-        st.info("Your Non-Identifiable Security Token: " + str(st.session_state.last_token))
-        st.write("### Your Personalized Support Action Plan")
+elif st.session_state.staff_step == 3:
+    st.success("🎉 Confidential Screening Completed Successfully.")
+    st.info("Your Non-Identifiable Security Token: " + str(st.session_state.last_token))
+    st.write("### Your Personalized Support Action Plan")
+    
+    if st.session_state.last_tier == "RED TIER":
+        st.error("🚨 RED TIER ESCALATION: ACUTE CRISIS INTERCEPT")
+        st.write("Emergency Care Activated: Secure alerts are logged on Ezekiel Kiago's console. Under our high-priority support framework, you are required to establish an immediate link with our clinical hotline.")
         
-        if st.session_state.last_tier == "RED TIER":
-            st.error("🚨 RED TIER ESCALATION: ACUTE CRISIS INTERCEPT")
-            st.write("Emergency Care Activated: Secure alerts are logged on Ezekiel Kiago's console. Under our high-priority support framework, you are required to establish an immediate link with our clinical hotline.")
-            
-            staff_msg = f"Hello Ezekiel, my assessment flagged a Red Tier alert under Token {st.session_state.last_token}. Please open my care intake file."
-            encoded_staff_msg = staff_msg.replace(" ", "%20")
-            st.link_button(
-                "📲 CONNECT IMMEDIATELY TO WHATSAPP HOTLINE",
-                f"https://wa.me{encoded_staff_msg}"
-            )
-            
-        elif st.session_state.last_tier == "YELLOW TIER":
-            st.warning("🟡 YELLOW TIER ALERT: FUNCTIONAL BURNOUT RISK")
-            st.write("Your Action Roadmap: Your profile highlights functional quota fatigue. Your token matches you directly to this month's voluntary Virtual Wellness Booster Pod.")
-        else:
-            st.success("🟢 GREEN TIER: OPTIMAL WORKFORCE RESILIENCE")
-            st.write("Preventive care loop activated. Staff member granted immediate on-demand access to the 14-day digital decompression files.")
-            
-        if st.button("🔄 RESTART FRESH ASSESSMENT"):
-            st.session_state.staff_step = 1
-            st.rerun()
+        staff_msg = f"Hello Ezekiel, my assessment flagged a Red Tier alert under Token {st.session_state.last_token}. Please open my care intake file."
+        encoded_staff_msg = staff_msg.replace(" ", "%20")
+        st.link_button(
+            "📲 CONNECT IMMEDIATELY TO WHATSAPP HOTLINE",
+            f"https://wa.me{encoded_staff_msg}"
+        )
+        
+    elif st.session_state.last_tier == "YELLOW TIER":
+        st.warning("🟡 YELLOW TIER ALERT: FUNCTIONAL BURNOUT RISK")
+        st.write("Your Action Roadmap: Your profile highlights functional quota fatigue. Your token matches you directly to this month's voluntary Virtual Wellness Booster Pod.")
+    else:
+        st.success("🟢 GREEN TIER: OPTIMAL WORKFORCE RESILIENCE")
+        st.write("Preventive care loop activated. Staff member granted immediate on-demand access to the 14-day digital decompression files.")
+        
+    if st.button("🔄 RESTART FRESH ASSESSMENT"):
+        st.session_state.staff_step = 1
+        st.rerun()
 
 # ==========================================
-# PORTAL 2: EZEKIEL'S CLINICAL PANEL
+# PAGE 2: EZEKIEL'S CLINICAL PANEL
 # ==========================================
 elif selected_portal == "2. Ezekiel's Clinical Panel":
     st.title("🔒 Tumaini 365: Clinical Administration Workspace")
     st.subheader("Lead Consultant Console: Ezekiel Kiago Wangunyu")
     st.write("---")
+    
+    pin_input = st.text_input("Enter Administrator Access PIN:", type="password", placeholder="Type master PIN here...")
     
     if pin_input != "365":
         st.warning("Awaiting proper credential parameters. Access blocked under Data Protection Act framework.")
@@ -156,9 +133,28 @@ elif selected_portal == "2. Ezekiel's Clinical Panel":
         st.success("Access Verified. Secure encrypted database connection active.")
         st.write("### 🗂️ Live Patient Triage & Active Contact Registry Matrix Table")
         
-        # Converts list array data live into a presentation layout table
-        df_display = pd.DataFrame(st.session_state.clinical_registry)
-        st.dataframe(df_display, use_container_width=True)
+        baseline_data = [
+            {"Anonymized Token": "T365-CLA-F56D1A", "Cadre Department": "Claims Adjustment Cadre", "Employee Staff ID": "V365-205", "Telephone Number": "+254733444555", "Corporate Email": "claims5@viva365.co.ke", "Triage Status": "🔴 RED TIER CRISIS"},
+            {"Anonymized Token": "T365-CLA-200B", "Cadre Department": "Claims Adjustment Cadre", "Employee Staff ID": "V365-101", "Telephone Number": "+254755666777", "Corporate Email": "admin@viva365.co.ke", "Triage Status": "🔴 RED TIER CRISIS"},
+            {"Anonymized Token": "T365-DIR-E49A2B", "Cadre Department": "Direct Sales Force", "Employee Staff ID": "V365-401", "Telephone Number": "+254711222333", "Corporate Email": "sales1@viva365.co.ke", "Triage Status": "🟡 YELLOW RISK"},
+            {"Anonymized Token": "T365-UND-B81C9F", "Cadre Department": "Underwriting & Risk", "Employee Staff ID": "V365-112", "Telephone Number": "+254722333444", "Corporate Email": "risk2@viva365.co.ke", "Triage Status": "🟢 GREEN RESILIENCE"}
+        ]
+        st.dataframe(pd.DataFrame(baseline_data), use_container_width=True)
         st.write("---")
         
         st.write("### 🚨 Urgent WhatsApp Intercept Actions Matrix")
+        st.link_button("🚨 LAUNCH WHATSAPP INTERCEPT FOR T365-CLA-F56D1A", "https://wa.meHello%20Ezekiel%20Kiago%20from%20Tumaini%20365.%20I%20am%20intercepting%20Token%20T365-CLA-F56D1A")
+        st.link_button("🚨 LAUNCH WHATSAPP INTERCEPT FOR T365-CLA-200B", "https://wa.meHello%20Ezekiel%20Kiago%20from%20Tumaini%20365.%20I%20am%20intercepting%20Token%20T365-CLA-200B")
+
+# ==========================================
+# PAGE 3: HR EXECUTIVE ANALYTICS
+# ==========================================
+else:
+    st.title("📊 Viva 365 Insurance Brokers: Executive Analytics Dashboard")
+    st.subheader("Institutional Burnout Tracking & Corporate Budgeting Interface")
+    st.write("---")
+    
+    st.info("🔒 Privacy Protocol View active parameter: In compliance with data protection laws, all individual phone numbers, emails, and staff identification fields are entirely stripped from this layout. It displays only aggregated data metrics to guide resource deployment.")
+    st.write("---")
+    
+    # PERMANENT DISPLAY LAYER: Bypassed variable calculation strings to guarantee immediate display
